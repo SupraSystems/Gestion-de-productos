@@ -1,0 +1,7 @@
+.card_pintura:hover{
+    border: solid 0.2rem  #e94dd4;
+}
+#title{
+    position:absolute;
+    width: 100%;
+}
