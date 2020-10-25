@@ -1,10 +1,7 @@
 <nav class="navbar navbar-light navbar-expand-xl  bg-custom-2">
     <div class="container justify-content-between">
-        <!--<div class="navbar-brand">
-        <img src="../../../assets/images/logo/logo.png" width="80" height="80" alt="">
-      </div>-->
         <div class="navbar-brand">
-            <h3 class="text-light font-italic Italica"><strong>Supermercado XD</strong> </h3>
+            <h3 class="text-light font-italic Italica"><strong>Supermercado</strong> </h3>
         </div>
         <button class="navbar-toggler btn-outline-light" data-toggle="collapse" data-target="#menu" aria-expanded="false" id="amburguesa">
       <span class="navbar-toggler-icon"></span>
@@ -14,30 +11,23 @@
                 <li class="nav-item"><a routerLink="home" (click)="precionar_amburguesa()" class="nav-link text-light" title="ir al inicio de la pagina">Inicio</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href='#' routerLinkActive="router-link-active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="ver catalogo de productos">
-            Catalogo De Productos
+            Categorias
           </a>
                     <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" routerLink="/todos_los_productos" (click)="precionar_amburguesa()">Todos Los Productos</a>
                         <a class="dropdown-item" routerLink="/productos_frescos" (click)="precionar_amburguesa()">Frescos</a>
-                        <a class="dropdown-item" routerLink="/productos_alimentacion" (click)="precionar_amburguesa()">Alimentacion</a>
-                        <a class="dropdown-item" routerLink="/productos_para_farmacia" (click)="precionar_amburguesa()">ParaFarmacia</a>
-                        <a class="dropdown-item" routerLink="/productos_basicos_hogar" (click)="precionar_amburguesa()">Basicos del Hogar</a>
-                        <a class="dropdown-item" routerLink="/productos_higiene_belleza" (click)="precionar_amburguesa()">Higiene Y Belleza</a>
-                        <a class="dropdown-item" routerLink="/productos_mascota" (click)="precionar_amburguesa()">Mascotas</a>
-                        <a class="dropdown-item" routerLink="/productos_bebe" (click)="precionar_amburguesa()">Bebe</a>
+                        <a class="dropdown-item" routerLink="/productos_alimenticios" (click)="precionar_amburguesa()">Alimentacion</a>
+                        <a class="dropdown-item" routerLink="/productos_de_farmacia" (click)="precionar_amburguesa()">ParaFarmacia</a>
+                        <a class="dropdown-item" routerLink="/productos_del_hogar" (click)="precionar_amburguesa()">Basicos del Hogar</a>
+                        <a class="dropdown-item" routerLink="/productos_de_higiene_y_belleza" (click)="precionar_amburguesa()">Higiene Y Belleza</a>
+                        <a class="dropdown-item" routerLink="/productos_para_mascotas" (click)="precionar_amburguesa()">Mascotas</a>
+                        <a class="dropdown-item" routerLink="/productos_para_bebe" (click)="precionar_amburguesa()">Bebe</a>
                         <a class="dropdown-item" routerLink="/productos_bebidas" (click)="precionar_amburguesa()">Bebidas</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="ver productos en promocion">
-            Promociones
-          </a>
-                    <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" routerLink="combos" (click)="precionar_amburguesa()" title="ver los combos disponibles">Combos</a>
-                        <a class="dropdown-item" routerLink="productos_en_promocion" (click)="precionar_amburguesa()" title="ver los productos en descuento">Productos En Descuento</a>
-                    </div>
-                </li>
-                <li>
+                <li class="nav-item"><a routerLink="/productos_en_promocion" (click)="precionar_amburguesa()" class="nav-link text-light" title="ver los productos en promocion">Promociones</a></li>
+                <li class="nav-item"><a routerLink="/productos_combos" (click)="precionar_amburguesa()" class="nav-link text-light" title="ver los combos">Combos</a></li>
+               <!-- <li>
                     <form class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="nombre de producto" aria-describedby="basic-addon1">
@@ -47,56 +37,8 @@
                             </div>
                         </div>
                     </form>
-                </li>
-                <ng-container *ngIf="getUsuarioSesion()">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" routerLinkActive="router-link-active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="opciones de usuario">
-                            <i class="fa fa-user" aria-hidden="true"></i> {{usuario}}
-                        </a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">Historial
-                De Compras</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">Historial De
-                Cotizasiones</a>
-                            <a class="dropdown-item" (click)="cerrarSesion(); precionar_amburguesa()">Cerrar
-                Sesion</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" routerLinkActive="router-link-active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="opciones de usuario">
-                            <i class="fa fa-question-circle" aria-hidden="true"></i>Ayuda
-                        </a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" (click)="precionar_amburguesa()"> ver guia de la pagina</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">como comprar productos</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">consulta problema</a>
-                        </div>
-                    </li>
-                </ng-container>
-                <ng-container *ngIf="!getUsuarioSesion()">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" routerLinkActive="router-link-active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="opciones de usuario">
-              opciones
-            </a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" routerLink="formulario_registro" (click)="precionar_amburguesa()">Registrarme</a>
-                            <a class="dropdown-item" routerLink="formulario_inicio_sesion" (click)="precionar_amburguesa()">Iniciar
-                Sesion</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" routerLinkActive="router-link-active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="opciones de usuario">
-                            <i class="fa fa-question-circle" aria-hidden="true"></i>Ayuda
-                        </a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" (click)="precionar_amburguesa()"> ver guia de la pagina</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">como comprar productos</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">como elegir color de pintura deseada</a>
-                            <a class="dropdown-item" (click)="precionar_amburguesa()">consulta problema</a>
-
-                        </div>
-                    </li>
-                </ng-container>
+                </li>-->
+                <li class="nav-item"><span class="nav-link text-light" title=" iniciar sesion">Tu cuenta</span></li>
             </ul>
         </div>
     </div>
