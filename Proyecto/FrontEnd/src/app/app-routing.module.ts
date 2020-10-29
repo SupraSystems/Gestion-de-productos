@@ -15,6 +15,13 @@ import { BebidasComponent } from './Pages/bebidas/bebidas.component'
 import { PromocionesComponent } from './Pages/promociones/promociones.component'
 import { CombosComponent } from './Pages/combos/combos.component'
 
+import { RegistroProductosComponent } from './Pages/registro-productos/registro-productos.component'
+import { RegistroCombosComponent } from './Pages/registro-combos/registro-combos.component'
+import { RegistroDescuentosComponent} from './Pages/registro-descuentos/registro-descuentos.component'
+
+
+
+
 const routes: Routes = [
   { path: 'home', component: PrincipalComponent},
   { path: 'todos_los_productos', component: TodosLosProductosComponent},
@@ -29,6 +36,12 @@ const routes: Routes = [
   { path: 'productos_bebidas', component: BebidasComponent},
   { path: 'productos_en_promocion', component: PromocionesComponent},
   { path: 'productos_combos', component: CombosComponent},
+
+
+  { path: 'registro_productos', component: RegistroProductosComponent},
+  { path: 'registro_combos', component: RegistroCombosComponent},
+  { path: 'registro_descuentos', component: RegistroDescuentosComponent},
+
 
   { path: '', pathMatch: 'full', redirectTo: 'home' }, 
   { path: '**', pathMatch: 'full', redirectTo: 'home' }

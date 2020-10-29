@@ -10,6 +10,8 @@ export class ParaFarmaciaComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('tipo_producto', "para_farmacia");
+    localStorage.setItem('titulo','productos para farmacia');  
   }
 
 }

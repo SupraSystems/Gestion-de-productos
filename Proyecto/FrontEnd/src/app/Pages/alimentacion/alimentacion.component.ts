@@ -10,6 +10,8 @@ export class AlimentacionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('tipo_producto', "alimentos");
+    localStorage.setItem('titulo','productos almenticios');  
   }
 
 }

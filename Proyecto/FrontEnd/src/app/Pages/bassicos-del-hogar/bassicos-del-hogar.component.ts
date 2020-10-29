@@ -10,6 +10,8 @@ export class BassicosDelHogarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('tipo_producto', "basicos_del_hogar");
+    localStorage.setItem('titulo','productos basicos del hogar');  
   }
 
 }

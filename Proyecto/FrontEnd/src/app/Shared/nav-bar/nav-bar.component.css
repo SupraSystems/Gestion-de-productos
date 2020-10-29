@@ -11,3 +11,14 @@
     background: #4A5070;
     color:white;
   }
+  html {
+    min-height: 100%;
+    position: relative;
+}
+
+footer {
+    position: relative;
+    bottom: 0 !important;
+    width: 100%;
+}
+.fa.icon-white { color: white; } 

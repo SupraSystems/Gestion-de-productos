@@ -10,6 +10,8 @@ export class HigieneBellezaComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('tipo_producto', "higiene_y_belleza");
+    localStorage.setItem('titulo','productos para higiene y belleza');  
   }
 
 }

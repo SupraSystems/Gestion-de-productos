@@ -10,6 +10,8 @@ export class BebidasComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('tipo_producto', "bebidas");
+    localStorage.setItem('titulo','productos bebidas');  
   }
 
 }

@@ -20,6 +20,9 @@ import { HigieneBellezaComponent } from './Pages/higiene-belleza/higiene-belleza
 import { MascotasComponent } from './Pages/mascotas/mascotas.component';
 import { BebeComponent } from './Pages/bebe/bebe.component';
 import { BebidasComponent } from './Pages/bebidas/bebidas.component';
+import { RegistroProductosComponent } from './Pages/registro-productos/registro-productos.component';
+import { RegistroCombosComponent } from './Pages/registro-combos/registro-combos.component';
+import { RegistroDescuentosComponent } from './Pages/registro-descuentos/registro-descuentos.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { BebidasComponent } from './Pages/bebidas/bebidas.component';
     HigieneBellezaComponent,
     MascotasComponent,
     BebeComponent,
-    BebidasComponent
+    BebidasComponent,
+    RegistroProductosComponent,
+    RegistroCombosComponent,
+    RegistroDescuentosComponent
   ],
   imports: [
     BrowserModule,
