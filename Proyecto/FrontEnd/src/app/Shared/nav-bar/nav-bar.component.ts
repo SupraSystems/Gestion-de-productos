@@ -8,6 +8,7 @@ declare var $: any;
 })
 export class NavBarComponent implements OnInit {
   usuario="Pepe";
+  seRegistro=false;
   constructor() { }
 
   ngOnInit(): void {
@@ -25,6 +26,14 @@ export class NavBarComponent implements OnInit {
   }
 
   cerrarSesion(){
+    if(this.seRegistro){
+      this.seRegistro=false;
+    }
+  }
+  inciarSesion(){
+    if(!this.seRegistro){
+      this.seRegistro=true;
+    }
   }
 }
 

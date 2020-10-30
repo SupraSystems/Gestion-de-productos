@@ -10,9 +10,9 @@ footer {
 }
 
 .footer-distributed {
-    /*background-color: #242c34;*/
-   /* background-image: linear-gradient(15deg, #12121486 0%, #1e36be6c 100%);*/
-   background-image: linear-gradient(15deg, #3d24aa 10%,#5e24aa 20%, #E91E63 100%); 
+    background:#4A5070;
+    /* background-image: linear-gradient(15deg, #12121486 0%, #1e36be6c 100%);*/
+   /*background-image: linear-gradient(15deg, #3d24aa 10%,#5e24aa 20%, #E91E63 100%); */
    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
     box-sizing: border-box;
     width: 100%;

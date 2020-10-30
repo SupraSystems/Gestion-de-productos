@@ -19,6 +19,8 @@ export class ProductsComponent implements OnInit {
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.cargarLista();
+    //
+    this.todosLosProductos()
   }
   cargarLista() {
     console.log(this.tipoProducto, "-----------")

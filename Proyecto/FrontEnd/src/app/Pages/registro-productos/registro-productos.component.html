@@ -1,0 +1,187 @@
+<div
+  id="title"
+  class="container py-5 text-center"
+  width="100%">
+  <h2 class="container text-dark text-center">REGISTRO DE PRODUCTOS</h2>
+</div>
+<br>
+<div
+  class="container"
+  role="document">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleInputpwd2">Nombre del producto</label>
+            <div class="input-group">
+              <input
+                class="form-control bg-white"
+                placeholder="nombre"
+                formControlName="precio">
+              <!-- readonly value="{{precioProducto}}" -->
+              <span
+                class="btn disabled"
+                style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+                <i class="fa fa-money-bill"></i></span>
+            </div>
+          </div>
+          <div class="form-group col">
+              <label for="inputEmail4">Pecio:</label><br>
+              <div class="input-group">
+                  <input placeholder="Ejem: 1111111" type="number" >
+                  <div class="input-group-append">
+                      <select class="custom-select" required name="emision">
+              <option class="text-muted" style="color: grey !important;" value="" selected disabled hidden>Moneda
+              </option>
+              <option value="Cbba">Bolivianos</option>
+              <option value="Lpz">Dolares</option>
+              <option value="Oru">Euros</option>
+            </select>
+            
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleInputpwd2">Precio Del Poducto</label>
+            <div class="input-group">
+              <input
+                class="form-control bg-white"
+                formControlName="precio"
+                placeholder="precio">
+              <span
+                class="btn disabled"
+                style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+                <i class="fa fa-money-bill"></i></span>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="exampleInputpwd2">Fecha de vencimiento</label>
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="fecha de vencimiento"
+                id="targetaC">
+              <span
+                class="btn disabled"
+                style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+                <i class="fa fa-credit-card"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            for="nombreConvocatoria"
+            class="col-form-label">
+            Descripcion del producto:
+          </label>
+          <textarea
+            class="form-control"
+            id="tituloConvocatoria"
+            rows="3"
+            style="min-height: 100px; max-height: 150px;"></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between align-items-end">
+            <label for="requisitos">Productos A Registrar</label>
+            <button
+              class="btn btn-outline-info"
+              type="button"
+              data-toggle="modal"
+              data-target="#aniadirCompra">
+              <i class="fa fa-plus"></i>
+              <i class="fa fa-shopping-cart"></i>
+              Añadir A egistro
+            </button>
+          </div>
+          <div class="table-responsive mt-3">
+            <table
+              class="table align-middle table-hover table-bordered"
+              id="requerimientos">
+              <thead class="thead-dark">
+                <tr>
+                  <th
+                    class="text-center"
+                    scope="col">
+                    Nombre
+                  </th>
+                  <th
+                    class="text-center"
+                    scope="col">
+                    Taminio
+                  </th>
+                  <th
+                    class="text-center"
+                    scope="col">
+                    Precio
+                  </th>
+                  <th
+                    class="text-center"
+                    scope="col">
+                    Fecha de vencimiento
+                  </th>
+                  <th
+                    class="text-center"
+                    scope="col">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let productos of listaProducto; index as i">
+                                    <td>{{productos.getCantidad()}} </td>
+                                    <td>{{productos.getColor()}}</td>
+                                    <td>{{productos.getPrecio()}}bs </td>
+                                    <td class="text-center">
+                                        <div class="btn btn-group" role="group">
+                                            <button class="btn btn-outline-danger" type="button" title="borrar producto del carrito" (click)="eliminarProducto(productos)">
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                                        </div>
+                                    </td>
+                                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputpwd2">Cantidad Total De Productos</label>
+                        <div class="input-group">
+                            <input class="form-control bg-white" formControlName='precio' readonly value="{{cantidadTotal}}">
+                            <span class="btn disabled" style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+                <i class="fa fa-sort-numeric-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputpwd2">Precio Total De Compra</label>
+                        <div class="input-group">
+                            <input class="form-control bg-white" formControlName='precio' readonly value="{{precioTotal}}">
+                            <span class="btn disabled" style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+                <i class="fa fa-money-bill"></i></span>
+                        </div>
+                    </div>
+                </div> -->
+        <div class="card-footer d-flex justify-content-between">
+          <button
+            type="button"
+            class="btn btn-secondary">
+            Cancelar Registro
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary">
+            Registar Productos
+            <i class="fa fa-money-bill"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
