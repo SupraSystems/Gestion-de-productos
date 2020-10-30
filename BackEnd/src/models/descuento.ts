@@ -1,20 +1,19 @@
-import { Schema, model, Document} from 'mongoose';
+import { Schema, model, Document } from 'mongoose'
+//models
+const esquemaDescuento = new Schema({
+    _idDescuento: String,
+    fechaini: String,
+    fechafin: String,
+    porcentaje: Number,
+    cantidad: Number
 
-
-const schema = new Schema({
-    _id:String,
-    fechainicio: Date,
-    fechafin:Date,
-    porcentaje:Number,
-    cantidadDeProductos:Number
 });
 
-interface IDescuento extends Document {
-    _id:string;
-    fechainicio:Date,
-    fehcafin:Date,
-    porcentaje:number,
-    cantidadDeProductos:number
+export interface IDescuento extends Document {
+    _idDescuento: string;
+    fechaini: string;
+    fechafin: string;
+    porcentaje: number;
+    cantidad: number;
 }
-
-export default model<IDescuento>('descuento', schema);
+export default model<IDescuento>('Descuento', esquemaDescuento);

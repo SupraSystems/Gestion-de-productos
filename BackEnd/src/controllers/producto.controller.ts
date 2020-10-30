@@ -4,6 +4,8 @@ import path from 'path'
 
 // Models
 import Producto from '../models/producto';
+import Descuento from '../models/descuento'
+import Detalle_Combo from '../models/detalle_combo'
 
 export async function getProductos(req: Request, res: Response): Promise<Response> {
     const producto = await Producto.find();
@@ -11,13 +13,14 @@ export async function getProductos(req: Request, res: Response): Promise<Respons
 };
 
 export async function createProducto(req: Request, res: Response): Promise<Response> {
-    const {_id,nombre,descripcion,precio,tamanio,fechavencimiento,coddescuento} = req.body;
+    const {_id,nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
     const newPreoducto = {
         _id:_id,
         nombre:nombre,
         descripcion:descripcion,
+        tipo:tipo,
         precio:precio,
-        tamanio:tamanio,
+        cantidad:cantidad,
         fechavencimiento:fechavencimiento,
         coddescuento:coddescuento,
         imagePath:req.file.path
@@ -42,17 +45,20 @@ export async function deleteProducto(req: Request, res: Response): Promise<Respo
     if (producto) {
         await fs.unlink(path.resolve(producto.imagePath));
     }
-    return res.json({ message: 'Producto Eliminado' });
-};
+    return res.json({ message: 'Producto Eliminado',
+    producto
+});
+}
 
 export async function updateProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { nombre, descripcion, precio,tamanio,fechavencimiento,coddescuento} = req.body;
+    const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento} = req.body;
     const updatedProducto = await Producto.findByIdAndUpdate(id, {
         nombre,
         descripcion,
+        tipo,
         precio,
-        tamanio,
+        cantidad,
         fechavencimiento,
         coddescuento
     });
@@ -60,4 +66,18 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
         message: 'Producto actualizado exitosamente',
         updatedProducto
     });
+}
+
+export async function getDescuentoDeProducto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const producto = await Producto.findById(id);
+    const codDescuento = producto?.coddescuento;
+    const descuento = await Descuento.findById(codDescuento);
+    return res.json(descuento);
+}
+
+export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Detalle_Combo.find(id);
+    return res.json(detalle);
 }

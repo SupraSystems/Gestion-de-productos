@@ -1,29 +1,22 @@
 import { Request, Response } from 'express'
 
-
-import Descuento from '../models/descuento';
+import Descuento, { IDescuento } from '../models/descuento';
 
 export async function getDescuentos(req: Request, res: Response): Promise<Response> {
-    const descuento = await Descuento.find();
-    return res.json(descuento);
+    const descuentos = await Descuento.find();
+    return res.json(descuentos);
 };
 
 export async function createDescuento(req: Request, res: Response): Promise<Response> {
-    const {_id,fechainicio,fechafin,porcentaje,cantidadDeProductos} = req.body;
-    const newDescuento = {
-        _id:_id,
-        fechainicio:fechainicio,
-        fechafin:fechafin,
-        porcentaje:porcentaje,
-        cantidadDeProductos:cantidadDeProductos
-    };
-    const descuento = new Descuento(newDescuento);
+    const { idDescuento, fechaini, fechafin,porcentaje, cantidad } = req.body;
+    const nuevoDescuento = { idDescuento, fechaini, fechafin,porcentaje, cantidad };
+    const descuento = new Descuento(nuevoDescuento);
     await descuento.save();
     return res.json({
-        message: 'Descuento guardado exitosamente',
+        message: 'Descuento creado',
         descuento
-    })
-}
+    });
+};
 
 export async function getDescuento(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
@@ -33,24 +26,18 @@ export async function getDescuento(req: Request, res: Response): Promise<Respons
 
 export async function deleteDescuento(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const descuento = await Descuento.findByIdAndRemove(id);
-    return res.json({ message: 'Descuento Eliminado',
-                    descuento
-    });
-}
+    const descuento = await Descuento.findByIdAndRemove(id) as IDescuento;
+    return res.json({ message: 'Descuento Eliminado', descuento});
+};
 
 export async function updateDescuento(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { _id,fechainicio,fechafin,porcentaje,cantidadDeProductos} = req.body;
-    const updatedDescuento = await Descuento.findByIdAndUpdate(id, {
-        _id,
-        fechainicio,
-        fechafin,
-        porcentaje,
-        cantidadDeProductos
+    const { idDescuento, fechaini, fechafin, porcentaje, cantidad } = req.body;
+    const DescuentoActualizado = await Descuento.findByIdAndUpdate(id, {
+        idDescuento, fechaini, fechafin, porcentaje, cantidad
     });
     return res.json({
-        message: 'Descuento actualizado exitosamente',
-        updatedDescuento
+        message: 'Descuento Actualizado',
+        DescuentoActualizado
     });
 }

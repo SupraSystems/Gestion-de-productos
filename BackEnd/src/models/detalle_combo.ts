@@ -1,16 +1,12 @@
-import { Schema, model, Document} from 'mongoose';
-
-
-const schema = new Schema({
-    _id:String,
-    idCombo:String,
-    idProducto:String
+import { Schema, model, Document } from 'mongoose'
+//models
+const esquemaDetalle = new Schema({
+    _idCombo: String,
+    _idProducto: String,
 });
 
-interface IDetalle_Combo extends Document {
-    _id:string,
-    idCombo:string,
-    idproducto:string
+export interface IDetalleCombo extends Document {
+    _idCombo: String,
+    _idProducto: String,
 }
-
-export default model<IDetalle_Combo>('detalle_combo', schema);
+export default model<IDetalleCombo>('Descuento', esquemaDetalle);

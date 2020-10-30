@@ -6,9 +6,10 @@ const schema = new Schema({
     _id:String,
     nombre:String,
     descripcion: String,
+    tipo:String,
     precio:Number,
-    tamanio:Number,
-    fechavencimiento:Date,
+    cantidad:Number,
+    fechavencimiento:String,
     imagePath: String,
     coddescuento:String
 });
@@ -17,9 +18,10 @@ interface IProducto extends Document {
     _id:string;
     nombre:string,
     descripcion: string,
+    tipo:string,
     precio:number,
-    tamanio:number,
-    fechavencimiento:Date,
+    cantidad:number,
+    fechavencimiento:string,
     imagePath: string,
     coddescuento:string
 }
