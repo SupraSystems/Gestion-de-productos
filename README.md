@@ -21,7 +21,13 @@ posicionarse en el frontend con el sig comando
 
 y ejecutar el sig comando (y esperar a que descargue las dependencias)
 
+
     npm install
+
+    y
+
+    npm install -g @angular/cli@9.1.1
+
 
 y correr la aplicacion con
 
