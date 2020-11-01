@@ -16,4 +16,4 @@ export interface IDescuento extends Document {
     porcentaje: number;
     cantidad: number;
 }
-export default model<IDescuento>('Descuento', esquemaDescuento);
+export default model<IDescuento>('descuento', esquemaDescuento);

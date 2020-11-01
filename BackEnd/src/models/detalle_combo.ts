@@ -9,4 +9,4 @@ export interface IDetalleCombo extends Document {
     _idCombo: String,
     _idProducto: String,
 }
-export default model<IDetalleCombo>('Descuento', esquemaDetalle);
+export default model<IDetalleCombo>('detalle_combo', esquemaDetalle);

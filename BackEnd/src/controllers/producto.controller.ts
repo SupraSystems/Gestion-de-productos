@@ -71,9 +71,10 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
 export async function getDescuentoDeProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const producto = await Producto.findById(id);
-    const codDescuento = producto?.coddescuento;
-    const descuento = await Descuento.findById(codDescuento);
-    return res.json(descuento);
+    //const codDescuento = producto?.coddescuento;
+    //const descuento = await Descuento.findById(codDescuento);
+    //return res.json(descuento);
+    return res.json();
 }
 
 export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
