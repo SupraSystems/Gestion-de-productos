@@ -1,32 +1,35 @@
 import { Request, Response } from 'express'
 
-import detalleCombo, { IDetalleCombo } from '../models/detalle_combo';
+import Detalle from '../models/detalle_combo';
 
 export async function getDetalles(req: Request, res: Response): Promise<Response> {
-    const detalles = await detalleCombo.find();
+    const detalles = await Detalle.find();
     return res.json(detalles);
 };
 
 export async function createDetalle(req: Request, res: Response): Promise<Response> {
-    const { _idCombo, _idDescuento } = req.body;
-    const nuevoDetalle = { _idCombo, _idDescuento };
-    const detalle = new detalleCombo(nuevoDetalle);
+    const { idCombo, idProducto } = req.body;
+    const nuevoDetalle = { 
+        idCombo:idCombo, 
+        idProducto:idProducto 
+    };
+    const detalle = new Detalle(nuevoDetalle);
     await detalle.save();
     return res.json({
-        message: 'Descuento creado',
+        message: 'Detalle creado',
         detalle
     });
 };
 
 export async function getDetalle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const detalle = await detalleCombo.findById(id);
+    const detalle = await Detalle.findById(id);
     return res.json(detalle);
 }
 
 export async function deleteDetalle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const detalle = await detalleCombo.findByIdAndRemove(id) as IDetalleCombo;
+    const detalle = await Detalle.findByIdAndRemove(id);
     return res.json({ message: 'Detalle eliminado' ,
         detalle});
 };
@@ -34,7 +37,7 @@ export async function deleteDetalle(req: Request, res: Response): Promise<Respon
 export async function updateDetalle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const { _idCombo, _idDescuento } = req.body;
-    const DetalleActualizado = await detalleCombo.findByIdAndUpdate(id, {
+    const DetalleActualizado = await Detalle.findByIdAndUpdate(id, {
         _idCombo, _idDescuento
     });
     return res.json({

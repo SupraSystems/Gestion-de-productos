@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose'
 //models
 const esquemaDescuento = new Schema({
-    _idDescuento: String,
+    _id: String,
     fechaini: String,
     fechafin: String,
     porcentaje: Number,
@@ -10,10 +10,10 @@ const esquemaDescuento = new Schema({
 });
 
 export interface IDescuento extends Document {
-    _idDescuento: string;
+    _id: string;
     fechaini: string;
     fechafin: string;
     porcentaje: number;
     cantidad: number;
 }
-export default model<IDescuento>('Descuento', esquemaDescuento);
+export default model<IDescuento>('descuento', esquemaDescuento);

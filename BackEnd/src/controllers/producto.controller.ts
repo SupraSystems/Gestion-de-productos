@@ -10,7 +10,7 @@ import Detalle_Combo from '../models/detalle_combo'
 export async function getProductos(req: Request, res: Response): Promise<Response> {
     const producto = await Producto.find();
     return res.json(producto);
-};
+}
 
 export async function createProducto(req: Request, res: Response): Promise<Response> {
     const {_id,nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
@@ -61,23 +61,23 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
         cantidad,
         fechavencimiento,
         coddescuento
-    });
+    },{new: true});
     return res.json({
         message: 'Producto actualizado exitosamente',
         updatedProducto
     });
 }
 
-export async function getDescuentoDeProducto(req: Request, res: Response): Promise<Response> {
+export async function getDescuentoProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const producto = await Producto.findById(id);
-    const codDescuento = producto?.coddescuento;
-    const descuento = await Descuento.findById(codDescuento);
-    return res.json(descuento);
+    const descuento = producto!.coddescuento
+    const desc = await Descuento.findById(descuento)
+    return res.json(desc);
 }
 
 export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const detalle = await Detalle_Combo.find(id);
+    const detalle = await Detalle_Combo.find({idProducto:id});
     return res.json(detalle);
 }
