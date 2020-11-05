@@ -10,55 +10,79 @@ import { ServicesService } from "../../services/services.service";
 })
 export class ProductsComponent implements OnInit {
   listaDeProductos: Producto[] = [];
-  producto: Producto = new Producto("","",0,0,"","","","");
+  producto: Producto = new Producto("", "", 0, 0, "", "", "", "");
   titulo = "";
   ruta = "";
-  descripcion ="";
-  tipoProducto="";
-  
-  constructor(private router: Router,public productsService: ServicesService) {
+  descripcion = "";
+  tipoProducto = "";
+
+  constructor(private router: Router, public productsService: ServicesService) {
   }
 
   ngOnInit(): void {
-    this.productsService.listaproductos=[];
+    this.productsService.listaproductos = [];
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
-    if(this.tipoProducto=="para_farmacia"){
+    if (this.tipoProducto == "para_farmacia") {
       this.getCategoria("parafarmacia");
-    }else{
-      if(this.tipoProducto=="bebidas"){
+    } else {
+      if (this.tipoProducto == "bebidas") {
         this.getCategoria("bebidas");
-      } 
+      } else {
+        if (this.tipoProducto == "bebe") {
+          this.getCategoria("bebe");
+        }else {
+            if (this.tipoProducto == "mascotas") {
+              this.getCategoria("mascotas");
+            } else {
+              if (this.tipoProducto == "higiene_y_belleza") {
+                this.getCategoria("higieneybelleza");
+              } else {
+                if (this.tipoProducto == "basicos_del_hogar") {
+                  this.getCategoria("basicosdelhogar");
+                } else {
+                  if (this.tipoProducto == "frescos") {
+                    this.getCategoria("frescos");
+                  } else {
+                    if (this.tipoProducto == "alimentos") {
+                      this.getCategoria("alimentacion");
+                    }
+                }
+              }
+            }
+          }
+        }
+      }
     }
     //this.cargarLista();
     //
     //this.todosLosProductos()
   }
-  getCategoria(categoria:string){
+  getCategoria(categoria: string) {
     this.productsService.getProductsCategoria(categoria).subscribe(
       res => {
         this.productsService.listaproductos = res;
-      console.log(res)
+        console.log(res)
       },
       err => console.log(err)
     )
   }
 
-  getProductos(){
+  getProductos() {
     this.productsService.getProducts().subscribe(
       res => {
         this.productsService.listaproductos = res;
         //this.listaDeProductos=this.productsService.listaproductos;
-      console.log(res)
+        console.log(res)
       },
       err => console.log(err)
     )
   }
-  setActualizarProducto(producto: Producto){
+  setActualizarProducto(producto: Producto) {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
-    this.ruta = "http://localhost:4000/uploads/"+path.substring(8); 
-    this.producto = new Producto(this.descripcion,producto.tipo,producto.precio,producto.cantidad,producto.foto, producto._id,path,producto.nombre);
+    this.ruta = "http://localhost:4000/uploads/" + path.substring(8);
+    this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre);
     console.log(this.ruta);
     console.log(this.producto);
     console.log(this.descripcion);
@@ -70,7 +94,7 @@ export class ProductsComponent implements OnInit {
 
 
 
-  
+
   cargarLista() {
     console.log(this.tipoProducto, "-----------")
     if (this.tipoProducto == "todos_los_productos") {
@@ -79,16 +103,16 @@ export class ProductsComponent implements OnInit {
       if (this.tipoProducto == "alimentos") {
         this.getAlimentos();
       } else {
-  
+
       }
     }
   }
 
-  getAlimentos(){
+  getAlimentos() {
     this.getProductos();
     console.log("producto tipo alimentos")
   }
-
+  
   todosLosProductos() {
     /*this.producto = new Producto("frescos",1,"producto comestible a base de resinas alquídicas, solventes, óxido de hierro de alta calidad e inhibidores de corrosión libres de plomo. USOS:   Hierro y Acero Protección de estructuras metálicas, rejas de hierro, ventanas, puertas, cañerías, maquinaria, etc.,", "https://static.ulabox.com/media/112534_m1.jpg",45,12,"frescos");
     this.listaDeProductos.push(this.producto);
