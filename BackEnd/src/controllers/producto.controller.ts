@@ -81,3 +81,9 @@ export async function getComboDeProducto(req: Request, res: Response): Promise<R
     const detalle = await Detalle_Combo.find({idProducto:id});
     return res.json(detalle);
 }
+export async function getFoto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Producto.findById(id);
+    const foto= detalle!.imagePath;
+    return res.send('<img src=http://localhost:4000/'+foto+'>');
+}
