@@ -45,7 +45,7 @@ export class RegistroProductosComponent implements OnInit {
     let descripcion = $("#descripcion").val();
     console.log(nombre, "----", precio, "----", fecha, "----", cantidad, "----", categoria, "----", imagen, "----", descripcion);
 
-    this.producto=new Producto(descripcion,categoria,precio,cantidad,"","","",nombre,fechaV);
+    this.producto=new Producto(descripcion,categoria,precio,cantidad,"","","",nombre,fechaV,this.file);
     this.listaProducto.push(this.producto);
   }
 

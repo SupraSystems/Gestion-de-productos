@@ -9,8 +9,8 @@ export class Producto {
     _id:string;
     imagePath: string;
     fechavencimiento:string;
-
-    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,fecha?:string){
+    file:File;
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
 
         this.descripcion=descripcion;
         this.tipo=tipo;
@@ -22,6 +22,7 @@ export class Producto {
         this.imagePath=imagePath;
         this.nombre=nombre;
         this.fechavencimiento=fecha;
+        this.file=file;
     }
     public getFecha(){
         return this.fechavencimiento;
