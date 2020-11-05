@@ -10,57 +10,65 @@
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Nombre del producto</label>
             <div class="input-group">
-              <input class="form-control bg-white" placeholder="nombre" formControlName="precio">
-              <!-- readonly value="{{precioProducto}}" -->
+              <input class="form-control bg-white" id="nombre" placeholder="nombre" (click)="valido('nombre')">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
                 <i class="fa fa-cubes"></i></span>
             </div>
+            <small class="inline-block text-danger" id="nombre1" style="display: none;">
+              datos invalidos
+              <small class="fal fa-exclamation-triangle"></small>
+            </small>
           </div>
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Precio del producto: Bs</label>
             <div class="input-group">
-              <input class="form-control bg-white" placeholder="precio" formControlName="precio">
-              <!-- readonly value="{{precioProducto}}" -->
+              <input class="form-control bg-white" type="number" id="precio" placeholder="precio"
+                (click)="valido('precio')">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
                 <i class="fa fa-money-bill"></i></span>
             </div>
+            <small class="inline-block text-danger" id="precio1" style="display: none;">
+              datos invalidos
+              <small class="fal fa-exclamation-triangle"></small>
+            </small>
           </div>
-
         </div>
-
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="col-form-label mr-1">Fecha de vencimiento:</label>
             <div class="d-flex justify-content">
-              <input id="fechaI" name="fechaInicio" [min]="min" placeholder="Fecha inicio" [matDatepicker]="pickerm3"
+              <input id="fechaI" name="fecha" [min]="min" placeholder="Fecha inicio" [matDatepicker]="pickerm3"
                 class="form-control bg-white" readonly>
               <!-- [max]="max" (dateInput)="setFecha()" #fechaInicio="ngModel" ngModel [class.is-invalid]="fechaInicio.invalid && fechaInicio.touched" [class.is-valid]="fechaInicio.valid && fechaInicio.touched" -->
-              <mat-datepicker-toggle matSuffix [for]="pickerm3" class=""></mat-datepicker-toggle>
+              <mat-datepicker-toggle matSuffix [for]="pickerm3"></mat-datepicker-toggle>
               <mat-datepicker #pickerm3></mat-datepicker>
             </div>
           </div>
-
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Cantidad:</label>
             <div class="input-group">
-              <input class="form-control bg-white" placeholder="cantidad" formControlName="precio">
-              <!-- readonly value="{{precioProducto}}" -->
+              <input class="form-control bg-white" type="number" id="cantidad" placeholder="cantidad"
+                formControlName="precio" (click)="valido('cantidad')">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
                 <i class="fa fa-sort-numeric-down-alt"></i></span>
             </div>
+            <small class="inline-block text-danger" id="precio1" style="display: none;">
+              datos invalidos
+              <small class="fal fa-exclamation-triangle"></small>
+            </small>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputEmail4">Categoria:</label>
             <div class="input-group-addon">
-              <select class="custom-select rounded-0" required name="emision">
+              <select class="custom-select rounded-0" id="categoria" (click)="validoS('categoria')" id="categoria">
                 <option value="frescos" selected>
                   Frescos
                 </option>
@@ -78,30 +86,28 @@
             <label for="exampleInputpwd2">Registrar Imagen</label>
             <div class="input-group">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile04" style="display:none">
-                <label class="custom-file-label" for="inputGroupFile04">buscar imagen</label>
+                <input type="file" class="custom-file-input" id="imagen" style="display:none"
+                  (change)="seleccionImagen($event)" #photoInput>
+                <label class="custom-file-label longdesc" for="imagen">
+                  {{ruta}}
+                </label>
               </div>
             </div>
           </div>
         </div>
 
-
-
-
-
-
         <div class="form-group">
-          <label for="nombreConvocatoria" class="col-form-label">
+          <label for="descripcion" class="col-form-label">
             Descripcion del producto:
           </label>
-          <textarea class="form-control" id="tituloConvocatoria" rows="3"
+          <textarea class="form-control" id="descripcion" rows="3"
             style="min-height: 100px; max-height: 150px;"></textarea>
         </div>
 
         <div class="form-group">
           <div class="d-flex justify-content-between align-items-end">
             <label for="requisitos">Productos A Registrar</label>
-            <button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#aniadirCompra">
+            <button class="btn btn-outline-info" type="button" (click)="enlistar()">
               <i class="fa fa-plus"></i>
               <i class="fa fa-shopping-cart"></i>
               Añadir A Registro
@@ -115,13 +121,13 @@
                     Nombre
                   </th>
                   <th class="text-center" scope="col">
-                    Taminio
-                  </th>
-                  <th class="text-center" scope="col">
                     Precio
                   </th>
                   <th class="text-center" scope="col">
                     Fecha de vencimiento
+                  </th>
+                  <th class="text-center" scope="col">
+                    Cantidad
                   </th>
                   <th class="text-center" scope="col">
                     Categoria
@@ -132,18 +138,20 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr *ngFor="let productos of listaProducto; index as i">
-                                    <td>{{productos.getCantidad()}} </td>
-                                    <td>{{productos.getColor()}}</td>
-                                    <td>{{productos.getPrecio()}}bs </td>
-                                    <td class="text-center">
-                                        <div class="btn btn-group" role="group">
-                                            <button class="btn btn-outline-danger" type="button" title="borrar producto del carrito" (click)="eliminarProducto(productos)">
-                        <i class="fa fa-trash-alt"></i>
+                <tr *ngFor="let productos of listaProducto; index as i">
+                  
+                  <td>{{productos.getNombre()}}</td>
+                  <td>{{productos.getPrecio()}}bs</td>
+                  <td>{{productos.getFecha()}}</td>
+                  <td>{{productos.getCantidad()}}</td>
+                  <td>{{productos.getTipo()}}</td>
+                  <td class="text-center">
+                    <div class="btn btn-group" role="group">
+                      <button class="btn btn-outline-danger" type="button" title="borrar producto del carrito">
                       </button>
-                                        </div>
-                                    </td>
-                                </tr> -->
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -170,7 +178,7 @@
           <button type="button" class="btn btn-secondary">
             Cancelar Registro
           </button>
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" (click)="registrarProducto()" >
             Registar Productos
             <i class="fa fa-money-bill"></i>
           </button>
