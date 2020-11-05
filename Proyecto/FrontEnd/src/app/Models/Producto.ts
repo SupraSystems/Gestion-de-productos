@@ -10,6 +10,7 @@ export class Producto {
     imagePath: string;
     fechavencimiento:string;
     file:File;
+
     constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
 
         this.descripcion=descripcion;
@@ -50,5 +51,8 @@ export class Producto {
     }
     public getNombre(): string{
         return this.nombre;
+    }
+    public getFile(): File{
+        return this.file;
     }
 }

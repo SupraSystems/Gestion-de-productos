@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RegistroDescuentosComponent } from '../registro-descuentos/registro-descuentos.component';
 import { Producto } from '../../Models/Producto';
 
+import { ServicesService } from "../../services/services.service";
+
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 
@@ -14,13 +16,14 @@ declare var $: any;
   styleUrls: ['./registro-productos.component.css']
 })
 export class RegistroProductosComponent implements OnInit {
+  
   min: Date;
   ruta = "";
   producto: Producto = new Producto("","",0,0,"","","","");
   file: File;
   listaProducto:Producto[]=[]
   valido1=false;
-  constructor() {
+  constructor(public productsService: ServicesService) {
     const dia = new Date().getDate();
     const mes = new Date().getMonth();
     const anio = new Date().getFullYear();
@@ -95,6 +98,12 @@ export class RegistroProductosComponent implements OnInit {
 
   }
 
-  registrarProducto(){
+  registrarProducto(): Boolean{
+      for(let i=0 ; i< this.listaProducto.length ; i++){
+        this.productsService.addProduct(this.listaProducto[i].getFile())
+        
+          
+      }
+    return false;
   }
 }
