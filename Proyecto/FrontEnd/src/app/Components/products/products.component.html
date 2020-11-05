@@ -5,15 +5,15 @@
         <div class="m-auto w-80">
             <div class="container text-center  bg-light">
                 <div class="row p-4">
-                    <ng-container *ngFor="let producto of listaDeProductos">
+                    <ng-container *ngFor="let producto of productsService.listaproductos">
                         <div class="col-sm-6 col-lg-3">
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
                                 <div class="card-body text-center  uk-transition-toggle" tabindex="0">
                                     <h5 class="card-title text-primary text"><strong>{{producto.getTipo()}}</strong> </h5>
-                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getFoto()}}" width="300" height="200" alt="">
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalles" (click)="setProducto(producto)"><strong>Detalles </strong></button>
+                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalles" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
                                     <button class="col-6" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCompraP" (click)="redireccion(producto)">
                     <strong>Productos </strong>
                   </button>
@@ -30,15 +30,15 @@
         <div class="m-auto w-80">
             <div class="container text-center  bg-light">
                 <div class="row p-4">
-                    <ng-container *ngFor="let producto of listaDeProductos">
+                    <ng-container *ngFor="let producto of productsService.listaproductos">
                         <div class="col-sm-6 col-lg-3">
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
                                 <div class="card-body text-center  uk-transition-toggle" tabindex="0">
-                                    <h5 class="card-title text-primary text"><strong>{{producto.getNombre()}}</strong> &nbsp;&nbsp;{{producto.getPrecio()}} .bs </h5>
-                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getFoto()}}" width="300" height="200" alt="">
+                                    <h5 class="card-title text-primary text"><strong>{{producto.nombre}}</strong> &nbsp;&nbsp;{{producto.precio}} .bs </h5>
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setProducto(producto)"><strong>Detalles </strong></button>
+                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
                   <button class="btn btn-outline-primary col-6" type="button" data-toggle="modal" data-target="#modalCompraP" (click)="redireccion(producto)">
                     <i class="fa fa-plus"></i>  <i
                     class="fa fa-shopping-cart"></i>
@@ -55,7 +55,7 @@
 </div>
 
 
-<!-- Modal detalle de categoria de producto-->
+<!--Modal detalle de categoria de producto-->
 <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -67,11 +67,11 @@
         </button>
             </div>
             <div class="modal-body">
-                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]="producto.getFoto()" alt="">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
                 <br><br>
                 <strong>Descripcion de los productos:</strong>
                 <p >
-                    {{producto.getDescripcion()}}
+                {{producto.getDescripcion()}}
                 </p>
             </div>
             <div class="modal-footer">
@@ -80,7 +80,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal detalle de producto-->
 <div class="modal fade" id="modalDetallesProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -93,7 +92,7 @@
         </button>
             </div>
             <div class="modal-body">
-                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]="producto.getFoto()" alt="">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
                 <br>
                 <ng-container *ngIf="!productosEnGneral()">
                     <strong>Datos</strong>
@@ -106,7 +105,7 @@
                 </ng-container>
                 <strong>Descripcion</strong>
                 <p >
-                    {{producto.getDescripcion()}}
+                   {{producto.getDescripcion()}}
                 </p>
             </div>
             <div class="modal-footer">

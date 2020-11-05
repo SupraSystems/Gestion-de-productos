@@ -1,19 +1,31 @@
 export class Producto {
-    nombre:string;
+   
     descripcion:string;
-    tamanio:number;
+    nombre:string;
+    tipo:string;
+    precio:number;
     cantidad:number;
     foto:string;
-    precio:number;
-    tipo:string;
-    constructor(nombre:string,cantidad:number,descripcion:string,foto:string,precio:number,tamanio:number,tipo:string){
-        this.nombre=nombre;
-        this.cantidad=cantidad;
+    _id:string;
+    imagePath: string;
+    fechavencimiento:string;
+    file:File;
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
+
         this.descripcion=descripcion;
-        this.precio=precio;
-        this.tamanio=tamanio;
-        this.foto=foto;
         this.tipo=tipo;
+        this.precio=precio;
+        this.cantidad=cantidad;
+        this.foto=foto;
+        this._id=_id;
+        this.foto=foto;
+        this.imagePath=imagePath;
+        this.nombre=nombre;
+        this.fechavencimiento=fecha;
+        this.file=file;
+    }
+    public getFecha(){
+        return this.fechavencimiento;
     }
     public getPrecio(): number {
         return this.precio;
@@ -21,16 +33,22 @@ export class Producto {
     public getCantidad(): number {
         return this.cantidad;
     }
-    public getFoto(): string {
-        return this.foto;
-    }
-    public getNombre(): string {
-        return this.nombre;
+    public getImagePath(): string {
+        return this.imagePath;
     }
     public getDescripcion(): string {
         return this.descripcion;
     }
     public getTipo(): string {
         return this.tipo;
+    }
+    public getId(): string {
+        return this._id;
+    }
+    public getFoto(): string {
+        return this.foto;
+    }
+    public getNombre(): string{
+        return this.nombre;
     }
 }

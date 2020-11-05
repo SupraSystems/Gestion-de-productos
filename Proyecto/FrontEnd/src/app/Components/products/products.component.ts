@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
+import { ServicesService } from "../../services/services.service";
 
 @Component({
   selector: 'app-products',
@@ -9,10 +10,13 @@ import { Router } from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
   listaDeProductos: Producto[] = [];
-  producto: Producto;// = new Producto(1, "amarillo", "holaholaholahola", "../../../assets/images/tipos-de-pinturas/anticorrosiva-OHM-241x187.jpg", "anticorr", 11, "anticoo");
-  tipoProducto = "";
+  producto: Producto = new Producto("","",0,0,"","","","");
   titulo = "";
-  constructor(private router: Router) {
+  ruta = "";
+  descripcion ="";
+  tipoProducto="";
+  
+  constructor(private router: Router,public productsService: ServicesService) {
   }
 
   ngOnInit(): void {
@@ -22,16 +26,55 @@ export class ProductsComponent implements OnInit {
     //
     this.todosLosProductos()
   }
+
+  getProductos(){
+    this.productsService.getProducts().subscribe(
+      res => {
+        this.productsService.listaproductos = res;
+        //this.listaDeProductos=this.productsService.listaproductos;
+      console.log(res)
+      },
+      err => console.log(err)
+    )
+
+  }
+  setActualizarProducto(producto: Producto){
+    let path = producto.imagePath;
+    this.descripcion = producto.descripcion
+    this.ruta = "http://localhost:4000/uploads/"+path.substring(8); 
+    this.producto = new Producto(this.descripcion,producto.tipo,producto.precio,producto.cantidad,producto.foto, producto._id,path,producto.nombre);
+    console.log(this.ruta);
+    console.log(this.producto);
+    console.log(this.descripcion);
+  }
+
+
+
+
+
+
+
+  
   cargarLista() {
     console.log(this.tipoProducto, "-----------")
     if (this.tipoProducto == "todos_los_productos") {
       this.todosLosProductos();
     } else {
+      if (this.tipoProducto == "alimentos") {
+        this.getAlimentos();
+      } else {
+  
+      }
     }
   }
 
+  getAlimentos(){
+    this.getProductos();
+    console.log("producto tipo alimentos")
+  }
+
   todosLosProductos() {
-    this.producto = new Producto("frescos",1,"producto comestible a base de resinas alquídicas, solventes, óxido de hierro de alta calidad e inhibidores de corrosión libres de plomo. USOS:   Hierro y Acero Protección de estructuras metálicas, rejas de hierro, ventanas, puertas, cañerías, maquinaria, etc.,", "https://static.ulabox.com/media/112534_m1.jpg",45,12,"frescos");
+    /*this.producto = new Producto("frescos",1,"producto comestible a base de resinas alquídicas, solventes, óxido de hierro de alta calidad e inhibidores de corrosión libres de plomo. USOS:   Hierro y Acero Protección de estructuras metálicas, rejas de hierro, ventanas, puertas, cañerías, maquinaria, etc.,", "https://static.ulabox.com/media/112534_m1.jpg",45,12,"frescos");
     this.listaDeProductos.push(this.producto);
     this.producto = new Producto("frescos",1,"NITROLAC ACABADO NITROCELULÓSICO TIPO DUCO PARA EL REPINTADO DE AUTOS C-20 DESCRIPCIÓN Pintura, a base de nitrocelulosa y resinas sintéticas plastificantes, de secado rápido y fácil pulido. USOS:   Retoques y repintado general de automóviles, vehículos de trabajo pesado, refrigeradores, muebles metálicos, etc.", "https://static.ulabox.com/media/112537_m1.jpg", 87,90,"comida");
     this.listaDeProductos.push(this.producto);
@@ -42,7 +85,7 @@ export class ProductsComponent implements OnInit {
     this.producto = new Producto("frescos",1,"producto comestible a base de resinas alquídicas, solventes, óxido de hierro de alta calidad e inhibidores de corrosión libres de plomo. USOS:   Hierro y Acero Protección de estructuras metálicas, rejas de hierro, ventanas, puertas, cañerías, maquinaria, etc.,", "https://static.ulabox.com/media/112534_m1.jpg",45,12,"frescos");
     this.listaDeProductos.push(this.producto);
     this.producto = new Producto("frescos",1,"NITROLAC ACABADO NITROCELULÓSICO TIPO DUCO PARA EL REPINTADO DE AUTOS C-20 DESCRIPCIÓN Pintura, a base de nitrocelulosa y resinas sintéticas plastificantes, de secado rápido y fácil pulido. USOS:   Retoques y repintado general de automóviles, vehículos de trabajo pesado, refrigeradores, muebles metálicos, etc.", "https://static.ulabox.com/media/112537_m1.jpg", 87,90,"comida");
-    this.listaDeProductos.push(this.producto);
+    this.listaDeProductos.push(this.producto);*/
   }
 
   redireccion(producto: Producto) {
