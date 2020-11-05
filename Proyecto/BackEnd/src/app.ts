@@ -22,4 +22,4 @@ app.use('/api', indexRoutes);
 
 app.use('/uploads', express.static(path.resolve('uploads')));
 
-export default app;
+export default app; 

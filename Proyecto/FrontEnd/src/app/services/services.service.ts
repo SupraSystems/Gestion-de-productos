@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../Models/Producto";
+import { DepFlags } from '@angular/compiler/src/core';
 
 //import { Photo } from '../Components/interfaces/Photo'
 @Injectable({
@@ -10,6 +11,7 @@ export class ServicesService {
   URL_API = "http://localhost:4000/api/producto"
 
   listaproductos : Producto[];
+  productoReg : Producto = new Producto("","",0,0,"","","","");
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +25,28 @@ export class ServicesService {
 
   getProducts(){
     return this.http.get<Producto[]>(this.URL_API)
+  }
+  getProductsCategoria(categoria:string){
+    let url="http://localhost:4000/api/categoria/"
+    return this.http.get<Producto[]>(url+categoria);
+  }
+
+  addProduct(producto:Producto ){
+    const fd = new FormData();
+    fd.append('nombre', producto.getNombre());
+    fd.append("descripcion", producto.getDescripcion());
+    fd.append("tipo", producto.getTipo());
+    fd.append("precio", producto.getPrecio()+"");
+    fd.append("cantidad", producto.getCantidad()+"");
+    fd.append("fechavencimiento", producto.getFecha());
+    fd.append("coddescuento", "");
+    fd.append("imagen", producto.getFile());
+    //console.log(producto);
+    console.log(fd);
+
+
+    return this.http.post(this.URL_API,fd);
+
   }
 
   /*getPhotos(id: string){

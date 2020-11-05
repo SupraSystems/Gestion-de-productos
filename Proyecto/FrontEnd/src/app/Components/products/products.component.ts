@@ -20,11 +20,28 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productsService.listaproductos=[];
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
-    this.cargarLista();
+    if(this.tipoProducto=="para_farmacia"){
+      this.getCategoria("parafarmacia");
+    }else{
+      if(this.tipoProducto=="bebidas"){
+        this.getCategoria("bebidas");
+      } 
+    }
+    //this.cargarLista();
     //
-    this.todosLosProductos()
+    //this.todosLosProductos()
+  }
+  getCategoria(categoria:string){
+    this.productsService.getProductsCategoria(categoria).subscribe(
+      res => {
+        this.productsService.listaproductos = res;
+      console.log(res)
+      },
+      err => console.log(err)
+    )
   }
 
   getProductos(){
@@ -36,7 +53,6 @@ export class ProductsComponent implements OnInit {
       },
       err => console.log(err)
     )
-
   }
   setActualizarProducto(producto: Producto){
     let path = producto.imagePath;

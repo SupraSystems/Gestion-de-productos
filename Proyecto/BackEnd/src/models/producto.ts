@@ -3,7 +3,7 @@ import { Schema, model, Document} from 'mongoose';
 
 
 const schema = new Schema({
-    _id:String,
+    //_id:String,
     nombre:String,
     descripcion: String,
     tipo:String,
@@ -15,7 +15,7 @@ const schema = new Schema({
 });
 
 interface IProducto extends Document {
-    _id:string;
+    //_id:string;
     nombre:string,
     descripcion: string,
     tipo:string,

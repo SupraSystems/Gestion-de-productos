@@ -10,7 +10,7 @@
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Nombre del producto</label>
             <div class="input-group">
-              <input class="form-control bg-white" id="nombre" placeholder="nombre" (click)="valido('nombre')">
+              <input class="form-control bg-white" id="nombre" placeholder="minimo 3 caracteres" autocomplete="off">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
@@ -24,8 +24,7 @@
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Precio del producto: Bs</label>
             <div class="input-group">
-              <input class="form-control bg-white" type="number" id="precio" placeholder="precio"
-                (click)="valido('precio')">
+              <input class="form-control bg-white" type="number" id="precio" placeholder="maximo 4 digitos" autocomplete="off">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
@@ -51,14 +50,14 @@
           <div class="form-group col-md-6">
             <label for="exampleInputpwd2">Cantidad:</label>
             <div class="input-group">
-              <input class="form-control bg-white" type="number" id="cantidad" placeholder="cantidad"
-                formControlName="precio" (click)="valido('cantidad')">
+              <input class="form-control bg-white" type="number" id="cantidad" placeholder="maximo 2 digitos"
+                autocomplete="off">
               <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
                 <i class="fa fa-sort-numeric-down-alt"></i></span>
             </div>
-            <small class="inline-block text-danger" id="precio1" style="display: none;">
+            <small class="inline-block text-danger" id="cantidad1" style="display: none;">
               datos invalidos
               <small class="fal fa-exclamation-triangle"></small>
             </small>
@@ -101,7 +100,11 @@
             Descripcion del producto:
           </label>
           <textarea class="form-control" id="descripcion" rows="3"
-            style="min-height: 100px; max-height: 150px;"></textarea>
+            style="min-height: 100px; max-height: 150px;" placeholder="minimo 15 caracteres"></textarea>
+          <small class="inline-block text-danger" id="descripcion1" style="display: none;">
+            datos invalidos
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
         </div>
 
         <div class="form-group">
@@ -109,8 +112,8 @@
             <label for="requisitos">Productos A Registrar</label>
             <button class="btn btn-outline-info" type="button" (click)="enlistar()">
               <i class="fa fa-plus"></i>
-              <i class="fa fa-shopping-cart"></i>
-              Añadir A Registro
+              <!--<i class="fa fa-shopping-cart"></i>-->
+              Añadir A Lista
             </button>
           </div>
           <div class="table-responsive mt-3">
@@ -139,7 +142,6 @@
               </thead>
               <tbody>
                 <tr *ngFor="let productos of listaProducto; index as i">
-                  
                   <td>{{productos.getNombre()}}</td>
                   <td>{{productos.getPrecio()}}bs</td>
                   <td>{{productos.getFecha()}}</td>
@@ -147,8 +149,16 @@
                   <td>{{productos.getTipo()}}</td>
                   <td class="text-center">
                     <div class="btn btn-group" role="group">
-                      <button class="btn btn-outline-danger" type="button" title="borrar producto del carrito">
+                      <button class="btn btn-outline-primary mx-1" type="button" title="borrar producto de la lista">
+                        <i class="fa fa-eye"></i>
                       </button>
+                      <button class="btn btn-outline-warning" type="button" title="borrar producto de la lista">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger mx-1" type="button" title="borrar producto de la lista">
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                      
                     </div>
                   </td>
                 </tr>
@@ -157,7 +167,7 @@
           </div>
         </div>
         <!-- <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">s
                         <label for="exampleInputpwd2">Cantidad Total De Productos</label>
                         <div class="input-group">
                             <input class="form-control bg-white" formControlName='precio' readonly value="{{cantidadTotal}}">
@@ -175,11 +185,11 @@
                     </div>
                 </div> -->
         <div class="card-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary">
-            Cancelar Registro
+          <button type="button" class="btn btn-secondary" (click)="limpiarRegistros()">
+            Limpiar Formulario
           </button>
-          <button type="button" class="btn btn-primary" (click)="registrarProducto()" >
-            Registar Productos
+          <button type="button" class="btn btn-primary" (click)="registrarProducto()">
+            Registar Productos Listados
             <i class="fa fa-money-bill"></i>
           </button>
         </div>
