@@ -87,3 +87,8 @@ export async function getFoto(req: Request, res: Response): Promise<Response> {
     const foto= detalle!.imagePath;
     return res.send('<img src=http://localhost:4000/'+foto+'>');
 }
+export async function getCategoria(req: Request, res: Response): Promise<Response> {
+    const { tipo } = req.params;
+    const productos = await Producto.find({tipo:tipo});
+    return res.json(productos);
+}
