@@ -26,7 +26,7 @@ export class RegistroProductosComponent implements OnInit {
   listaProducto: Producto[] = []
   valido1 = false;
 
-  mensaje="";
+  mensaje = "";
   constructor(public productsService: ServicesService) {
     const dia = new Date().getDate();
     const mes = new Date().getMonth();
@@ -35,41 +35,30 @@ export class RegistroProductosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.valido('nombre');
-   this.valido('precio');
-   this.valido('cantidad');
-   this.valido('descripcion');
+    this.valido('nombre');
+    this.valido('precio');
+    this.valido('cantidad');
+    this.valido('descripcion');
   }
 
   enlistar() {
-    if(this.camposValidos()){
-      console.log("uno----------------")
-    let nombre = $("#nombre").val();
-    let precio = $("#precio").val();
-    let fecha = new Date()// $("#pickerm3").val()
-    let dia = fecha.getDay();
-    let mes = fecha.getMonth();
-    let anio = fecha.getFullYear();
-    let fechaV = dia + "/" + mes + "/" + anio;
-    let cantidad = $("#cantidad").val();
-    let categoria = $("#categoria").val().toLowerCase().replace(' ', '');
-    let imagen = $("#imagen").val();
-    let descripcion = $("#descripcion").val();
-    console.log(nombre, "----", precio, "----", fecha, "----", cantidad, "----", categoria, "----", imagen, "----", descripcion);
+    if (this.camposValidos()) {
+      let nombre = $("#nombre").val();
+      let precio = $("#precio").val();
+      let fechaV = $('#fechaV').val();
 
-    this.producto = new Producto(descripcion, categoria, precio, cantidad, "", "", "", nombre, fechaV, this.file);
-    this.listaProducto.push(this.producto);
-    }else{
-      console.log("dos----------------")
-    this.toastError();
+      console.log(fechaV, "------------------")
+      let fecha = new Date()
+      let cantidad = $("#cantidad").val();
+      let categoria = $("#categoria").val().toLowerCase().replace(' ', '');
+      let imagen = $("#imagen").val();
+      let descripcion = $("#descripcion").val();
+
+      this.producto = new Producto(descripcion, categoria, precio, cantidad, "", "", "", nombre, fechaV, this.file);
+      this.listaProducto.push(this.producto);
+    } else {
+      this.toastError();
     }
-  }
-
-  guardarRuta() {
-    $('input[type=file]').change(function () {
-      console.log(this.files[0].mozFullPath);
-      this.ruta = $("#imagen").val().split(" ")[0];
-    });
   }
 
   seleccionImagen(event: HtmlInputEvent): void {
@@ -77,7 +66,6 @@ export class RegistroProductosComponent implements OnInit {
       this.file = <File>event.target.files[0];
       this.ruta = this.file.name;
       console.log(this.file, "--------")
-
       $("#imagen").removeClass("is-invalid");
       $("#imagen").addClass("is-valid");
     }
@@ -98,12 +86,12 @@ export class RegistroProductosComponent implements OnInit {
           tamanio = 2;
           break;
         case 'descripcion':
-           tamanio = 15;
-           break;
+          tamanio = 15;
+          break;
         default:
           console.log("no se pudo validar");
       }
-      if (id == "descripcion"||id=="nombre") {
+      if (id == "descripcion" || id == "nombre") {
         if (value.length < tamanio) {
           $("#" + id).removeClass("is-valid");
           $("#" + id).addClass("is-invalid");
@@ -115,7 +103,6 @@ export class RegistroProductosComponent implements OnInit {
             $("#" + id + "1").css('display', 'none');
           }
         }
-        console.log("errrror")
       } else {
         if (value.length > tamanio || value.length == 0) {
           $("#" + id).removeClass("is-valid");
@@ -131,41 +118,47 @@ export class RegistroProductosComponent implements OnInit {
       }
     }, true);
   }
+  camposValidos(): Boolean {
+    let res = true;
+    let nombre = $("#nombre").val();
+    let precio = $("#precio").val();
+    let fechaV = $('#fechaV').val();
+    let cantidad = $("#cantidad").val();
+    let imagen = $("#imagen").val();
+    let descripcion = $("#descripcion").val();
 
-
-
-  camposValidos():Boolean{
-   let res=true;
-   let nombre = $("#nombre").val();
-   let precio = $("#precio").val();
-   let fecha = $("#nombre").val();
-   let cantidad = $("#precio").val();
-   let imagen = $("#precio").val();
-   let descripcion = $("#precio").val();
-
-    if(nombre.length==0||nombre.length <3){
+    if (nombre.length == 0 || nombre.length < 3) {
       $("#nombre").addClass("is-invalid");
-      $("#nombre1").css('display', 'none');
-      this.mensaje+='debe llenar el campo de nombre <br>'
+      $("#nombre1").css('display', 'block');
+      this.mensaje += 'debe llenar el campo de nombre <br>'
 
-      res=false;
-    }if(precio.length==0||precio.length <3){
-        $("#precio").addClass("is-invalid");
-        $("#precio1").css('display', 'none');
-        this.mensaje+='debe llenar el campo de precio <br>'
-        res=false;
-      }if(cantidad.length==0||nombre.length <3){
-          $("#cantidad").addClass("is-invalid");
-          $("#cantidad1").css('display', 'none');
-          this.mensaje+='debe llenar el campo de cantidad <br>'
-          res=false;
-        }if(descripcion.length==0||nombre.length <3){
-            $("#descripcion").addClass("is-invalid");
-            $("#descripcion1").css('display', 'none');
-            this.mensaje+='debe llenar el campo de descripcion<br>'
-            res=false;  
+      res = false;
+    } if (precio.length == 0 || precio.length > 4) {
+      $("#precio").addClass("is-invalid");
+      $("#precio1").css('display', 'block');
+      this.mensaje += 'debe llenar el campo de precio <br>'
+      res = false;
+    } if (cantidad.length == 0 || cantidad.length > 2) {
+      $("#cantidad").addClass("is-invalid");
+      $("#cantidad1").css('display', 'block');
+      this.mensaje += 'debe llenar el campo de cantidad <br>'
+      res = false;
+    } if (descripcion.length == 0 || descripcion.length < 15) {
+      $("#descripcion").addClass("is-invalid");
+      $("#descripcion1").css('display', 'block');
+      this.mensaje += 'debe llenar el campo de descripcion<br>'
+      res = false;
+    } if (fechaV == "") {
+      $("#fechaV").addClass("is-invalid");
+      $("#fechaV1").css('display', 'block');
+      this.mensaje += 'debe llenar el campo de fecha de vencimiento<br>'
+      res = false;
+    }else{
+        $("#fechaV").addClass("is-valid");
+        $("#fechaV").removeClass("is-invalid");
+        $("#fechaV1").css('display', 'none');
     }
-   return res;
+    return res;
   }
 
   toastError(): void {
@@ -173,7 +166,7 @@ export class RegistroProductosComponent implements OnInit {
       duration: 6000,
       animate: 'slide'
     });
-    this.mensaje=""
+    this.mensaje = ""
   }
 
 
@@ -196,8 +189,8 @@ export class RegistroProductosComponent implements OnInit {
     return false;
   }
 
-  limpiarRegistros(){
-    let res= $("#descripcion").val();
-    console.log(res,"________________________________")
+  limpiarRegistros() {
+    let res = $("#descripcion").val();
+    console.log(res, "________________________________")
   }
 }
