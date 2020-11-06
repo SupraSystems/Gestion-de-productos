@@ -50,7 +50,7 @@ export class RegistroProductosComponent implements OnInit {
       console.log(fechaV, "------------------")
       let fecha = new Date()
       let cantidad = $("#cantidad").val();
-      let categoria = $("#categoria").val().toLowerCase().replace(' ', '');
+      let categoria = $("#categoria").val();
       let imagen = $("#imagen").val();
       let descripcion = $("#descripcion").val();
 

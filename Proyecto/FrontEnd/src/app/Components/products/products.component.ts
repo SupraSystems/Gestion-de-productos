@@ -24,28 +24,28 @@ export class ProductsComponent implements OnInit {
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
     if (this.tipoProducto == "para_farmacia") {
-      this.getCategoria("parafarmacia");
+      this.getCategoria("Para Farmacia");
     } else {
       if (this.tipoProducto == "bebidas") {
-        this.getCategoria("bebidas");
+        this.getCategoria("Bebidas");
       } else {
         if (this.tipoProducto == "bebe") {
-          this.getCategoria("bebe");
+          this.getCategoria("Bebe");
         }else {
             if (this.tipoProducto == "mascotas") {
-              this.getCategoria("mascotas");
+              this.getCategoria("Mascotas");
             } else {
               if (this.tipoProducto == "higiene_y_belleza") {
-                this.getCategoria("higieneybelleza");
+                this.getCategoria("Higiene y Belleza");
               } else {
                 if (this.tipoProducto == "basicos_del_hogar") {
-                  this.getCategoria("basicosdelhogar");
+                  this.getCategoria("Basicos del hogar");
                 } else {
                   if (this.tipoProducto == "frescos") {
-                    this.getCategoria("frescos");
+                    this.getCategoria("Frescos");
                   } else {
                     if (this.tipoProducto == "alimentos") {
-                      this.getCategoria("alimentacion");
+                      this.getCategoria("Alimentos");
                     }
                 }
               }
@@ -82,7 +82,7 @@ export class ProductsComponent implements OnInit {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
     this.ruta = "http://localhost:4000/uploads/" + path.substring(8);
-    this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre);
+    this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre,producto.fechavencimiento);
     console.log(this.ruta);
     console.log(this.producto);
     console.log(this.descripcion);

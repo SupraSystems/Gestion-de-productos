@@ -95,15 +95,15 @@
                 <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
                 <br>
                 <ng-container *ngIf="!productosEnGneral()">
-                    <strong>Datos</strong>
+                    <strong>Datos:</strong>
                     <ul>
-                        <li>tipo de producto: {{producto.getTipo()}}bs.</li>
-                        <li>precio: {{producto.getPrecio()}}bs.</li>
-                        <li>cantidad: {{producto.getCantidad()}}bs.</li>
-                        <li>fecha de vencimineto: 2//12/20</li>
+                        <li>Categoria de producto: {{producto.getTipo()}}</li>
+                        <li>Precio: {{producto.getPrecio()}} bs.</li>
+                        <li>Cantidad: {{producto.getCantidad()}}</li>
+                        <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
                     </ul>
                 </ng-container>
-                <strong>Descripcion</strong>
+                <strong>Descripcion:</strong>
                 <p >
                    {{producto.getDescripcion()}}
                 </p>
