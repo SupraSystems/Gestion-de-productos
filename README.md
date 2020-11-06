@@ -29,7 +29,7 @@ Cambiar a la terminal 1 desde el combobox que muestra el visual studio abajo a l
 
 Posicionarse en la carpeta del front end con el siguiente comando
 
-    cd .\SupraSystems\FrontEnd\
+    cd .\SupraSystems\FrontEndv2\
     
 luego instalar las dependecias con 
 
