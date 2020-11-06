@@ -1,0 +1,124 @@
+<div class="container">
+        <h2 class=" container text-dark text-center pt-5">{{titulo | uppercase}}</h2>
+      <br><br> <br>
+    <ng-container *ngIf="productosEnGneral()">
+        <div class="m-auto w-80">
+            <div class="container text-center  bg-light">
+                <div class="row p-4">
+                    <ng-container *ngFor="let producto of productsService.listaproductos">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
+                                <div class="card-body text-center  uk-transition-toggle" tabindex="0">
+                                    <h5 class="card-title text-primary text"><strong>{{producto.getTipo()}}</strong> </h5>
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalles" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
+                                    <button class="col-6" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCompraP" (click)="redireccion(producto)">
+                    <strong>Productos </strong>
+                  </button>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!productosEnGneral()">
+        <div class="m-auto w-80">
+            <div class="container text-center  bg-light">
+                <div class="row p-4">
+                    <ng-container *ngFor="let producto of productsService.listaproductos">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
+                                <div class="card-body text-center  uk-transition-toggle" tabindex="0">
+                                    <h5 class="card-title text-primary text"><strong>{{producto.nombre}}</strong> &nbsp;&nbsp;{{producto.precio}} .bs </h5>
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
+                  <button class="btn btn-outline-primary col-6" type="button" data-toggle="modal" data-target="#modalCompraP" (click)="redireccion(producto)">
+                    <i class="fa fa-plus"></i>  <i
+                    class="fa fa-shopping-cart"></i>
+                  </button>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+
+<!--Modal detalle de categoria de producto-->
+<div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 *ngIf="!productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}&nbsp;&nbsp;{{producto.getPrecio()}}bs.</h5>
+                <h5 *ngIf="productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getTipo()}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
+                <br><br>
+                <strong>Descripcion de los productos:</strong>
+                <p >
+                {{producto.getDescripcion()}}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Ver Productos</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal detalle de producto-->
+<div class="modal fade" id="modalDetallesProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 *ngIf="!productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
+                <h5 *ngIf="productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getTipo()}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
+                <br>
+                <ng-container *ngIf="!productosEnGneral()">
+                    <strong>Datos:</strong>
+                    <ul>
+                        <li>Categoria de producto: {{producto.getTipo()}}</li>
+                        <li>Precio: {{producto.getPrecio()}} bs.</li>
+                        <li>Cantidad: {{producto.getCantidad()}}</li>
+                        <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
+                    </ul>
+                </ng-container>
+                <strong>Descripcion:</strong>
+                <p >
+                   {{producto.getDescripcion()}}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <ng-container *ngIf="!productosEnGneral()">
+                    <button class="btn btn-outline-success" type="button" data-dismiss="modal">
+                        <i class="fa fa-plus"></i>  <i
+                        class="fa fa-shopping-cart"></i> &nbsp; Añadir al carrito
+                      </button>                </ng-container>
+                      <ng-container *ngIf="productosEnGneral()">
+
+                      <button type="button" class="btn btn-success" data-dismiss="modal">Ver Productos</button>
+                      </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
