@@ -1,5 +1,6 @@
 GUIA PARA INSTALACION DEL PROYECTO
 
+PASO 1
 Abrir el Visual Studio Code, crearse una carpeta donde trabajar y arrastrarla al Visual Studio Code
 ya dentro presionar "Ctrl+Shift+ñ" (o crear una nueva terminal desde la barra Terminal en el Visual Studio)
 
@@ -7,33 +8,38 @@ con la terminal creada ingresar el siguiente comando
 
     git clone https://github.com/SupraSystems/SupraSystems.git
 
-posicionarse en la carpeta tras la clonacion
 
-    cd .\SupraSystems\
+PASO 2
 
-y pullear la rama necesaria
+Despues de clonar abrir una segunda terminal con (Ctrl+Shift+ñ) la terminal se creara abajo a la derecha, y ejecutar el siguiente comando para posicionarse en el Backend
 
-    git pull origin creacionMenu
+    cd .\SupraSystems\BackEnd\
 
-posicionarse en el frontend con el sig comando
-
-    cd .\Proyecto\FrontEnd\
-
-y ejecutar el sig comando (y esperar a que descargue las dependencias)
-
+luego instalar las dependecias con 
 
     npm install
 
-    y
+y correr el Backend
 
-    npm install -g @angular/cli@9.1.1
+    npm run dev
 
+PASO 3
+
+Cambiar a la terminal 1 desde el combobox que muestra el visual studio abajo a la derecha
+
+Posicionarse en la carpeta del front end con el siguiente comando
+
+    cd .\SupraSystems\FrontEnd\
+    
+luego instalar las dependecias con 
+
+    npm install
 
 y correr la aplicacion con
 
     ng serve
 
-Abres el navegador e ingresas 
+Abrir el navegador e ingresar para ver el proyecto
 
     http://localhost:4200
 
