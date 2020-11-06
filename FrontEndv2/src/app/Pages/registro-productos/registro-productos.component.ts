@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistroDescuentosComponent } from '../registro-descuentos/registro-descuentos.component';
 import { Producto } from '../../Models/Producto';
-
+import { Validacion } from '../validacion'
 import { ServicesService } from "../../services/services.service";
 declare var tata: any;
+declare var $: any;
+declare var Swal: any;
 
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 
 }
-declare var $: any;
 
 @Component({
   selector: 'app-registro-productos',
@@ -25,8 +26,9 @@ export class RegistroProductosComponent implements OnInit {
   file: File;
   listaProducto: Producto[] = []
   valido1 = false;
-
   mensaje = "";
+  validador: Validacion = new Validacion()
+
   constructor(public productsService: ServicesService) {
     const dia = new Date().getDate();
     const mes = new Date().getMonth();
@@ -35,10 +37,11 @@ export class RegistroProductosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.valido('nombre');
-    this.valido('precio');
-    this.valido('cantidad');
-    this.valido('descripcion');
+    this.valido('nombre', 'text', 30, 3);
+    this.valido('precio', 'number', 4, 1);
+    this.valido('cantidad', 'number', 2, 1);
+    this.valido('descripcion', 'text',100, 15);
+    this.valido('fechaV', '', 0, 0);
   }
 
   enlistar() {
@@ -56,6 +59,8 @@ export class RegistroProductosComponent implements OnInit {
 
       this.producto = new Producto(descripcion, categoria, precio, cantidad, "", "", "", nombre, fechaV, this.file);
       this.listaProducto.push(this.producto);
+      this.limpiarRegistros();
+      this.toastExito();
     } else {
       this.toastError();
     }
@@ -65,132 +70,135 @@ export class RegistroProductosComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files[0];
       this.ruta = this.file.name;
-      console.log(this.file, "--------")
-      $("#imagen").removeClass("is-invalid");
-      $("#imagen").addClass("is-valid");
+      //console.log(this.ruta.split("."),"+++++++++++++++++++++++++++++++++++++++");
+      let temp=this.ruta.split(".")[1].toLocaleLowerCase();
+      //console.log(temp,"^^^^^^^^^^^^^^^^^^^^^^^^^")
+      if(temp=="jpg"||temp=="png"||temp=="jpeg"){
+        $("#imagen").removeClass("is-invalid");
+        $("#imagen").addClass("is-valid");
+        $("#imagen1").css('display', 'none');  
+      }else{
+        $("#imagen").removeClass("is-valid");
+        $("#imagen").addClass("is-invalid");
+        $("#imagen1").css('display', 'block');  
+      }
+      //console.log(this.file, "--------")
+     
     }
   }
-  valido(id) {
-    let form = document.getElementById(id);
-    form.addEventListener("blur", function (event) {
-      let value = (<HTMLInputElement>document.getElementById(id)).value;
-      let tamanio = 1;
-      switch (id) {
-        case 'nombre':
-          tamanio = 3;
-          break;
-        case 'precio':
-          tamanio = 4;
-          break;
-        case 'cantidad':
-          tamanio = 2;
-          break;
-        case 'descripcion':
-          tamanio = 15;
-          break;
-        default:
-          console.log("no se pudo validar");
-      }
-      if (id == "descripcion" || id == "nombre") {
-        if (value.length < tamanio) {
-          $("#" + id).removeClass("is-valid");
-          $("#" + id).addClass("is-invalid");
-          $("#" + id + "1").css('display', 'block');
-        } else {
-          if (value.length >= tamanio) {
-            $("#" + id).removeClass("is-invalid");
-            $("#" + id).addClass("is-valid");
-            $("#" + id + "1").css('display', 'none');
-          }
-        }
-      } else {
-        if (value.length > tamanio || value.length == 0) {
-          $("#" + id).removeClass("is-valid");
-          $("#" + id).addClass("is-invalid");
-          $("#" + id + "1").css('display', 'block');
-        } else {
-          if (value.length <= tamanio && value.length > 0) {
-            $("#" + id).removeClass("is-invalid");
-            $("#" + id).addClass("is-valid");
-            $("#" + id + "1").css('display', 'none');
-          }
-        }
-      }
-    }, true);
+
+  valido(id, tipo, max, min) {
+    switch (tipo) {
+      case 'text':
+        this.validador.validoText(id, max, min);
+        break;
+      case 'number':
+        this.validador.validoNumber(id, max, min);
+        break;
+      default: 11
+        this.validador.validoFecha("fechaV")
+    }
   }
+
   camposValidos(): Boolean {
-    let res = true;
-    let nombre = $("#nombre").val();
-    let precio = $("#precio").val();
-    let fechaV = $('#fechaV').val();
-    let cantidad = $("#cantidad").val();
-    let imagen = $("#imagen").val();
-    let descripcion = $("#descripcion").val();
-
-    if (nombre.length == 0 || nombre.length < 3) {
-      $("#nombre").addClass("is-invalid");
-      $("#nombre1").css('display', 'block');
-      this.mensaje += 'debe llenar el campo de nombre <br>'
-
-      res = false;
-    } if (precio.length == 0 || precio.length > 4) {
-      $("#precio").addClass("is-invalid");
-      $("#precio1").css('display', 'block');
-      this.mensaje += 'debe llenar el campo de precio <br>'
-      res = false;
-    } if (cantidad.length == 0 || cantidad.length > 2) {
-      $("#cantidad").addClass("is-invalid");
-      $("#cantidad1").css('display', 'block');
-      this.mensaje += 'debe llenar el campo de cantidad <br>'
-      res = false;
-    } if (descripcion.length == 0 || descripcion.length < 15) {
-      $("#descripcion").addClass("is-invalid");
-      $("#descripcion1").css('display', 'block');
-      this.mensaje += 'debe llenar el campo de descripcion<br>'
-      res = false;
-    } if (fechaV == "") {
-      $("#fechaV").addClass("is-invalid");
-      $("#fechaV1").css('display', 'block');
-      this.mensaje += 'debe llenar el campo de fecha de vencimiento<br>'
-      res = false;
-    }else{
-        $("#fechaV").addClass("is-valid");
-        $("#fechaV").removeClass("is-invalid");
-        $("#fechaV1").css('display', 'none');
+    let result = false;
+    let res = this.validador.verificacionValidos("cantidad", 'cantidad');
+    let res1 = this.validador.verificacionValidos("precio", 'precio');
+    let res2 = this.validador.verificacionValidos("nombre", 'nombre');
+    let res3 = this.validador.verificacionValidos("descripcion", 'descripcion');
+    let res4 = this.validador.verificacionValidos("fechaV", 'fecha de vencimiento');
+    let res5 = this.validador.verificacionValidos("imagen", 'registro imagen');
+    if (res && res1 && res2 && res3 && res4 && res5) {
+      result = true
     }
-    return res;
+    this.validoS("categoria")
+    return result;
   }
 
   toastError(): void {
-    tata.error('error', this.mensaje, {
-      duration: 6000,
+    tata.error('Error', this.validador.getMensaje(), {
+      duration: 8000,
       animate: 'slide'
     });
-    this.mensaje = ""
+    this.validador.setMensaje();
   }
-
-
+  toastExito(): void {
+    tata.success('Exito', 'Se enlisto la informacion del producto', {
+      duration: 8000,
+      animate: 'slide'
+    });
+  }
 
   validoS(id) {
     $("#" + id).addClass("is-valid");
   }
 
-  eliminarProducto(producto: Producto) {
-
-  }
   setFecha() {
-
+    console.log("ingreso datos a la");
+    $("#fechaV").removeClass("is-invalid");
+    $("#fechaV").addClass("is-valid");
+    $("#fechaV1").css('display', 'none');
   }
 
-  registrarProducto(): Boolean {
+  registrarProducto() {
     for (let i = 0; i < this.listaProducto.length; i++) {
       this.productsService.addProduct(this.listaProducto[i]).subscribe(res => console.log(res), err => console.log(err));
     }
-    return false;
   }
 
   limpiarRegistros() {
-    let res = $("#descripcion").val();
-    console.log(res, "________________________________")
+    this.validador.limpiarRegistros('nombre');
+    this.validador.limpiarRegistros('precio');
+    this.validador.limpiarRegistros('fechaV');
+    this.validador.limpiarRegistros('cantidad');
+    this.validador.limpiarRegistros('descripcion');
+    this.validador.limpiarRegistros('imagen');
+    $("#categoria").removeClass("is-valid").removeClass("is-invalid");
+    this.ruta = "";
+  }
+
+  limpiarFomulario() {
+    this.limpiarRegistros();
+    this.listaProducto = [];
+  }
+
+  borrarElemento(indice: number) {
+    let listaAux: Producto[] = [];
+    for (let i = 0; i < this.listaProducto.length; i++) {
+      if (indice != i) {
+        listaAux.push(this.listaProducto[i]);
+      }
+    }
+    this.listaProducto = listaAux;
+  }
+
+
+  alertRegistrar(): void {
+    if (this.listaProducto.length > 0) {
+      Swal.fire({
+        title: 'Confirmar',
+        text: "Esta Seguro De Registrar Los Produtos Listados?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.registrarProducto();
+          Swal.fire(
+            '!Registro Existoso!',
+            'Sus Productos Fueron Registrados',
+            'success'
+          )
+        }
+      })
+    }else{
+      tata.error('Error', "no tiene productos listados", {
+        duration: 3000,
+        animate: 'slide'
+      });
+    }
   }
 }

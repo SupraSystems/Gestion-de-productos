@@ -27,14 +27,16 @@
         </div>
     </ng-container>
     <ng-container *ngIf="!productosEnGneral()">
-        <div class="m-auto w-80">
+        <div class="m-auto w-80 h-10">
             <div class="container text-center  bg-light">
                 <div class="row p-4">
                     <ng-container *ngFor="let producto of productsService.listaproductos">
                         <div class="col-sm-6 col-lg-3">
-                            <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
-                                <div class="card-body text-center  uk-transition-toggle" tabindex="0">
+                            <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura"  ><!--style="max-width: 25rem; max-height: 20rem;"-->
+                                <div style="height: 4rem;">
                                     <h5 class="card-title text-primary text"><strong>{{producto.nombre}}</strong> &nbsp;&nbsp;{{producto.precio}} .bs </h5>
+                                </div>
+                                <div class="card-body text-center  uk-transition-toggle" tabindex="0">
                                     <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">

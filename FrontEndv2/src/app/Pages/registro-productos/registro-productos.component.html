@@ -40,11 +40,11 @@
           <div class="form-group col-md-6">
             <label class="col-form-label mr-1">Fecha de vencimiento:</label>
             <div class="d-flex justify-content">
-              <input id="fechaV" name="fecha" [min]="min" placeholder="Fecha inicio" [matDatepicker]="pickerm3"
-                class="form-control bg-white" readonly>
-              <!-- [max]="max" (dateInput)="setFecha()" #fechaInicio="ngModel" ngModel [class.is-invalid]="fechaInicio.invalid && fechaInicio.touched" [class.is-valid]="fechaInicio.valid && fechaInicio.touched" -->
+              <input id="fechaV" name="fecha" [min]="min" (dateInput)="setFecha()"  [matDatepicker]="pickerm3" class="form-control bg-white" readonly >
               <mat-datepicker-toggle matSuffix [for]="pickerm3" ></mat-datepicker-toggle>
-              <mat-datepicker #pickerm3 ></mat-datepicker>
+                 <!-- [max]="max" (dateInput)="setFecha()" #fechaInicio="ngModel" ngModel [class.is-invalid]="fechaInicio.invalid && fechaInicio.touched" [class.is-valid]="fechaInicio.valid && fechaInicio.touched" -->
+
+              <mat-datepicker #pickerm3  ></mat-datepicker>
             </div>
             <small class="inline-block text-danger" id="fechaV1" style="display: none;">
               fecha invalida
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-lg-6">
             <label for="inputEmail4">Categoria:</label>
             <div class="input-group-addon">
               <select class="custom-select rounded-0" id="categoria" (click)="validoS('categoria')" id="categoria">
@@ -85,17 +85,21 @@
               </select>
             </div>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-lg-6">
             <label for="exampleInputpwd2">Registrar Imagen</label>
             <div class="input-group">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="imagen" style="display:none"
-                  (change)="seleccionImagen($event)" #photoInput>
+                  (change)="seleccionImagen($event)" #photoInput accept="image/*">
                 <label class="custom-file-label longdesc" for="imagen">
                   {{ruta}}
                 </label>
               </div>
             </div>
+            <small class="inline-block text-danger" id="imagen1" style="display: none;">
+              datos invalidos
+              <small class="fal fa-exclamation-triangle"></small>
+            </small>
           </div>
         </div>
 
@@ -153,16 +157,15 @@
                   <td>{{productos.getTipo()}}</td>
                   <td class="text-center">
                     <div class="btn btn-group" role="group">
-                      <button class="btn btn-outline-primary mx-1" type="button" title="borrar producto de la lista">
+                      <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de la lista">
                         <i class="fa fa-eye"></i>
                       </button>
-                      <button class="btn btn-outline-warning" type="button" title="borrar producto de la lista">
+                      <button class="btn btn-outline-warning" type="button" title="editar producto de la lista">
                         <i class="fa fa-edit"></i>
                       </button>
-                      <button class="btn btn-outline-danger mx-1" type="button" title="borrar producto de la lista">
+                      <button class="btn btn-outline-danger mx-1" type="button" title="borrar producto de la lista" (click)="borrarElemento(i)">
                         <i class="fa fa-trash-alt"></i>
-                      </button>
-                      
+                      </button>                      
                     </div>
                   </td>
                 </tr>
@@ -189,10 +192,10 @@
                     </div>
                 </div> -->
         <div class="card-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary" (click)="limpiarRegistros()">
+          <button type="button" class="btn btn-secondary" (click)="limpiarFomulario()">
             Limpiar Formulario
           </button>
-          <button type="button" class="btn btn-primary" (click)="registrarProducto()">
+          <button type="button" class="btn btn-primary" (click)="alertRegistrar()">
             Registar Productos Listados
             <i class="fa fa-money-bill"></i>
           </button>
