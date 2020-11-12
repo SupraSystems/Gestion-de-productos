@@ -5,6 +5,7 @@ import path from 'path'
 // Models
 import Combo from '../models/combo';
 import Detalle_Combo from '../models/detalle_combo'
+import Descuento from '../models/descuento'
 import Producto from '../models/producto'
 
 export async function getCombos(req: Request, res: Response): Promise<Response> {
@@ -69,3 +70,30 @@ export async function getProductosDeCombo(req: Request, res: Response): Promise<
     const productos = await Detalle_Combo.find({idCombo:combo});
     return res.json(productos);
 };
+
+export async function getDescuentoCombo(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const combo = await Combo.findById(id);
+    const descuento = combo!.coddescuento
+    const desc = await Descuento.findById(descuento)
+    return res.json(desc);
+}
+
+export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Detalle_Combo.find({idProducto:id});
+    return res.json(detalle);
+}
+
+export async function getFoto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Combo.findById(id);
+    const foto= detalle!.imagePath;
+    return res.send('<img src=http://localhost:4000/'+foto+'>');
+}
+
+export async function getCategoria(req: Request, res: Response): Promise<Response> {
+    const { tipo } = req.params;
+    const combos = await Combo.find({tipo:tipo});
+    return res.json(combos);
+}
