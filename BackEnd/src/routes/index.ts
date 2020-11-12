@@ -7,10 +7,6 @@ import { createDescuento, deleteDescuento, getDescuento, getDescuentos, updateDe
 import { createCombo, deleteCombo, getCombo, updateCombo,getCombos } from '../controllers/combo.controller';
 import { createDetalle, deleteDetalle, getDetalle, getDetalles, updateDetalle } from '../controllers/detalle.controller';
 
-// middleware
-// router.use(upload.single('image'));
-
-// routes
 router.route('/producto')
     .get(getProductos)
     .post(upload.single('imagen'), createProducto);
