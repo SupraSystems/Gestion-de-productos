@@ -13,9 +13,8 @@ export async function getProductos(req: Request, res: Response): Promise<Respons
 }
 
 export async function createProducto(req: Request, res: Response): Promise<Response> {
-    const {_id,nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
+    const {nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
     const newPreoducto = {
-        _id:_id,
         nombre:nombre,
         descripcion:descripcion,
         tipo:tipo,
@@ -90,5 +89,10 @@ export async function getFoto(req: Request, res: Response): Promise<Response> {
 export async function getCategoria(req: Request, res: Response): Promise<Response> {
     const { tipo } = req.params;
     const productos = await Producto.find({tipo:tipo});
+    return res.json(productos);
+}
+export async function busquedaProducto(req: Request, res: Response): Promise<Response> {
+    const { nombre } = req.params;
+    const productos = await Producto.find({nombre:nombre});
     return res.json(productos);
 }
