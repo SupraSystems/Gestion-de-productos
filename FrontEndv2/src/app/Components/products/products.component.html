@@ -10,7 +10,7 @@
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
                                 <div class="card-body text-center  uk-transition-toggle" tabindex="0">
                                     <h5 class="card-title text-primary text"><strong>{{producto.getTipo()}}</strong> </h5>
-                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="https://productos-backend.herokuapp.com/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalles" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
@@ -29,15 +29,34 @@
     <ng-container *ngIf="!productosEnGneral()">
         <div class="m-auto w-80 h-10">
             <div class="container text-center  bg-light">
+
+
+                <!---->
+
+                <div class="row d-flex justify-content-between">
+                    <label for="requisitos" class="col-sm-6 ml-5 d-flex align-items-start ">
+                      Ordenamiento De Los Los Productos =>
+                    </label>
+                    <select class="custom-select col-sm  mr-5" (change)="ordenar()" id="orden">
+                      <option value="Desordenado" selected>
+                        Desordenado
+                      </option>
+                      <option value="Alfabeticamente A-Z">Alfabeticamente A-Z</option>
+                      <option value="Alfabeticamente Z-A" >Alfabeticamente Z-A</option>
+                      <option value="Precio Descendente" >Precio Descendente</option>
+                      <option value="Precio Ascendente" >Precio Ascendente</option>
+                    </select>
+                  </div>
+                  <!---->
                 <div class="row p-4">
-                    <ng-container *ngFor="let producto of productsService.listaproductos">
+                    <ng-container *ngFor="let producto of listaTodosPr">
                         <div class="col-sm-6 col-lg-3">
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura"  ><!--style="max-width: 25rem; max-height: 20rem;"-->
                                 <div style="height: 4rem;">
-                                    <h5 class="card-title text-primary text"><strong>{{producto.nombre}}</strong> &nbsp;&nbsp;{{producto.precio}} .bs </h5>
+                                    <h5 class="card-title text-primary text"><strong>{{producto.getNombre()}}</strong> &nbsp;&nbsp;{{producto.getPrecio()}} .bs </h5>
                                 </div>
                                 <div class="card-body text-center  uk-transition-toggle" tabindex="0">
-                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="http://localhost:4000/uploads/{{producto.imagePath.substring(7)}}" width="300" height="200" alt="">
+                                    <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getImagePath()}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
@@ -94,7 +113,7 @@
         </button>
             </div>
             <div class="modal-body">
-                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=ruta alt="">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getImagePath()}}" alt="">
                 <br>
                 <ng-container *ngIf="!productosEnGneral()">
                     <strong>Datos:</strong>

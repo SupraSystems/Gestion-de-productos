@@ -1,1 +1,323 @@
-<p>registro-combos works!</p>
+<div id="title" class="container py-5 text-center" width="100%">
+  <h2 class="container text-dark text-center">REGISTRO DE COMBOS</h2>
+</div>
+<br>
+<div class="container" role="document">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-12">
+          <div class="row d-flex justify-content-between align-items-end">
+            <label for="requisitos" class="col">
+              Seleccionar Productos
+            </label>
+            <select class="custom-select col ml-3 mr-3" (change)="categorizar()" id="categoria">
+              <option value="todos" selected>
+                Todos Los Productos
+              </option>
+              <option value="Frescos">Frescos</option>
+              <option value="Alimentos" >Alimentos</option>
+              <option value="Para Farmacia" >Para Farmacia</option>
+              <option value="Basicos del hogar" >Basicos del hogar</option>
+              <option value="Higiene y Belleza" >Higiene y Belleza</option>
+              <option value="Mascotas" >Mascotas</option>
+              <option value="Bebe" >Bebe</option>
+              <option value="Bebidas" >Bebidas</option>
+            </select>
+          </div>
+
+          <div class="table-responsive mt-3 aux">
+            <table class="table align-middle table-hover table-bordered" id="requerimientos">
+              <thead class="thead-dark" style="background-color: black;">
+                <tr>
+                  <th class="text-center" scope="col">
+                    Nombre
+                  </th>
+                  <th class="text-center" scope="col">
+                    Precio
+                  </th>
+                  <th class="text-center" scope="col">
+                    Fecha de vencimiento
+                  </th>
+                  <th class="text-center" scope="col">
+                    Categoria
+                  </th>
+                  <th class="text-center" scope="col">
+                    Detalles
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let productos of listaProductoRegistrado; index as i" >
+                  <td (click)="aniadirACombo(productos)">{{productos.getNombre()}}</td>
+                  <td (click)="aniadirACombo(productos)">{{productos.getPrecio()}}bs</td>
+                  <td (click)="aniadirACombo(productos)">{{productos.getFecha()}}</td>
+                  <td (click)="aniadirACombo(productos)">{{productos.getTipo()}}</td>
+                  <td class="text-center">
+                    <div class="btn btn-group" role="group">
+                      <button class="btn btn-outline-primary mx-1" type="button"
+                        title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
+                        <i class="fa fa-eye"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group col-12">
+          <div class="d-flex justify-content-between align-items-end">
+            <label for="requisitos">Productos Agregados</label>
+            <button class="btn btn-outline-danger" type="button" (click)="borrarProductosDelCombo()">
+              <i class="fa fa-minus"></i>
+              <!-- <i class="fa fa-shopping-cart"></i> -->
+              Vaciar Productos
+            </button>
+          </div>
+          <div class="table-responsive mt-3 aux">
+            <table class="table align-middle table-hover table-bordered" id="requerimientos">
+              <thead class="thead-dark" style="background-color: black;">
+                <tr>
+                  <th class="text-center" scope="col">
+                    Nombre
+                  </th>
+                  <th class="text-center" scope="col">
+                    Precio
+                  </th>
+                  <th class="text-center" scope="col">
+                    Fecha de vencimiento
+                  </th>
+                  <th class="text-center" scope="col">
+                    Categoria
+                  </th>
+                  <th class="text-center" scope="col">
+                    Detalles
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let productos of listaProductosEnCombo; index as i">
+                  <td>{{productos.getNombre()}}</td>
+                  <td>{{productos.getPrecio()}}bs</td>
+                  <td>{{productos.getFecha()}}</td>
+                  <td>{{productos.getTipo()}}</td>
+                  <td class="text-center">
+                    <div class="btn btn-group" role="group">
+                      <button class="btn btn-outline-primary mx-1" type="button"
+                        title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
+                        <i class="fa fa-eye"></i>
+                      </button>
+                      <button class="btn btn-outline-danger mx-1" type="button" title="borrar producto de la lista"
+                      (click)="borrarProductoDelCombo(i)">
+                      <i class="fa fa-trash-alt"></i>
+                    </button>
+                    </div>
+                  </td>
+                </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <form id="formulario">
+      <div id="datos">
+      <hr style="height: 2px; background-color: rgb(41, 37, 37);">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="exampleInputpwd2">Cantidad Total De Productos</label>
+            <div class="input-group">
+                <input class="form-control bg-white" formControlName='precio' readonly value="{{cantidadTotal}}">
+                <span class="btn disabled" style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+    <i class="fa fa-sort-numeric-up"></i></span>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="exampleInputpwd2">Precio Total De Productos Agregados</label>
+            <div class="input-group">
+                <input class="form-control bg-white" formControlName='precio' readonly value="{{precioTotal}}">
+                <span class="btn disabled" style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+    <i class="fa fa-money-bill"></i></span>
+            </div>
+        </div>
+    </div>
+
+
+
+      <div class="form-row">  
+        <div class="form-group col-md-6">
+          <label for="exampleInputpwd2">Nombre Del Combo</label>
+          <div class="input-group">
+            <input class="form-control bg-white" id="nombre" placeholder="minimo 3 caracteres" autocomplete="off">
+            <span class="btn disabled" style="background-color: #e9ecef;
+                  border: 1px solid
+                  rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+              <i class="fa fa-cubes"></i></span>
+          </div>
+          <small class="inline-block text-danger" id="nombre1" style="display: none;">
+            datos invalidos
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleInputpwd2">Precio Del Combo: Bs</label>
+          <div class="input-group">
+            <input class="form-control bg-white" type="number" id="precio" placeholder="maximo 4 digitos"
+              autocomplete="off" min="0">
+            <span class="btn disabled" style="background-color: #e9ecef;
+                  border: 1px solid
+                  rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+              <i class="fa fa-money-bill"></i></span>
+          </div>
+          <small class="inline-block text-danger" id="precio1" style="display: none;">
+            datos invalidos
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="col-form-label mr-1">Fecha de Coclusion:</label>
+          <div class="d-flex justify-content">
+            <input id="fechaV" name="fecha" [min]="min" (dateInput)="setFecha()" [max]="max" (dateInput)="setFecha()" [matDatepicker]="pickerm3"
+              class="form-control bg-white" readonly>
+            <mat-datepicker-toggle matSuffix [for]="pickerm3" id="fechaIc"></mat-datepicker-toggle>
+            <!-- [max]="max" (dateInput)="setFecha()" #fechaInicio="ngModel" ngModel [class.is-invalid]="fechaInicio.invalid && fechaInicio.touched" [class.is-valid]="fechaInicio.valid && fechaInicio.touched" -->
+
+            <mat-datepicker #pickerm3></mat-datepicker>
+          </div>
+          <small class="inline-block text-danger" id="fechaV1" style="display: none;">
+            fecha invalida
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleInputpwd2">Registrar Imagen</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="imagen" style="display:none"
+                (change)="seleccionImagen($event)" #photoInput accept="image/*">
+              <label class="custom-file-label longdesc" for="imagen">
+                {{ruta}}
+              </label>
+            </div>
+          </div>
+          <small class="inline-block text-danger" id="imagen1" style="display: none;">
+            datos invalidos
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion" class="col-form-label">
+          Descripcion Del Combo:
+        </label>
+        <textarea class="form-control" id="descripcion" rows="3" style="min-height: 100px; max-height: 150px;"
+          placeholder="minimo 15 caracteres"></textarea>
+        <small class="inline-block text-danger" id="descripcion1" style="display: none;">
+          datos invalidos
+          <small class="fal fa-exclamation-triangle"></small>
+        </small>
+      </div>
+    </div>
+      <div class="form-group">
+          <div class="d-flex justify-content-between align-items-end">
+            <label for="requisitos">Combos A Registrar</label>
+            <button class="btn btn-outline-info" type="button" (click)="enlistarCombo()" id="enlistar">
+              <i class="fa fa-plus"></i>
+              <!-- <i class="fa fa-shopping-cart"></i> -->
+              Añadir A Lista
+            </button>
+          </div>
+        <div class="table-responsive mt-3">
+          <table class="table align-middle table-hover table-bordered" id="requerimientos">
+            <thead class="thead-dark">
+              <tr>
+                <th class="text-center" scope="col">
+                  Nombre
+                </th>
+                <th class="text-center" scope="col">
+                  Precio
+                </th>
+                <th class="text-center" scope="col">
+                  Fecha de vencimiento
+                </th>
+                <th class="text-center" scope="col">
+                  Cantidad
+                </th>
+                <th class="text-center" scope="col">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let comboL of listaCombos; index as i">
+                <td>{{comboL.getNombre()}}</td>
+                <td>{{comboL.getPrecio()}}bs</td>
+                <td>{{comboL.getFecha()}}</td>
+                <td>{{comboL.getCantidad()}}</td>
+                <td class="text-center">
+                  <div class="btn btn-group" role="group">
+                    <button class="btn btn-outline-primary mx-1" type="button"
+                      title="ver detalles de combo de la lista">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button class="btn btn-outline-warning" type="button" title="editar combo de la lista">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-outline-danger mx-1" type="button" title="borrar combo de la lista"
+                      (click)="borrarElemento(i)">
+                      <i class="fa fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="limpiarFomulario()" id="vaciar">
+          Limpiar Formulario
+        </button>
+        <button type="button" class="btn btn-primary" (click)="alertRegistrar()" id="registrar">
+          Registar Combos Listados
+          <i class="fa fa-money-bill"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+
+
+<!-- Modal detalle de producto-->
+<div class="modal fade" id="modalDetallesProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5  class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+          </div>
+          <div class="modal-body">
+              <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=producto.getImagePath() alt="">
+              <br>
+                  <strong>Datos:</strong>
+                  <ul>
+                      <li>Categoria de producto: {{producto.getTipo()}}</li>
+                      <li>Precio: {{producto.getPrecio()}} bs.</li>
+                      <li>Cantidad: {{producto.getCantidad()}}</li>
+                      <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
+                  </ul>
+              <strong>Descripcion:</strong>
+              <p>
+                 {{producto.getDescripcion()}}
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
