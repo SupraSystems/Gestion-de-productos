@@ -4,7 +4,7 @@ const router = Router();
 import upload from '../libs/multer'
 import { getProductos, createProducto, deleteProducto, getProducto, updateProducto, getComboDeProducto, getDescuentoProducto, getFoto, getCategoria } from '../controllers/producto.controller'
 import { createDescuento, deleteDescuento, getDescuento, getDescuentos, updateDescuento } from '../controllers/descuento.controller';
-import { createCombo, deleteCombo, getCombo, updateCombo } from '../controllers/combo.controller';
+import { createCombo, deleteCombo, getCombo, updateCombo,getCombos } from '../controllers/combo.controller';
 import { createDetalle, deleteDetalle, getDetalle, getDetalles, updateDetalle } from '../controllers/detalle.controller';
 
 // middleware
@@ -26,7 +26,7 @@ router.route('/descuento/:id')
     .delete(deleteDescuento)
     .put(updateDescuento)
 router.route('/combo')
-    .get(getCombo)
+    .get(getCombos)
     .post(upload.single('imagen'),createCombo)
 router.route('/combo/:id')
     .get(getCombo)
