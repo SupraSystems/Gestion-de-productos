@@ -3,7 +3,10 @@ import fs from 'fs-extra';
 import path from 'path'
 // Models
 
+import Producto from '../models/producto';
 import Descuento, { IDescuento } from '../models/descuento';
+import Detalle_Combo from '../models/detalle_combo'
+
 
 export async function getDescuentos(req: Request, res: Response): Promise<Response> {
     const descuentos = await Descuento.find();
@@ -11,7 +14,13 @@ export async function getDescuentos(req: Request, res: Response): Promise<Respon
 };
 
 export async function createDescuento(req: Request, res: Response): Promise<Response> {
-    const { _id, fechaini, fechafin,porcentaje, cantidad } = req.body;
+    const { 
+        _id, 
+        fechaini, 
+        fechafin,
+        porcentaje, 
+        cantidad 
+    } = req.body;
     const nuevoDescuento = { 
         _id,
         fechaini,
@@ -36,12 +45,20 @@ export async function getDescuento(req: Request, res: Response): Promise<Respons
 export async function deleteDescuento(req: Request, res: Response): Promise<Response> {
     const { _id } = req.params;
     const descuento = await Descuento.findByIdAndRemove(_id) as IDescuento;
-    return res.json({ message: 'Descuento Eliminado', descuento});
+    return res.json( { 
+        message: 'Descuento Eliminado', 
+        descuento
+    });
 };
 
 export async function updateDescuento(req: Request, res: Response): Promise<Response> {
     const { _id } = req.params;
-    const { fechaini, fechafin, porcentaje, cantidad } = req.body;
+    const { 
+        fechaini, 
+        fechafin, 
+        porcentaje, 
+        cantidad 
+    } = req.body;
     const DescuentoActualizado = await Descuento.findByIdAndUpdate(_id, {
         _id, 
         fechaini, 
@@ -81,3 +98,26 @@ export async function getCategoria(req: Request, res: Response): Promise<Respons
     const combos = await Descuento.find({tipo:tipo});
     return res.json(combos);
 }
+
+export async function createDesc(req: Request, res: Response): Promise<Response> {
+    const { 
+        _id, 
+        fechaini, 
+        fechafin,
+        porcentaje, 
+        cantidad 
+    } = req.body;
+    const nuevoDescuento = { 
+        _id,
+        fechaini,
+        fechafin,
+        porcentaje, 
+        cantidad 
+    };
+    const descuento = new Descuento(nuevoDescuento);
+    await descuento.save();
+    return res.json({
+        message: 'Descuento creado',
+        descuento
+    });
+};

@@ -12,7 +12,10 @@ export async function getDetalles(req: Request, res: Response): Promise<Response
 };
 
 export async function createDetalle(req: Request, res: Response): Promise<Response> {
-    const { combo, producto } = req.body;
+    const { 
+        combo, 
+        producto 
+    } = req.body;
     const nuevoDetalle = { 
         combo:combo, 
         producto:producto 
@@ -40,7 +43,10 @@ export async function deleteDetalle(req: Request, res: Response): Promise<Respon
 
 export async function updateDetalle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { _idCombo, _idDescuento } = req.body;
+    const { 
+        _idCombo, 
+        _idDescuento 
+    } = req.body;
     const DetalleActualizado = await Detalle.findByIdAndUpdate(id, {
         _idCombo,
         _idDescuento
@@ -78,3 +84,20 @@ export async function getCategoria(req: Request, res: Response): Promise<Respons
     const combos = await Detalle.find({tipo:tipo});
     return res.json(combos);
 }
+
+export async function createDeta(req: Request, res: Response): Promise<Response> {
+    const { 
+        combo, 
+        producto 
+    } = req.body;
+    const nuevoDetalle = { 
+        combo:combo, 
+        producto:producto 
+    };
+    const detalle = new Detalle(nuevoDetalle);
+    await detalle.save();
+    return res.json({
+        message: 'Detalle creado',
+        detalle
+    });
+};
