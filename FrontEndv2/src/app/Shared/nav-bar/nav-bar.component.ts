@@ -55,8 +55,9 @@ export class NavBarComponent implements OnInit {
           }
         }
         if (flag) {
+          localStorage.setItem('buscador',this.buscarNombre);
           this.router.navigate(['/todos_los_productos']);
-          this.buscarProducto.emit({palabra:this.buscarNombre, ruta:"todos_los_productos"});
+          //this.buscarProducto.emit({palabra:this.buscarNombre, ruta:"todos_los_productos"});
         } else {
           this.toastError("No tiene productos con ese nombre");
         }

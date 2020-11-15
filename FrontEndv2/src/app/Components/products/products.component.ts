@@ -47,9 +47,9 @@ export class ProductsComponent implements OnInit {
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.servicio.$emitter.subscribe(x => this.actualizarBuscador(x),
-    err => console.error('Eroor de mensaje: ' + err),
-    () => console.log('Ocurrio un problems')
-  );
+      err => console.error('Eroor de mensaje: ' + err),
+      () => console.log('Ocurrio un problems')
+    );
     if (this.tipoProducto == "para_farmacia") {
       this.getCategoria("Para Farmacia");
     } else {
@@ -85,16 +85,18 @@ export class ProductsComponent implements OnInit {
         }
       }
     }
+    if(localStorage.getItem('buscador')!=""&&this.tipoProducto =="todos_los_productos"){
+      let aux={palabra:localStorage.getItem('buscador'),ruta:"todos_los_productos"}
+      this.actualizarBuscador(aux);
+      localStorage.setItem('buscador',"")
+      
+    }
   }
-
-
 
   cambiar() {
     console.log("resionooooooooooooooo!", $("#inputs").val())
     localStorage.setItem('aux', $("#inputs").val());
   }
-
-
 
   actualizarBuscador(msj) {
     console.log("//////////////////////", msj.palabra, "///", msj.ruta, "////////////")
@@ -113,7 +115,6 @@ export class ProductsComponent implements OnInit {
       }
       if (flag) {
         this.toastExitoso("se encontraron los sigueintes productos <br> coincidentes")
-
       } else {
         this.toastError(msj.ruta);
       }
@@ -123,15 +124,17 @@ export class ProductsComponent implements OnInit {
 
   toastError(hubicacion) {
     tata.error('Error', "No tiene ningun producto con ese nombre en " + hubicacion.replace(/\_/g, ' '), {
-      duration: 8000,
-      animate: 'slide'
+      duration: 4000,
+      animate: 'slide',
+      closeBtn: false
     });
   }
 
   toastExitoso(msj: string) {
     tata.success('Exito', msj, {
-      duration: 5000,
-      animate: 'slide'
+      duration: 4000,
+      animate: 'slide',
+      closeBtn: false
     });
   }
 
@@ -203,7 +206,7 @@ export class ProductsComponent implements OnInit {
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
-       
+
         this.listaOrdenadaAZ = this.listaTodosPr;
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;

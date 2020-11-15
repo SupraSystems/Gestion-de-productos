@@ -6,7 +6,7 @@ export class Validacion {
         let form = document.getElementById(id);
         form.addEventListener("blur", function (event) {
             let value = (<HTMLInputElement>document.getElementById(id)).value;
-            if (value.length < min ||value.length > max ) {
+            if (value.length < min || value.length > max) {
                 $("#" + id).removeClass("is-valid");
                 $("#" + id).addClass("is-invalid");
                 $("#" + id + "1").css('display', 'block');
@@ -34,8 +34,8 @@ export class Validacion {
                         $("#" + id).removeClass("is-valid");
                         $("#" + id).addClass("is-invalid");
                         $("#" + id + "1").css('display', 'block');
-                    }else{
-                        if (contador >=min || contador < max) {
+                    } else {
+                        if (contador >= min || contador < max) {
                             $("#" + id).removeClass("is-invalid");
                             $("#" + id).addClass("is-valid");
                             $("#" + id + "1").css('display', 'none');
@@ -49,12 +49,12 @@ export class Validacion {
                 }
                 else {
                     contador += 1;
-                    if ((value.length + 1) >= min && (value.length+1)< max) {
+                    if ((value.length + 1) >= min && (value.length + 1) < max) {
                         $("#" + id).removeClass("is-invalid");
                         $("#" + id).addClass("is-valid");
                         $("#" + id + "1").css('display', 'none');
-                    }else{
-                        if (value.length+1> max) {
+                    } else {
+                        if (value.length + 1 > max) {
                             $("#" + id).removeClass("is-valid");
                             $("#" + id).addClass("is-invalid");
                             $("#" + id + "1").css('display', 'block');
@@ -90,51 +90,55 @@ export class Validacion {
         let contador = 0;
         $("#" + id).keydown(function (e) {
             let value = (<HTMLInputElement>document.getElementById(id)).value;
-           console.log(e.which)
-            if (e.which != 48 && e.which != 49 && e.which != 50 && e.which != 51 && e.which != 52 && e.which != 53 && e.which != 54 && e.which != 55 && e.which != 56 && e.which != 57 && e.which !=8) {
-            return false;
-            }else{
-                let temp = contador;
-                if (e.which == 8) {
-                    if (contador > 0) {
-                        contador -= 1;
-                    }
-                    if (contador == 0) {
-                        $("#" + id).removeClass("is-valid");
-                        $("#" + id).addClass("is-invalid");
-                        $("#" + id + "1").css('display', 'block');
-                    } else {
-                        if (contador < min) {
+            console.log(e.which)
+            if (e.which == 48 && value.length == 0) {
+                return false;
+            } else {
+                if (e.which != 48 && e.which != 49 && e.which != 50 && e.which != 51 && e.which != 52 && e.which != 53 && e.which != 54 && e.which != 55 && e.which != 56 && e.which != 57 && e.which != 8) {
+                    return false;
+                } else {
+                    let temp = contador;
+                    if (e.which == 8) {
+                        if (contador > 0) {
+                            contador -= 1;
+                        }
+                        if (contador == 0) {
                             $("#" + id).removeClass("is-valid");
                             $("#" + id).addClass("is-invalid");
                             $("#" + id + "1").css('display', 'block');
-                        }
-                        else {
-                            if (contador > min) {
-                                $("#" + id).removeClass("is-invalid");
-                                $("#" + id).addClass("is-valid");
-                                $("#" + id + "1").css('display', 'none');
-                            }
-                        }
-                    }
-                }
-                else {
-                    if (e.which == 32) {//si presiona espacio
-                        return false;
-                    }
-                    else {
-                        if (e.which != 32) {
-                            contador += 1;
-                        }
-                        if ((value.length + 1) >= min && (value.length + 1) < max) {
-                            $("#" + id).removeClass("is-invalid");
-                            $("#" + id).addClass("is-valid");
-                            $("#" + id + "1").css('display', 'none');
                         } else {
-                            if ((value.length + 1) < min || (value.length + 1) > max) {
+                            if (contador < min) {
                                 $("#" + id).removeClass("is-valid");
                                 $("#" + id).addClass("is-invalid");
                                 $("#" + id + "1").css('display', 'block');
+                            }
+                            else {
+                                if (contador > min) {
+                                    $("#" + id).removeClass("is-invalid");
+                                    $("#" + id).addClass("is-valid");
+                                    $("#" + id + "1").css('display', 'none');
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        if (e.which == 32) {//si presiona espacio
+                            return false;
+                        }
+                        else {
+                            if (e.which != 32) {
+                                contador += 1;
+                            }
+                            if ((value.length + 1) >= min && (value.length + 1) < max) {
+                                $("#" + id).removeClass("is-invalid");
+                                $("#" + id).addClass("is-valid");
+                                $("#" + id + "1").css('display', 'none');
+                            } else {
+                                if ((value.length + 1) < min || (value.length + 1) > max) {
+                                    $("#" + id).removeClass("is-valid");
+                                    $("#" + id).addClass("is-invalid");
+                                    $("#" + id + "1").css('display', 'block');
+                                }
                             }
                         }
                     }
@@ -177,8 +181,8 @@ export class Validacion {
     addMensaje(msj: string) {
         this.mensaje += msj;
     }
-    limpiarRegistros(id){
-        $("#"+id).val("").removeClass("is-valid").removeClass("is-invalid");
-        $("#"+id+"1").css('display', 'none');
+    limpiarRegistros(id) {
+        $("#" + id).val("").removeClass("is-valid").removeClass("is-invalid");
+        $("#" + id + "1").css('display', 'none');
     }
 }  
