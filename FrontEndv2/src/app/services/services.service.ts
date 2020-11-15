@@ -9,8 +9,6 @@ import { DepFlags } from '@angular/compiler/src/core';
 })
 export class ServicesService {
   URL_API ="https://productos-backend.herokuapp.com/api/producto"
-
-
   listaproductos : Producto[];
   productoReg : Producto = new Producto("","",0,0,"","","","");
 
@@ -47,7 +45,6 @@ export class ServicesService {
 
 
     return this.http.post(this.URL_API,fd);
-
   }
 
   /*getPhotos(id: string){

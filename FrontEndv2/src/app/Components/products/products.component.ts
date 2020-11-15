@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
+import { BuscadorService } from 'src/app/services/buscador.service';
 declare var $: any;
+declare var tata: any;
 
 @Component({
   selector: 'app-products',
@@ -29,13 +31,25 @@ export class ProductsComponent implements OnInit {
   listaOrdenadaDescendente: Producto[] = [];
   listaOrdenadaAscendente: Producto[] = [];
   /*----------------------------------*/
-  constructor(private router: Router, public productsService: ServicesService) {
+
+
+  URLactual = "";
+  buscarNombre = "";
+  palabraBuscada = "";
+
+
+  constructor(private router: Router, public productsService: ServicesService, public servicio: BuscadorService) {
+
   }
 
   ngOnInit(): void {
     this.productsService.listaproductos = [];
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
+    this.servicio.$emitter.subscribe(x => this.actualizarBuscador(x),
+    err => console.error('Eroor de mensaje: ' + err),
+    () => console.log('Ocurrio un problems')
+  );
     if (this.tipoProducto == "para_farmacia") {
       this.getCategoria("Para Farmacia");
     } else {
@@ -81,13 +95,92 @@ export class ProductsComponent implements OnInit {
   }
 
 
-  actualizarBuscador(): void {
-    console.log("desde el producto,")
+
+  actualizarBuscador(msj) {
+    console.log("//////////////////////", msj.palabra, "///", msj.ruta, "////////////")
+    console.log(this.listaTodosPr[0], "---------------------")
+    this.buscarNombre = msj;
+    console.log(this.tipoProducto, "-----------------", msj.ruta)
+    this.tipoProducto = localStorage.getItem("tipo_producto");
+    if (this.tipoProducto == msj.ruta) {
+      this.buscarNombre = msj.palabra
+      console.log("estamos en los productos")
+      let flag = false;
+      for (let i = 0; i < this.listaTodosPr.length; i++) {
+        if (!flag) {
+          flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
+        }
+      }
+      if (flag) {
+        this.toastExitoso("se encontraron los sigueintes productos <br> coincidentes")
+
+      } else {
+        this.toastError(msj.ruta);
+      }
+
+    }
   }
 
+  toastError(hubicacion) {
+    tata.error('Error', "No tiene ningun producto con ese nombre en " + hubicacion.replace(/\_/g, ' '), {
+      duration: 8000,
+      animate: 'slide'
+    });
+  }
 
+  toastExitoso(msj: string) {
+    tata.success('Exito', msj, {
+      duration: 5000,
+      animate: 'slide'
+    });
+  }
 
+  nombresCoincidentes(nombre: string): boolean {
+    let flag = false;
+    if (this.buscarNombre != "") {
+      let nombres: string[] = nombre.split(" ");
+      let nombreBuscado: string[] = this.buscarNombre.split(" ");
+      //si el nombre es una palabra
+      if (nombres.length == 1) {
+        if (nombreBuscado.length == 1) {
+          console.log(nombres[0].toLowerCase(), "################", nombreBuscado[0].toLowerCase())
+          if (nombres[0].toLowerCase() == nombreBuscado[0].toLowerCase()) {
+            flag = true;
+          }
+        } else {
+          for (let k = 0; k < nombreBuscado.length; k++) {
+            if (nombres[0].toLowerCase() == nombreBuscado[k].toLowerCase()) {
+              flag = true;
+            }
+          }
+        }
+      } else {//si el nombre continen mas de dos palabras
+        if (nombreBuscado.length == 1) {
+          for (let j = 0; j < nombres.length; j++) {
+            if (nombres[j].toLowerCase() == nombreBuscado[0].toLowerCase()) {
+              flag = true;
+            }
+          }
+        } else {
+          for (let m = 0; m < nombres.length; m++) {
+            for (let n = 0; n < nombreBuscado.length; n++) {
+              if (nombres[m].toLowerCase() == nombreBuscado[n].toLowerCase()) {
+                flag = true;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      flag = true;
+    }
 
+    return flag;
+  }
+
+  ListarTodos() {
+    this.buscarNombre = "";
+  }
 
   getCategoria(categoria: string) {
     this.productsService.getProductsCategoria(categoria).subscribe(
@@ -110,6 +203,7 @@ export class ProductsComponent implements OnInit {
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
+       
         this.listaOrdenadaAZ = this.listaTodosPr;
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;
@@ -138,7 +232,8 @@ export class ProductsComponent implements OnInit {
           this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
           this.listaDesordenada.push(this.producto);
         }
-        this.listaTodosPr =  this.listaDesordenada.slice();
+        this.listaTodosPr = this.listaDesordenada.slice();
+
         this.listaOrdenadaAZ = this.listaTodosPr;
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;
@@ -149,14 +244,6 @@ export class ProductsComponent implements OnInit {
       err => console.log(err)
     )
   }
-
-
-  /*
-  this.enlistarPrecioNM();
-        this.enlistarPrecioMN();
-        this.enlistarAlfabeticamenteAZ();
-        this.enlistarAlfabeticamenteZA();
-*/
 
   /*----------****************************************-----------------------------------------------*/
 
@@ -274,7 +361,6 @@ export class ProductsComponent implements OnInit {
 
     }
     return this.listaOrdenadaAscendente;
-
   }
   /*---------------------------------------------------------*/
 
@@ -304,7 +390,7 @@ export class ProductsComponent implements OnInit {
   setActualizarProducto(producto: Producto) {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
-    this.ruta = "https://productos-backend.herokuapp.com/uploads/" + path.substring(8);
+    this.ruta = this.srcImagen + path.substring(8);
     this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento);
     console.log(this.ruta);
     console.log(this.producto);

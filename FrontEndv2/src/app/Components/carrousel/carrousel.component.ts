@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrousel',
@@ -11,11 +12,15 @@ export class CarrouselComponent implements OnInit {
   titulo = "";
   hrefArchivo="";
 
-  constructor() { }
+  constructor(private router: Router){
+  }
+
 
   ngOnInit(): void {
     this.titulo = localStorage.getItem('titulo');
     this.enlistar();
+
+
   }
   enlistar(){
     this.listaCatalogos.push("../../../assets/Images/Carrousel/img1.jpg");
