@@ -118,7 +118,6 @@ export class ProductsComponent implements OnInit {
       } else {
         this.toastError(msj.ruta);
       }
-
     }
   }
 
@@ -131,11 +130,11 @@ export class ProductsComponent implements OnInit {
   }
 
   toastExitoso(msj: string) {
-    tata.success('Exito', msj, {
+    /*tata.success('Exito', msj, {
       duration: 4000,
       animate: 'slide',
       closeBtn: false
-    });
+    });*/
   }
 
   nombresCoincidentes(nombre: string): boolean {
