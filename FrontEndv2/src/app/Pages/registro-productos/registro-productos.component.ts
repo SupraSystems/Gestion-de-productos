@@ -86,7 +86,6 @@ export class RegistroProductosComponent implements OnInit {
         $("#imagen1").css('display', 'block');  
       }
       //console.log(this.file, "--------")
-     
     }
   }
   setProductoM(producto:Producto){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
@@ -36,6 +36,7 @@ export class ProductsComponent implements OnInit {
   URLactual = "";
   buscarNombre = "";
   palabraBuscada = "";
+  @Output() mostrarMensaje = new EventEmitter();
 
 
   constructor(private router: Router, public productsService: ServicesService, public servicio: BuscadorService) {
@@ -85,11 +86,10 @@ export class ProductsComponent implements OnInit {
         }
       }
     }
-    if(localStorage.getItem('buscador')!=""&&this.tipoProducto =="todos_los_productos"){
-      let aux={palabra:localStorage.getItem('buscador'),ruta:"todos_los_productos"}
+    if (localStorage.getItem('buscador') != "" && this.tipoProducto == "todos_los_productos") {
+      let aux = { palabra: localStorage.getItem('buscador'), ruta: "todos_los_productos" }
       this.actualizarBuscador(aux);
-      localStorage.setItem('buscador',"")
-      
+      localStorage.setItem('buscador', "")
     }
   }
 
@@ -104,8 +104,9 @@ export class ProductsComponent implements OnInit {
     this.buscarNombre = msj;
     console.log(this.tipoProducto, "-----------------", msj.ruta)
     this.tipoProducto = localStorage.getItem("tipo_producto");
+    this.buscarNombre = msj.palabra
+    this.URLactual = msj.ruta;
     if (this.tipoProducto == msj.ruta) {
-      this.buscarNombre = msj.palabra
       console.log("estamos en los productos")
       let flag = false;
       for (let i = 0; i < this.listaTodosPr.length; i++) {
@@ -114,27 +115,16 @@ export class ProductsComponent implements OnInit {
         }
       }
       if (flag) {
-        this.toastExitoso("se encontraron los sigueintes productos <br> coincidentes")
+        this.mostrarMensaje.emit({ tipo: "exito", ruta: msj.ruta });
       } else {
-        this.toastError(msj.ruta);
+        if (localStorage.getItem('buscador') != "") {
+          this.mostrarMensaje.emit({ tipo: "exito", ruta: msj.ruta });
+          localStorage.setItem('buscador', "")
+        } else {
+          this.mostrarMensaje.emit({ tipo: "error", ruta: msj.ruta });
+        }
       }
     }
-  }
-
-  toastError(hubicacion) {
-    tata.error('Error', "No tiene ningun producto con ese nombre en " + hubicacion.replace(/\_/g, ' '), {
-      duration: 4000,
-      animate: 'slide',
-      closeBtn: false
-    });
-  }
-
-  toastExitoso(msj: string) {
-    /*tata.success('Exito', msj, {
-      duration: 4000,
-      animate: 'slide',
-      closeBtn: false
-    });*/
   }
 
   nombresCoincidentes(nombre: string): boolean {
@@ -145,7 +135,6 @@ export class ProductsComponent implements OnInit {
       //si el nombre es una palabra
       if (nombres.length == 1) {
         if (nombreBuscado.length == 1) {
-          console.log(nombres[0].toLowerCase(), "################", nombreBuscado[0].toLowerCase())
           if (nombres[0].toLowerCase() == nombreBuscado[0].toLowerCase()) {
             flag = true;
           }
@@ -188,8 +177,6 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProductsCategoria(categoria).subscribe(
       res => {
         this.productsService.listaproductos = res;
-        console.log(res)
-
         /*----------*****************************************--------------------------*/
         console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {
@@ -289,10 +276,6 @@ export class ProductsComponent implements OnInit {
 
       this.listaOrdenadaAZ[ini] = aux;    //inserta elemento
     }
-    for (let i = 0; i < this.listaOrdenadaAZ.length; i++) {
-      console.log(this.listaOrdenadaAZ[i], "------------");
-
-    }
     return this.listaOrdenadaAZ;
   }
 
@@ -309,10 +292,6 @@ export class ProductsComponent implements OnInit {
       }
 
       this.listaOrdenadaZA[ini] = aux;    //inserta elemento
-    }
-    for (let i = 0; i < this.listaOrdenadaZA.length; i++) {
-      console.log(this.listaOrdenadaZA[i], "------------");
-
     }
     return this.listaOrdenadaZA;
 
@@ -332,11 +311,6 @@ export class ProductsComponent implements OnInit {
       }
 
       this.listaOrdenadaDescendente[ini] = aux;    //inserta elemento
-    }
-
-    for (let i = 0; i < this.listaOrdenadaDescendente.length; i++) {
-      console.log(this.listaOrdenadaDescendente[i], "------------");
-
     }
     return this.listaOrdenadaDescendente;
   }
@@ -358,10 +332,6 @@ export class ProductsComponent implements OnInit {
       this.listaOrdenadaAscendente[ini] = aux;    //inserta elemento
     }
 
-    for (let i = 0; i < this.listaOrdenadaAscendente.length; i++) {
-      console.log(this.listaOrdenadaAscendente[i], "------------");
-
-    }
     return this.listaOrdenadaAscendente;
   }
   /*---------------------------------------------------------*/
