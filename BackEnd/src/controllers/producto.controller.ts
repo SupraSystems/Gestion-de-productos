@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import fs from 'fs-extra';
 import path from 'path'
-
 // Models
 import Producto from '../models/producto';
 import Descuento from '../models/descuento'
@@ -74,7 +73,6 @@ export async function getDescuentoProducto(req: Request, res: Response): Promise
     const desc = await Descuento.findById(descuento)
     return res.json(desc);
 }
-
 export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const detalle = await Detalle_Combo.find({idProducto:id});

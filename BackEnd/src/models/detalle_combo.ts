@@ -1,5 +1,5 @@
 import { Schema, model, Document } from 'mongoose'
-//models
+
 const esquemaDetalle = new Schema({
     idCombo: String,
     idProducto: String

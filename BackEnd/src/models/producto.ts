@@ -1,6 +1,4 @@
-
 import { Schema, model, Document} from 'mongoose';
-
 
 const schema = new Schema({
     //_id:String,

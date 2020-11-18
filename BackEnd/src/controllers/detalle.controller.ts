@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-
 import Detalle from '../models/detalle_combo';
 
 export async function getDetalles(req: Request, res: Response): Promise<Response> {
