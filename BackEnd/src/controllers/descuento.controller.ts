@@ -121,3 +121,39 @@ export async function createDesc(req: Request, res: Response): Promise<Response>
         descuento
     });
 };
+
+export async function getDes(req: Request, res: Response): Promise<Response> {
+    const { _id } = req.params;
+    const descuento = await Descuento.findById(_id);
+    return res.json(descuento);
+}
+
+export async function deleteDesc(req: Request, res: Response): Promise<Response> {
+    const { _id } = req.params;
+    const descuento = await Descuento.findByIdAndRemove(_id) as IDescuento;
+    return res.json( { 
+        message: 'Descuento Eliminado', 
+        descuento
+    });
+};
+
+export async function updateDesc(req: Request, res: Response): Promise<Response> {
+    const { _id } = req.params;
+    const { 
+        fechaini, 
+        fechafin, 
+        porcentaje, 
+        cantidad 
+    } = req.body;
+    const DescuentoActualizado = await Descuento.findByIdAndUpdate(_id, {
+        _id, 
+        fechaini, 
+        fechafin, 
+        porcentaje, 
+        cantidad
+    });
+    return res.json({
+        message: 'Descuento Actualizado',
+        DescuentoActualizado
+    });
+}

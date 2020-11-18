@@ -101,3 +101,32 @@ export async function createDeta(req: Request, res: Response): Promise<Response>
         detalle
     });
 };
+
+export async function getDeta(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Detalle.findById(id);
+    return res.json(detalle);
+}
+
+export async function deleteDeta(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Detalle.findByIdAndRemove(id);
+    return res.json({ message: 'Detalle eliminado' ,
+        detalle});
+};
+
+export async function updateDeta(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { 
+        _idCombo, 
+        _idDescuento 
+    } = req.body;
+    const DetalleActualizado = await Detalle.findByIdAndUpdate(id, {
+        _idCombo,
+        _idDescuento
+    });
+    return res.json({
+        message: 'Detalle Actualizado',
+        DetalleActualizado
+    });
+}
