@@ -6,5 +6,5 @@ const db = await connect('mongodb+srv://suprasystems:ingenieriadesoftware@cluste
         useFindAndModify: false,
         useUnifiedTopology: true
     });
-    console.log('Database is connected');
+    console.log('Se conecto a la base de datos');
 }
