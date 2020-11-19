@@ -269,7 +269,7 @@ export class ProductsComponent implements OnInit {
       let aux: Producto = this.listaOrdenadaAZ[i];
       ini = i;    //inicia el desplazamiento en i
 
-      while (ini > 0 && (this.listaOrdenadaAZ[ini - 1].getNombre().localeCompare(aux.getNombre())) > 0) {
+      while (ini > 0 && (this.listaOrdenadaAZ[ini - 1].getNombre().localeCompare(aux.getNombre())) < 0) {
         this.listaOrdenadaAZ[ini] = this.listaOrdenadaAZ[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }
@@ -286,7 +286,7 @@ export class ProductsComponent implements OnInit {
       let aux: Producto = this.listaOrdenadaZA[i];
       ini = i;    //inicia el desplazamiento en i
 
-      while (ini > 0 && (this.listaOrdenadaZA[ini - 1].getNombre().localeCompare(aux.getNombre())) < 0) {
+      while (ini > 0 && (this.listaOrdenadaZA[ini - 1].getNombre().localeCompare(aux.getNombre())) > 0) {
         this.listaOrdenadaZA[ini] = this.listaOrdenadaZA[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }
