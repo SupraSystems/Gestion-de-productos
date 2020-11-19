@@ -28,7 +28,7 @@ export class RegistroProductosComponent implements OnInit {
   valido1 = false;
   mensaje = "";
   validador: Validacion = new Validacion()
-
+  imagenM:string | ArrayBuffer;
   constructor(public productsService: ServicesService) {
     const dia = new Date().getDate();
     const mes = new Date().getMonth();
@@ -54,10 +54,10 @@ export class RegistroProductosComponent implements OnInit {
       let fecha = new Date()
       let cantidad = $("#cantidad").val();
       let categoria = $("#categoria").val();
-      let imagen = $("#imagen").val();
+      let imagen = this.imagenM;
       let descripcion = $("#descripcion").val();
 
-      this.producto = new Producto(descripcion, categoria, precio, cantidad, "", "", "", nombre, fechaV, this.file);
+      this.producto = new Producto(descripcion, categoria, precio, cantidad, imagen , "", "", nombre, fechaV, this.file);
       this.listaProducto.push(this.producto);
       this.limpiarRegistros();
       this.toastExito();
@@ -77,14 +77,19 @@ export class RegistroProductosComponent implements OnInit {
         $("#imagen").removeClass("is-invalid");
         $("#imagen").addClass("is-valid");
         $("#imagen1").css('display', 'none');  
+         const reader = new FileReader();
+         reader.onload= e=>this.imagenM=reader.result;
+         reader.readAsDataURL(this.file)
       }else{
         $("#imagen").removeClass("is-valid");
         $("#imagen").addClass("is-invalid");
         $("#imagen1").css('display', 'block');  
       }
       //console.log(this.file, "--------")
-     
     }
+  }
+  setProductoM(producto:Producto){
+    this.producto=producto;
   }
 
   valido(id, tipo, max, min) {

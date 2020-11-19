@@ -8,8 +8,7 @@ import { DepFlags } from '@angular/compiler/src/core';
   providedIn: 'root'
 })
 export class ServicesService {
-  URL_API = "http://localhost:4000/api/producto"
-
+  URL_API ="https://productos-backend.herokuapp.com/api/producto"
   listaproductos : Producto[];
   productoReg : Producto = new Producto("","",0,0,"","","","");
 
@@ -27,7 +26,7 @@ export class ServicesService {
     return this.http.get<Producto[]>(this.URL_API)
   }
   getProductsCategoria(categoria:string){
-    let url="http://localhost:4000/api/categoria/"
+    let url="https://productos-backend.herokuapp.com/api/categoria/"
     return this.http.get<Producto[]>(url+categoria);
   }
 
@@ -46,7 +45,6 @@ export class ServicesService {
 
 
     return this.http.post(this.URL_API,fd);
-
   }
 
   /*getPhotos(id: string){

@@ -5,13 +5,13 @@ export class Producto {
     tipo:string;
     precio:number;
     cantidad:number;
-    foto:string;
+    foto:string | ArrayBuffer;
     _id:string;
     imagePath: string;
     fechavencimiento:string;
     file:File;
 
-    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
 
         this.descripcion=descripcion;
         this.tipo=tipo;
@@ -46,7 +46,7 @@ export class Producto {
     public getId(): string {
         return this._id;
     }
-    public getFoto(): string {
+    public getFoto(): string | ArrayBuffer {
         return this.foto;
     }
     public getNombre(): string{

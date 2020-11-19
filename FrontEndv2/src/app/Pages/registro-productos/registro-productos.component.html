@@ -24,7 +24,7 @@
                     <div class="form-group col-md-6">
                         <label for="exampleInputpwd2">Precio del producto: Bs</label>
                         <div class="input-group">
-                            <input class="form-control bg-white" type="number" id="precio" placeholder="maximo 4 digitos" autocomplete="off" min="0">
+                            <input class="form-control bg-white" type="number" id="precio" placeholder="maximo 4 digitos" autocomplete="off" min="1">
                             <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
@@ -54,7 +54,7 @@
                     <div class="form-group col-md-6">
                         <label for="exampleInputpwd2">Cantidad:</label>
                         <div class="input-group">
-                            <input class="form-control bg-white" type="number" id="cantidad" placeholder="maximo 2 digitos" autocomplete="off" min="0">
+                            <input class="form-control bg-white" type="number" id="cantidad" placeholder="maximo 2 digitos" autocomplete="off" min="1">
                             <span class="btn disabled" style="background-color: #e9ecef;
                 border: 1px solid
                 rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
@@ -154,7 +154,7 @@
                                     <td>{{productos.getTipo()}}</td>
                                     <td class="text-center">
                                         <div class="btn btn-group" role="group">
-                                            <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de la lista">
+                                            <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de la lista"  data-toggle="modal" data-target="#modalProductoR" (click)="setProductoM(productos)">
                         <i class="fa fa-eye"></i>
                       </button>
                                             <button class="btn btn-outline-warning" type="button" title="editar producto de la lista">
@@ -201,3 +201,32 @@
         </div>
     </div>
 </div>
+
+<!-- Modal detalle de producto-->
+<div class="modal fade" id="modalProductoR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5  class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=producto.getFoto() alt="">
+                <br>
+                    <strong>Datos:</strong>
+                    <ul>
+                        <li>Categoria de producto: {{producto.getTipo()}}</li>
+                        <li>Precio: {{producto.getPrecio()}} bs.</li>
+                        <li>Cantidad: {{producto.getCantidad()}}</li>
+                        <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
+                    </ul>
+                <strong>Descripcion:</strong>
+                <p>
+                   {{producto.getDescripcion()}}
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
