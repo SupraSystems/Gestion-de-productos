@@ -6,14 +6,14 @@ export class Combo {
     tipo:string;
     precio:number;
     cantidad:number;
-    foto:string;
+    foto:string | ArrayBuffer;
     _id:string;
     imagePath: string;
     fechavencimiento:string;
     file:File;
     listaProductos:Producto[];
 
-    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string,_id:string,imagePath: string,nombre:string,listaProductos:Producto[], fecha?:string, file?:File){
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto:string | ArrayBuffer,_id:string,imagePath: string,nombre:string,listaProductos:Producto[], fecha?:string, file?:File){
         this.descripcion=descripcion;
         this.tipo=tipo;
         this.precio=precio;
@@ -54,7 +54,7 @@ export class Combo {
     public getId(): string {
         return this._id;
     }
-    public getFoto(): string {
+    public getFoto(): string | ArrayBuffer {
         return this.foto;
     }
     public getNombre(): string{

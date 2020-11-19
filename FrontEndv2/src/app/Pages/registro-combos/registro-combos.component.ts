@@ -40,6 +40,7 @@ export class RegistroCombosComponent implements OnInit {
   precioTotal:number=0;
   combo:Combo=new Combo("", "", 0, 0, "", "","","",[]);
   listaCombos:Combo[]=[];
+  imagenC: string | ArrayBuffer;
 
   mensaje = "";
   constructor(public productsService: ServicesService) {
@@ -142,6 +143,9 @@ export class RegistroCombosComponent implements OnInit {
     this.producto = producto;
   }
 
+  setActualizarCombo(combo: Combo) {
+    this.combo = combo;
+  }
   toastExitoso(msj: string): void {
     tata.success('Exito', msj, {
       duration: 5000,
@@ -190,10 +194,10 @@ export class RegistroCombosComponent implements OnInit {
       let fecha = new Date()
       let cantidad =this.cantidadTotal;
       let categoria = $("#categoria").val();
-      let imagen = $("#imagen").val();
+      let imagen = this.imagenC;
       let descripcion = $("#descripcion").val();
  
-      this.combo = new Combo(descripcion, categoria, precio, cantidad, "", "", "", nombre,this.listaProductosEnCombo, fechaV, this.file);
+      this.combo = new Combo(descripcion, categoria, precio, cantidad, imagen, "", "", nombre,this.listaProductosEnCombo, fechaV, this.file);
       this.listaCombos.push(this.combo);
       this.limpiarRegistros();
       this.toastExito();
@@ -245,6 +249,10 @@ export class RegistroCombosComponent implements OnInit {
         $("#imagen").removeClass("is-invalid");
         $("#imagen").addClass("is-valid");
         $("#imagen1").css('display', 'none');
+      
+        const reader = new FileReader();
+        reader.onload = e => this.imagenC=reader.result;
+        reader.readAsDataURL(this.file)
       } else {
         $("#imagen").removeClass("is-valid");
         $("#imagen").addClass("is-invalid");
