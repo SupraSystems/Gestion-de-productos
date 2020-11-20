@@ -252,24 +252,25 @@ export class ProductsComponent implements OnInit {
           if (categoria == "Alfabeticamente A-Z") {
             this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
           }
-          else {
+
+          /*else {
             if (categoria == "Desordenado") {
               console.log("ingreso a ordenar desordendo !!!!!!!!!!!!")
               this.listaTodosPr = this.listaDesordenada;;
             }
-          }
+          }*/
         }
       }
     }
   }
 
-  enlistarAlfabeticamenteAZ() {
+  enlistarAlfabeticamenteAZ(){
     let ini;
     for (let i = 1; i < this.listaOrdenadaAZ.length; i++) {
       let aux: Producto = this.listaOrdenadaAZ[i];
       ini = i;    //inicia el desplazamiento en i
 
-      while (ini > 0 && (this.listaOrdenadaAZ[ini - 1].getNombre().localeCompare(aux.getNombre())) < 0) {
+      while (ini > 0 && (this.listaOrdenadaAZ[ini - 1].getNombre().localeCompare(aux.getNombre())) > 0) {
         this.listaOrdenadaAZ[ini] = this.listaOrdenadaAZ[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }
@@ -279,14 +280,14 @@ export class ProductsComponent implements OnInit {
     return this.listaOrdenadaAZ;
   }
 
-  enlistarAlfabeticamenteZA() {
+  enlistarAlfabeticamenteZA(){
     let ini;
 
     for (let i = 1; i < this.listaOrdenadaZA.length; i++) {
       let aux: Producto = this.listaOrdenadaZA[i];
       ini = i;    //inicia el desplazamiento en i
 
-      while (ini > 0 && (this.listaOrdenadaZA[ini - 1].getNombre().localeCompare(aux.getNombre())) > 0) {
+      while (ini > 0 && (this.listaOrdenadaZA[ini - 1].getNombre().localeCompare(aux.getNombre())) < 0) {
         this.listaOrdenadaZA[ini] = this.listaOrdenadaZA[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }
@@ -305,7 +306,7 @@ export class ProductsComponent implements OnInit {
 
       let aux: Producto = this.listaOrdenadaDescendente[i];
       ini = i;    //inicia el desplazamiento en i
-      while (ini > 0 && this.listaOrdenadaDescendente[ini - 1].getPrecio() < aux.getPrecio()) {
+      while (ini > 0 && this.listaOrdenadaDescendente[ini - 1].getPrecio() > aux.getPrecio()) {
         this.listaOrdenadaDescendente[ini] = this.listaOrdenadaDescendente[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }
@@ -324,7 +325,7 @@ export class ProductsComponent implements OnInit {
 
       let aux: Producto = this.listaOrdenadaAscendente[i];
       ini = i;    //inicia el desplazamiento en i
-      while (ini > 0 && this.listaOrdenadaAscendente[ini - 1].getPrecio() > aux.getPrecio()) {
+      while (ini > 0 && this.listaOrdenadaAscendente[ini - 1].getPrecio() < aux.getPrecio()) {
         this.listaOrdenadaAscendente[ini] = this.listaOrdenadaAscendente[ini - 1];    //desplaza el elemento hacia la derecha
         --ini;
       }

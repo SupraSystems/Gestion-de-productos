@@ -33,14 +33,14 @@
 
                 <!---->
 
-                <div class="row d-flex justify-content-between">
-                    <label for="requisitos" class="col  d-flex align-items-start ">
-                      Ordenamiento De Los Los Productos =>
+                <div class="row d-flex justify-content-center">
+                    <label for="requisitos" class="col  align-items-start ">
+                      <strong>Ordenar por:</strong>
                     </label>
                     <select class="custom-select col  " (change)="ordenar()" id="orden">
-                      <option value="Desordenado" selected>
+                      <!--<option value="Desordenado" selected>
                         Desordenado
-                      </option>
+                      </option>-->
                       <option value="Alfabeticamente A-Z">Alfabeticamente A-Z</option>
                       <option value="Alfabeticamente Z-A">Alfabeticamente Z-A</option>
                       <option value="Precio Descendente">Precio Descendente</option>
