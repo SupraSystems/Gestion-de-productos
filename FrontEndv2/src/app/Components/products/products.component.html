@@ -106,16 +106,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 *ngIf="!productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
-                <h5 *ngIf="productosEnGneral()" class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getTipo()}}</h5>
+                <h5  class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
             </div>
             <div class="modal-body">
-                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getImagePath()}}" alt="">
+                <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getImagePath()}}" width="300" height="400" alt="">
                 <br>
-                <ng-container *ngIf="!productosEnGneral()">
                     <strong>Datos:</strong>
                     <ul>
                         <li>Categoria de producto: {{producto.getTipo()}}</li>
@@ -123,22 +121,16 @@
                         <li>Cantidad: {{producto.getCantidad()}}</li>
                         <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
                     </ul>
-                </ng-container>
                 <strong>Descripcion:</strong>
                 <p >
                    {{producto.getDescripcion()}}
                 </p>
             </div>
             <div class="modal-footer">
-                <ng-container *ngIf="!productosEnGneral()">
                     <button class="btn btn-outline-success" type="button" data-dismiss="modal">
                         <i class="fa fa-plus"></i>  <i
                         class="fa fa-shopping-cart"></i> &nbsp; Añadir al carrito
-                      </button>                </ng-container>
-                      <ng-container *ngIf="productosEnGneral()">
-
-                      <button type="button" class="btn btn-success" data-dismiss="modal">Ver Productos</button>
-                      </ng-container>
+                      </button>                
             </div>
         </div>
     </div>

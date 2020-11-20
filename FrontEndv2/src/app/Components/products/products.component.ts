@@ -32,14 +32,14 @@ export class ProductsComponent implements OnInit {
   buscarNombre = "";
   palabraBuscada = "";
   @Output() mostrarMensaje = new EventEmitter();
-  
+
   //------------------------------
-  listarCombos=false;
-  listarPromociones=false;
-  combo:Combo= new Combo ("","",0,0,"","","","",[])
-  listaCombos:Combo[]=[];
-  listaProductosCombo:Producto[]=[];
-  listarProductos=false;
+  listarCombos = false;
+  listarPromociones = false;
+  combo: Combo = new Combo("", "", 0, 0, "", "", "", "", [])
+  listaCombos: Combo[] = [];
+  listaProductosCombo: Producto[] = [];
+  listarProductos = false;
 
   constructor(private router: Router, public productsService: ServicesService, public servicio: BuscadorService) {
 
@@ -55,7 +55,7 @@ export class ProductsComponent implements OnInit {
     );
 
     this.recuperarCategoria();
-   
+
     if (localStorage.getItem('buscador') != "" && this.tipoProducto == "todos_los_productos") {
       let aux = { palabra: localStorage.getItem('buscador'), ruta: "todos_los_productos" }
       this.actualizarBuscador(aux);
@@ -64,7 +64,7 @@ export class ProductsComponent implements OnInit {
   }
 
   // configuramos la recuperacion de informacion deacuerdo a la categoria a la que ingreso
-  recuperarCategoria(){
+  recuperarCategoria() {
     switch (this.tipoProducto) {
       case 'para_farmacia':
         this.getCategoria("Para Farmacia");
@@ -97,8 +97,8 @@ export class ProductsComponent implements OnInit {
         this.getCombos();
         break;
       case 'promociones':
-          this.getPromociones();
-          break;    
+        this.getPromociones();
+        break;
       default:
         console.log('Categoria invalida');
     }
@@ -184,9 +184,9 @@ export class ProductsComponent implements OnInit {
     this.buscarNombre = "";
   }
 
-    //obtenemos los productos de una categoria especifica que se tienen en la base de datos
+  //obtenemos los productos de una categoria especifica que se tienen en la base de datos
   getCategoria(categoria: string) {
-    this.listarProductos=true;
+    this.listarProductos = true;
     this.productsService.getProductsCategoria(categoria).subscribe(
       res => {
         this.productsService.listaproductos = res;
@@ -215,7 +215,7 @@ export class ProductsComponent implements OnInit {
 
   //obtenemos todos los productos que se tienen en la base de datos
   getProductos() {
-    this.listarProductos =true;
+    this.listarProductos = true;
     this.productsService.getProducts().subscribe(
       res => {
         this.productsService.listaproductos = res;
@@ -242,24 +242,24 @@ export class ProductsComponent implements OnInit {
     )
   }
 
-  
-  //obtenemos los combos que se tienen en la base de datos
-  getCombos(){
-    this.listarCombos =true;
 
-    let img="https://tuguiacentral.com/wp-content/uploads/2019/10/combos_de_productos_tgc.png";
-    let product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+  //obtenemos los combos que se tienen en la base de datos
+  getCombos() {
+    this.listarCombos = true;
+
+    let img = "https://tuguiacentral.com/wp-content/uploads/2019/10/combos_de_productos_tgc.png";
+    let product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
     this.listaProductosCombo.push(product);
-    product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+    product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
     this.listaProductosCombo.push(product);
-    product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+    product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
     this.listaProductosCombo.push(product);
-    let combo1=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
-    let combo2=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
-    let combo3=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
-    let combo4=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
-    let combo5=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
-    let combo6=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo1 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo2 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo3 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo4 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo5 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo6 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
     this.listaCombos.push(combo1);
     this.listaCombos.push(combo2);
     this.listaCombos.push(combo3);
@@ -270,39 +270,32 @@ export class ProductsComponent implements OnInit {
   }
 
   //obtenemos las promociones que se tienen en la base de datos
-  getPromociones(){
+  getPromociones() {
 
   }
 
 
   ordenar() {
-    console.log("ingreso a ordenar!!!!!!!!!!!!!")
-    let categoria = $("#orden").val();
-    if (categoria == "Precio Ascendente") {
-      console.log("ingreso a ordenar ascendentemente !!!!!!!!!!!!!")
-      this.listaTodosPr = this.enlistarPrecioMN();;
-    } else {
-      if (categoria == "Precio Descendente") {
+    let orden = $("#orden").val();
+    switch (orden) {
+      case 'Precio Ascendente':
+        this.listaTodosPr = this.enlistarPrecioMN();;
+        break;
+      case 'Precio Descendente':
         this.listaTodosPr = this.enlistarPrecioNM();;
-      } else {
-        if (categoria == "Alfabeticamente Z-A") {
-          this.listaTodosPr = this.enlistarAlfabeticamenteZA();;
-        } else {
-          if (categoria == "Alfabeticamente A-Z") {
-            this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
-          }
-          /*else {
-            if (categoria == "Desordenado") {
-              console.log("ingreso a ordenar desordendo !!!!!!!!!!!!")
-              this.listaTodosPr = this.listaDesordenada;;
-            }
-          }*/
-        }
-      }
+        break;
+      case 'Alfabeticamente Z-A':
+        this.listaTodosPr = this.enlistarAlfabeticamenteZA();;
+        break;
+      case 'Alfabeticamente A-Z':
+        this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
+        break;
+      default:
+        this.listaTodosPr = this.listaDesordenada;;
     }
   }
 
-  enlistarAlfabeticamenteAZ(){
+  enlistarAlfabeticamenteAZ() {
     let ini;
     for (let i = 1; i < this.listaOrdenadaAZ.length; i++) {
       let aux: Producto = this.listaOrdenadaAZ[i];
@@ -318,7 +311,7 @@ export class ProductsComponent implements OnInit {
     return this.listaOrdenadaAZ;
   }
 
-  enlistarAlfabeticamenteZA(){
+  enlistarAlfabeticamenteZA() {
     let ini;
 
     for (let i = 1; i < this.listaOrdenadaZA.length; i++) {
@@ -385,15 +378,8 @@ export class ProductsComponent implements OnInit {
     //console.log(this.descripcion);
   }
 
-  setActualizarCombo(combo:Combo){
-    this.combo=combo;
+  setActualizarCombo(combo: Combo) {
+    this.combo = combo;
   }
 
-  productosEnGneral() {
-    let res = false;
-    /*if (this.titulo == "todos los productos") {
-      res = true;
-    }*/
-    return res;
-  }
 }
