@@ -3,6 +3,7 @@ import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
 import { BuscadorService } from 'src/app/services/buscador.service';
+import { Combo } from 'src/app/models/Combo';
 declare var $: any;
 declare var tata: any;
 
@@ -19,10 +20,6 @@ export class ProductsComponent implements OnInit {
   descripcion = "";
   tipoProducto = "";
 
-
-
-
-  /*-------------------------------*/
   srcImagen = "https://productos-backend.herokuapp.com/uploads/";
   listaDesordenada: Producto[] = [];
   listaTodosPr: Producto[] = [];
@@ -30,14 +27,19 @@ export class ProductsComponent implements OnInit {
   listaOrdenadaZA: Producto[] = [];
   listaOrdenadaDescendente: Producto[] = [];
   listaOrdenadaAscendente: Producto[] = [];
-  /*----------------------------------*/
-
 
   URLactual = "";
   buscarNombre = "";
   palabraBuscada = "";
   @Output() mostrarMensaje = new EventEmitter();
-
+  
+  //------------------------------
+  listarCombos=false;
+  listarPromociones=false;
+  combo:Combo= new Combo ("","",0,0,"","","","",[])
+  listaCombos:Combo[]=[];
+  listaProductosCombo:Producto[]=[];
+  listarProductos=false;
 
   constructor(private router: Router, public productsService: ServicesService, public servicio: BuscadorService) {
 
@@ -51,45 +53,54 @@ export class ProductsComponent implements OnInit {
       err => console.error('Eroor de mensaje: ' + err),
       () => console.log('Ocurrio un problems')
     );
-    if (this.tipoProducto == "para_farmacia") {
-      this.getCategoria("Para Farmacia");
-    } else {
-      if (this.tipoProducto == "bebidas") {
-        this.getCategoria("Bebidas");
-      } else {
-        if (this.tipoProducto == "bebe") {
-          this.getCategoria("Bebe");
-        } else {
-          if (this.tipoProducto == "mascotas") {
-            this.getCategoria("Mascotas");
-          } else {
-            if (this.tipoProducto == "higiene_y_belleza") {
-              this.getCategoria("Higiene y Belleza");
-            } else {
-              if (this.tipoProducto == "basicos_del_hogar") {
-                this.getCategoria("Basicos del hogar");
-              } else {
-                if (this.tipoProducto == "frescos") {
-                  this.getCategoria("Frescos");
-                } else {
-                  if (this.tipoProducto == "alimentos") {
-                    this.getCategoria("Alimentos");
-                  } else {
-                    if (this.tipoProducto == "todos_los_productos") {
-                      this.getProductos();
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+
+    this.recuperarCategoria();
+   
     if (localStorage.getItem('buscador') != "" && this.tipoProducto == "todos_los_productos") {
       let aux = { palabra: localStorage.getItem('buscador'), ruta: "todos_los_productos" }
       this.actualizarBuscador(aux);
       localStorage.setItem('buscador', "")
+    }
+  }
+
+  // configuramos la recuperacion de informacion deacuerdo a la categoria a la que ingreso
+  recuperarCategoria(){
+    switch (this.tipoProducto) {
+      case 'para_farmacia':
+        this.getCategoria("Para Farmacia");
+        break;
+      case 'bebidas':
+        this.getCategoria("Bebidas");
+        break;
+      case 'bebe':
+        this.getCategoria("Bebe");
+        break;
+      case 'mascotas':
+        this.getCategoria("Mascotas");
+        break;
+      case 'higiene_y_belleza':
+        this.getCategoria("Higiene y Belleza");
+        break;
+      case 'basicos_del_hogar':
+        this.getCategoria("Basicos del hogar");
+        break;
+      case 'frescos':
+        this.getCategoria("Frescos");
+        break;
+      case 'alimentos':
+        this.getCategoria("Alimentos");
+        break;
+      case 'todos_los_productos':
+        this.getProductos();
+        break;
+      case 'combos':
+        this.getCombos();
+        break;
+      case 'promociones':
+          this.getPromociones();
+          break;    
+      default:
+        console.log('Categoria invalida');
     }
   }
 
@@ -173,11 +184,12 @@ export class ProductsComponent implements OnInit {
     this.buscarNombre = "";
   }
 
+    //obtenemos los productos de una categoria especifica que se tienen en la base de datos
   getCategoria(categoria: string) {
+    this.listarProductos=true;
     this.productsService.getProductsCategoria(categoria).subscribe(
       res => {
         this.productsService.listaproductos = res;
-        /*----------*****************************************--------------------------*/
         console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {
           let nombre = this.productsService.listaproductos[i].nombre;
@@ -192,22 +204,21 @@ export class ProductsComponent implements OnInit {
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
-
         this.listaOrdenadaAZ = this.listaTodosPr;
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;
         this.listaOrdenadaAscendente = this.listaTodosPr;
-        /*-------------------------------------------------------*/
       },
       err => console.log(err)
     )
   }
 
+  //obtenemos todos los productos que se tienen en la base de datos
   getProductos() {
+    this.listarProductos =true;
     this.productsService.getProducts().subscribe(
       res => {
         this.productsService.listaproductos = res;
-        /*-----------***************************************************-------------------------*/
         console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {
           let nombre = this.productsService.listaproductos[i].nombre;
@@ -222,19 +233,47 @@ export class ProductsComponent implements OnInit {
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
-
         this.listaOrdenadaAZ = this.listaTodosPr;
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;
         this.listaOrdenadaAscendente = this.listaTodosPr;
-        /*-------------------------------------------------------*/
-
       },
       err => console.log(err)
     )
   }
 
-  /*----------****************************************-----------------------------------------------*/
+  
+  //obtenemos los combos que se tienen en la base de datos
+  getCombos(){
+    this.listarCombos =true;
+
+    let img="https://tuguiacentral.com/wp-content/uploads/2019/10/combos_de_productos_tgc.png";
+    let product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+    this.listaProductosCombo.push(product);
+    product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+    this.listaProductosCombo.push(product);
+    product=new Producto("","basicos del hogar",12,23,"","","","peras","")
+    this.listaProductosCombo.push(product);
+    let combo1=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo2=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo3=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo4=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo5=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    let combo6=new Combo("combo por navidad no se lo pierda", "combo",123,5,img,"",img,"combo navideno",this.listaProductosCombo,"2/12/2020")
+    this.listaCombos.push(combo1);
+    this.listaCombos.push(combo2);
+    this.listaCombos.push(combo3);
+    this.listaCombos.push(combo4);
+    this.listaCombos.push(combo5);
+    this.listaCombos.push(combo6);
+
+  }
+
+  //obtenemos las promociones que se tienen en la base de datos
+  getPromociones(){
+
+  }
+
 
   ordenar() {
     console.log("ingreso a ordenar!!!!!!!!!!!!!")
@@ -252,7 +291,6 @@ export class ProductsComponent implements OnInit {
           if (categoria == "Alfabeticamente A-Z") {
             this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
           }
-
           /*else {
             if (categoria == "Desordenado") {
               console.log("ingreso a ordenar desordendo !!!!!!!!!!!!")
@@ -297,6 +335,7 @@ export class ProductsComponent implements OnInit {
     return this.listaOrdenadaZA;
 
   }
+
   enlistarPrecioMN() {
     console.log("ingreso")
 
@@ -335,48 +374,19 @@ export class ProductsComponent implements OnInit {
 
     return this.listaOrdenadaAscendente;
   }
-  /*---------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   setActualizarProducto(producto: Producto) {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
     this.ruta = this.srcImagen + path.substring(8);
     this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento);
-    console.log(this.ruta);
-    console.log(this.producto);
-    console.log(this.descripcion);
+    //console.log(this.ruta);
+    //console.log(this.producto);
+    //console.log(this.descripcion);
   }
 
-  redireccion(producto: Producto) {
-    localStorage.setItem('titulo', producto.getTipo());
-    let ruta = "";
-    if (producto.getTipo() == "frescos") {
-      ruta = "productos_frescos";
-    } else {
-    }
+  setActualizarCombo(combo:Combo){
+    this.combo=combo;
   }
 
   productosEnGneral() {
