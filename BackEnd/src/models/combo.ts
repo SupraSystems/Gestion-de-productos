@@ -6,6 +6,7 @@ const schema = new Schema({
     descripcion: String,
     precio:Number,
     fechaconclusion:String,
+    productos:[String],
     imagePath: String
 });
 
@@ -14,6 +15,7 @@ interface ICombo extends Document {
     descripcion: string,
     precio:number,
     fechaconclusion:string,
+    productos:[string],
     imagePath: string,
 }
 
