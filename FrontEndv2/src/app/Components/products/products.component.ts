@@ -53,7 +53,7 @@ export class ProductsComponent implements OnInit {
       err => console.error('Eroor de mensaje: ' + err),
       () => console.log('Ocurrio un problems')
     );
-
+    
     this.recuperarCategoria();
 
     if (localStorage.getItem('buscador') != "" && this.tipoProducto == "todos_los_productos") {
@@ -92,6 +92,7 @@ export class ProductsComponent implements OnInit {
         break;
       case 'todos_los_productos':
         this.getProductos();
+        this.getCombos();
         break;
       case 'combos':
         this.getCombos();
@@ -110,6 +111,7 @@ export class ProductsComponent implements OnInit {
   }
 
   actualizarBuscador(msj) {
+    this.getCombos();
     console.log("//////////////////////", msj.palabra, "///", msj.ruta, "////////////")
     console.log(this.listaTodosPr[0], "---------------------")
     this.buscarNombre = msj;
@@ -123,6 +125,11 @@ export class ProductsComponent implements OnInit {
       for (let i = 0; i < this.listaTodosPr.length; i++) {
         if (!flag) {
           flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
+        }
+      }
+      for (let i = 0; i < this.listaCombos.length; i++) {
+        if (!flag) {
+          flag = this.nombresCoincidentes(this.listaCombos[i].getNombre())
         }
       }
       if (flag) {
@@ -246,7 +253,7 @@ export class ProductsComponent implements OnInit {
   //obtenemos los combos que se tienen en la base de datos
   getCombos() {
     this.listarCombos = true;
-
+    this.listaCombos=[];
     let img = "https://tuguiacentral.com/wp-content/uploads/2019/10/combos_de_productos_tgc.png";
     let product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
     this.listaProductosCombo.push(product);
@@ -259,14 +266,13 @@ export class ProductsComponent implements OnInit {
     let combo3 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
     let combo4 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
     let combo5 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo6 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
+    let combo6 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combox navideno", this.listaProductosCombo, "2/12/2020")
     this.listaCombos.push(combo1);
     this.listaCombos.push(combo2);
     this.listaCombos.push(combo3);
     this.listaCombos.push(combo4);
     this.listaCombos.push(combo5);
     this.listaCombos.push(combo6);
-
   }
 
   //obtenemos las promociones que se tienen en la base de datos

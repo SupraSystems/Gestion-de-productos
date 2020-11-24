@@ -11,7 +11,7 @@ export class CombosComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localStorage.setItem('tipo_producto', "combos");
+    localStorage.setItem('tipo_producto', "productos_combos");
     localStorage.setItem('titulo','productos en combos'); 
   }
   mostrarMensaje(obj) {
