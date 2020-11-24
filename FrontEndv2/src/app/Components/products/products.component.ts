@@ -381,5 +381,4 @@ export class ProductsComponent implements OnInit {
   setActualizarCombo(combo: Combo) {
     this.combo = combo;
   }
-
 }
