@@ -54,7 +54,6 @@ export class ProductsComponent implements OnInit {
       err => console.error('Eroor de mensaje: ' + err),
       () => console.log('Ocurrio un problems')
     );
-
     this.recuperarCategoria();
 
     if (localStorage.getItem('buscador') != "" && this.tipoProducto == "todos_los_productos") {
@@ -93,6 +92,7 @@ export class ProductsComponent implements OnInit {
         break;
       case 'todos_los_productos':
         this.getProductos();
+        this.getCombos();
         break;
       case 'combos':
         this.getCombos();
@@ -111,6 +111,7 @@ export class ProductsComponent implements OnInit {
   }
 
   actualizarBuscador(msj) {
+    this.getCombos();
     console.log("//////////////////////", msj.palabra, "///", msj.ruta, "////////////")
     console.log(this.listaTodosPr[0], "---------------------")
     this.buscarNombre = msj;
@@ -124,6 +125,11 @@ export class ProductsComponent implements OnInit {
       for (let i = 0; i < this.listaTodosPr.length; i++) {
         if (!flag) {
           flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
+        }
+      }
+      for (let i = 0; i < this.listaCombos.length; i++) {
+        if (!flag) {
+          flag = this.nombresCoincidentes(this.listaCombos[i].getNombre())
         }
       }
       if (flag) {
@@ -276,7 +282,6 @@ export class ProductsComponent implements OnInit {
         this.listaOrdenadaZA = this.listaTodosPr;
         this.listaOrdenadaDescendente = this.listaTodosPr;
         this.listaOrdenadaAscendente = this.listaTodosPr;
-
       },
       err => console.log(err)
     )

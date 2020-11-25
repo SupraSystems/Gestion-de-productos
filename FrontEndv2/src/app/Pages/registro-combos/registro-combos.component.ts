@@ -193,7 +193,7 @@ export class RegistroCombosComponent implements OnInit {
   enlistarCombo() {
     if (this.camposValidos()) {
       if(this.listaProductosEnCombo.length<6){
-        if(this.listaProductosEnCombo.length>2){
+        if(this.listaProductosEnCombo.length>1){
           let nombre = $("#nombre").val();
           let precio = $("#precio").val();
           let fechaV = $('#fechaV').val();

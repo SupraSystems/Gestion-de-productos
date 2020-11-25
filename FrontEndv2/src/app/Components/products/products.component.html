@@ -16,8 +16,11 @@
         </select>
 
         <button class="btn  btn-outline-success mx-5" (click)="ListarTodos()">Listar Todos</button>
+
+
     </div>
     <ng-container *ngIf="listarProductos">
+
         <div class="m-auto w-80 h-10">
             <div class="container text-center  bg-light">
                 <div class="row p-4">
@@ -34,6 +37,7 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(producto)"><strong>Detalles </strong></button>
                                     <button class="btn btn-outline-primary col-6" type="button" data-toggle="modal" data-target="#modalCompraP">
+                                    
                     <i class="fa fa-plus"></i>  <i
                     class="fa fa-shopping-cart"></i>
                   </button>
@@ -54,6 +58,7 @@
                         <div *ngIf="nombresCoincidentes(combox.nombre)" class="col-sm-6 col-lg-3">
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
                                 <!--style="max-width: 25rem; max-height: 20rem;"-->
+
                                 <div style="height: 4rem;">
                                     <h5 class="card-title text-primary text"><strong>{{combox.getNombre()}}</strong> &nbsp;&nbsp;{{combox.getPrecio()}} .bs </h5>
                                 </div>
@@ -63,6 +68,7 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalleCombo" (click)="setActualizarCombo(combox)"><strong>Detalles </strong></button>
                                     <button class="btn btn-outline-primary col-6" type="button" data-toggle="modal" data-target="#modalCompraP">
+                                        
                     <i class="fa fa-plus"></i>  <i
                     class="fa fa-shopping-cart"></i>
                   </button>
@@ -83,6 +89,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
