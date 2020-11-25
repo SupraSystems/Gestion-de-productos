@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../Models/Producto";
 import { DepFlags } from '@angular/compiler/src/core';
+import { Combo } from '../models/Combo';
+
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 //import { Photo } from '../Components/interfaces/Photo'
 @Injectable({
@@ -9,7 +12,10 @@ import { DepFlags } from '@angular/compiler/src/core';
 })
 export class ServicesService {
   URL_API ="https://productos-backend.herokuapp.com/api/producto"
+  URL_API_CB = "https://productos-backend.herokuapp.com/api/combo"
+
   listaproductos : Producto[];
+  listacombos : Combo[];
   productoReg : Producto = new Producto("","",0,0,"","","","");
 
   constructor(private http: HttpClient) { }
@@ -46,6 +52,40 @@ export class ServicesService {
 
     return this.http.post(this.URL_API,fd);
   }
+
+  getCombos(){
+    return this.http.get<Combo[]>(this.URL_API_CB)
+  }
+
+  getProducto(id:string){
+    console.log(id,"*-*-*-*-*-");
+    let url2 ="https://productos-backend.herokuapp.com/api/producto/";
+    return this.http.get<Producto>(url2+id);
+  }
+
+  addCombo(combo:Combo){
+    const fdc = new FormData();
+
+    for(let i=0 ; i< combo.getListaProducto().length ; i++){
+      fdc.append("productos", combo.getListaProducto()[i].getId());
+      //console.log(combo.getListaProducto[i][8]);
+    }
+    
+    fdc.append("_id", combo.getId());
+    fdc.append("nombre", combo.getNombre());
+    fdc.append("descripcion", combo.getDescripcion());
+    fdc.append("precio", combo.getPrecio()+"");
+    fdc.append("fechaconclusion", combo.getFecha());
+    fdc.append("imagen", combo.getFile());
+    
+    console.log(fdc);
+
+
+    return this.http.post(this.URL_API_CB,fdc);
+  }
+
+
+
 
   /*getPhotos(id: string){
     return this.http.get<Photo>(`${this.URL_API}/${id}`)
