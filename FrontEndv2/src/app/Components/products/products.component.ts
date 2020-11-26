@@ -476,6 +476,7 @@ export class ProductsComponent implements OnInit {
   //actualizamos el combo para que se vea en el modal
   setActualizarCombo(combo: Combo) {
     this.listaProductosCombo = [];
+    //console.log(combo.getImagePath(),":::::::::::::::::::::::::::")
     for (let k = 0; k < combo.getIds().length; k++) {
       this.productsService.getProducto(combo.getIds()[k]).subscribe(
         res => {
