@@ -351,8 +351,6 @@ export class RegistroCombosComponent implements OnInit {
   registrarCombos() {
     for (let i = 0; i < this.listaCombos.length; i++) {
       this.productsService.addCombo(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
-      //this.productsService.addComboProd(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
-    //  this.productsService.addProduct(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
     console.log(this.listaCombos[i],"-------")
     //console.log(this.listaCombos[i].getListaProducto()[2].getId());
     //console.log(this.listaCombos[i].getListaProducto().length);

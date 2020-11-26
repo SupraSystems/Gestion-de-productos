@@ -46,10 +46,7 @@ export class ServicesService {
     fd.append("fechavencimiento", producto.getFecha());
     fd.append("coddescuento", "");
     fd.append("imagen", producto.getFile());
-    //console.log(producto);
     console.log(fd);
-
-
     return this.http.post(this.URL_API,fd);
   }
 
@@ -58,37 +55,22 @@ export class ServicesService {
   }
 
   getProducto(id:string){
-    console.log(id,"*-*-*-*-*-");
     let url2 ="https://productos-backend.herokuapp.com/api/producto/";
     return this.http.get<Producto>(url2+id);
   }
 
   addCombo(combo:Combo){
     const fdc = new FormData();
-
     for(let i=0 ; i< combo.getListaProducto().length ; i++){
       fdc.append("productos", combo.getListaProducto()[i].getId());
-      //console.log(combo.getListaProducto[i][8]);
     }
-    
     fdc.append("_id", combo.getId());
     fdc.append("nombre", combo.getNombre());
     fdc.append("descripcion", combo.getDescripcion());
     fdc.append("precio", combo.getPrecio()+"");
     fdc.append("fechaconclusion", combo.getFecha());
     fdc.append("imagen", combo.getFile());
-    
     console.log(fdc);
-
-
     return this.http.post(this.URL_API_CB,fdc);
   }
-
-
-
-
-  /*getPhotos(id: string){
-    return this.http.get<Photo>(`${this.URL_API}/${id}`)
-  }*/
-
 }

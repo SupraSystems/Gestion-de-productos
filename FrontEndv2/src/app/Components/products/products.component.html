@@ -5,11 +5,11 @@
         <label for="requisitos" class="col  align-items-start ml-4">
           <strong>Ordenar por:</strong>
         </label>
-        <select class="custom-select col  " (change)="ordenar()" id="orden">
-          <!--<option value="Desordenado" selected>
+        <select class="custom-select col  " (change)="ordenarProductos()" id="orden" aria-selected="false">
+          <option value="Desordenado" selected>
             Desordenado
-          </option>-->
-          <option value="Alfabeticamente A-Z">Alfabeticamente A-Z</option>
+          </option>
+          <option value="Alfabeticamente A-Z" >Alfabeticamente A-Z</option>
           <option value="Alfabeticamente Z-A">Alfabeticamente Z-A</option>
           <option value="Precio Descendente">Precio Descendente</option>
           <option value="Precio Ascendente">Precio Ascendente</option>
@@ -66,7 +66,7 @@
                                     <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{combox.getImagePath()}}" width="300" height="200" alt="">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalDetalleCombo" (click)="setActualizarCombo(combox)"><strong>Detalles </strong></button>
+                                    <button class="col-6" href="#" class="btn btn-outline-primary" data-toggle="modal" (click)="setActualizarCombo(combox)"><strong>Detalles </strong></button>
                                     <button class="btn btn-outline-primary col-6" type="button" data-toggle="modal" data-target="#modalCompraP">
                                         
                     <i class="fa fa-plus"></i>  <i

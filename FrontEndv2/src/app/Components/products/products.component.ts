@@ -40,7 +40,15 @@ export class ProductsComponent implements OnInit {
   listaCombos: Combo[] = [];
   listaProductosCombo: Producto[] = [];
   listarProductos = false;
-  productoActualizable:Producto ;
+  productoActualizable: Producto;
+
+  //ordenamiento
+  listaTodosC: Combo[] = [];
+  listaOrdenadaAZC: Combo[] = [];
+  listaOrdenadaZAC: Combo[] = [];
+  listaOrdenadaDescendenteC: Combo[] = [];
+  listaOrdenadaAscendenteC: Combo[] = [];
+
 
   constructor(private router: Router, public productsService: ServicesService, public servicio: BuscadorService) {
 
@@ -106,21 +114,17 @@ export class ProductsComponent implements OnInit {
   }
 
   cambiar() {
-    console.log("resionooooooooooooooo!", $("#inputs").val())
     localStorage.setItem('aux', $("#inputs").val());
   }
 
+  //actualizamos la palabra a buscar
   actualizarBuscador(msj) {
     this.getCombos();
-    console.log("//////////////////////", msj.palabra, "///", msj.ruta, "////////////")
-    console.log(this.listaTodosPr[0], "---------------------")
     this.buscarNombre = msj;
-    console.log(this.tipoProducto, "-----------------", msj.ruta)
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.buscarNombre = msj.palabra
     this.URLactual = msj.ruta;
     if (this.tipoProducto == msj.ruta) {
-      console.log("estamos en los productos")
       let flag = false;
       for (let i = 0; i < this.listaTodosPr.length; i++) {
         if (!flag) {
@@ -145,6 +149,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  //verificamos si hay nombres que coincidan
   nombresCoincidentes(nombre: string): boolean {
     let flag = false;
     if (this.buscarNombre != "") {
@@ -187,6 +192,7 @@ export class ProductsComponent implements OnInit {
     return flag;
   }
 
+  //listamos todos los productos
   ListarTodos() {
     this.buscarNombre = "";
   }
@@ -197,7 +203,6 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProductsCategoria(categoria).subscribe(
       res => {
         this.productsService.listaproductos = res;
-        console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {
           let nombre = this.productsService.listaproductos[i].nombre;
           let precio = this.productsService.listaproductos[i].precio;
@@ -226,7 +231,6 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe(
       res => {
         this.productsService.listaproductos = res;
-        console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {
           let nombre = this.productsService.listaproductos[i].nombre;
           let precio = this.productsService.listaproductos[i].precio;
@@ -249,69 +253,38 @@ export class ProductsComponent implements OnInit {
     )
   }
 
-
-
-
   //obtenemos los combos que se tienen en la base de datos
   getCombos() {
     this.listarCombos = true;
     this.productsService.getCombos().subscribe(
       res => {
         this.productsService.listacombos = res;
-        console.log(this.productsService.listacombos, "--")
-        for (let i=0; i < this.productsService.listacombos.length; i++){
+        for (let i = 0; i < this.productsService.listacombos.length; i++) {
           let nombre = this.productsService.listacombos[i].nombre;
           let precio = this.productsService.listacombos[i].precio;
           let descripcion = this.productsService.listacombos[i].descripcion;
           let fechavencimiento = this.productsService.listacombos[i].fechaconclusion;
           let fechaconclusion = this.productsService.listacombos[i].fechaconclusion;
+          //console.log(this.productsService.listacombos[i].imagePath,"++++++++++++++++++++++++++++++++++++++++++")
           let imagen = this.srcImagen + this.productsService.listacombos[i].imagePath.substring(8);
           let id = this.productsService.listacombos[i]._id;
           let tipo = "";
           let cantidad = 0;
-          let ids:string[] = this.productsService.listacombos[i].productos;
-          console.log(ids,"*********-----****");
+          let ids: string[] = this.productsService.listacombos[i].productos;
           let listarCombos = this.productsService.listacombos[i].listaProductos;
-          this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null,ids,fechaconclusion)
+          this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null, ids, fechaconclusion)
+          //console.log(this.combo)
           this.listaCombos.push(this.combo);
 
         }
-        
-        this.listaTodosPr = this.listaCombos.slice();
-        this.listaOrdenadaAZ = this.listaTodosPr;
-        this.listaOrdenadaZA = this.listaTodosPr;
-        this.listaOrdenadaDescendente = this.listaTodosPr;
-        this.listaOrdenadaAscendente = this.listaTodosPr;
+        this.listaTodosC=this.listaCombos.slice();
+        this.listaOrdenadaAZC=  this.listaTodosC
+        this.listaOrdenadaZAC= this.listaTodosC
+        this.listaOrdenadaDescendenteC= this.listaTodosC
+        this.listaOrdenadaAscendenteC= this.listaTodosC
       },
       err => console.log(err)
     )
-
-  
-
-    /*
-
-
-    let img = "https://tuguiacentral.com/wp-content/uploads/2019/10/combos_de_productos_tgc.png";
-    let product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
-    this.listaProductosCombo.push(product);
-    product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
-    this.listaProductosCombo.push(product);
-    product = new Producto("", "basicos del hogar", 12, 23, "", "", "", "peras", "")
-    this.listaProductosCombo.push(product);
-    let combo1 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo2 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo3 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo4 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo5 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    let combo6 = new Combo("combo por navidad no se lo pierda", "combo", 123, 5, img, "", img, "combo navideno", this.listaProductosCombo, "2/12/2020")
-    this.listaCombos.push(combo1);
-    this.listaCombos.push(combo2);
-    this.listaCombos.push(combo3);
-    this.listaCombos.push(combo4);
-    this.listaCombos.push(combo5);
-    this.listaCombos.push(combo6);
-
-    */
   }
 
   //obtenemos las promociones que se tienen en la base de datos
@@ -320,26 +293,52 @@ export class ProductsComponent implements OnInit {
   }
 
 
-  ordenar() {
+  // ordnamos los productos
+  ordenarProductos() {
     let orden = $("#orden").val();
+    console.log(localStorage.getItem("tipo_producto"))
+    if (localStorage.getItem("tipo_producto")=="combos") {
+      this.ordenarProductosCombo(orden);
+    } else {
+      switch (orden) {
+        case 'Precio Ascendente':
+          this.listaTodosPr = this.enlistarPrecioMN();;
+          break;
+        case 'Precio Descendente':
+          this.listaTodosPr = this.enlistarPrecioNM();;
+          break;
+        case 'Alfabeticamente Z-A':
+          this.listaTodosPr = this.enlistarAlfabeticamenteZA();;
+          break;
+        case 'Alfabeticamente A-Z':
+          this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
+          break;
+        default:
+          this.listaTodosPr = this.listaDesordenada;
+      }
+    }
+  }
+  ordenarProductosCombo(orden) {
     switch (orden) {
       case 'Precio Ascendente':
-        this.listaTodosPr = this.enlistarPrecioMN();;
+        this.listaCombos = this.enlistarPrecioMNC();;
         break;
       case 'Precio Descendente':
-        this.listaTodosPr = this.enlistarPrecioNM();;
+        this.listaCombos = this.enlistarPrecioNMC();;
         break;
       case 'Alfabeticamente Z-A':
-        this.listaTodosPr = this.enlistarAlfabeticamenteZA();;
+        this.listaCombos = this.enlistarAlfabeticamenteZAC();;
         break;
       case 'Alfabeticamente A-Z':
-        this.listaTodosPr = this.enlistarAlfabeticamenteAZ();;
+        this.listaCombos = this.enlistarAlfabeticamenteAZC();;
         break;
       default:
-        this.listaTodosPr = this.listaDesordenada;;
+      //this.listaCombos = this.listaDesordenada;;
     }
   }
 
+
+  // ordnamos los productos de la a a la z
   enlistarAlfabeticamenteAZ() {
     let ini;
     for (let i = 1; i < this.listaOrdenadaAZ.length; i++) {
@@ -355,10 +354,24 @@ export class ProductsComponent implements OnInit {
     }
     return this.listaOrdenadaAZ;
   }
+  enlistarAlfabeticamenteAZC() {
+    let ini;
+    for (let i = 1; i < this.listaOrdenadaAZC.length; i++) {
+      let aux: Combo = this.listaOrdenadaAZC[i];
+      ini = i;    //inicia el desplazamiento en i
 
+      while (ini > 0 && (this.listaOrdenadaAZC[ini - 1].getNombre().localeCompare(aux.getNombre())) > 0) {
+        this.listaOrdenadaAZC[ini] = this.listaOrdenadaAZC[ini - 1];    //desplaza el elemento hacia la derecha
+        --ini;
+      }
+
+      this.listaOrdenadaAZC[ini] = aux;    //inserta elemento
+    }
+    return this.listaOrdenadaAZC;
+  }
+  // ordnamos los productos de la z a la a
   enlistarAlfabeticamenteZA() {
     let ini;
-
     for (let i = 1; i < this.listaOrdenadaZA.length; i++) {
       let aux: Producto = this.listaOrdenadaZA[i];
       ini = i;    //inicia el desplazamiento en i
@@ -373,14 +386,27 @@ export class ProductsComponent implements OnInit {
     return this.listaOrdenadaZA;
 
   }
+  enlistarAlfabeticamenteZAC() {
+    let ini;
+    for (let i = 1; i < this.listaOrdenadaZAC.length; i++) {
+      let aux: Combo = this.listaOrdenadaZAC[i];
+      ini = i;    //inicia el desplazamiento en i
 
+      while (ini > 0 && (this.listaOrdenadaZAC[ini - 1].getNombre().localeCompare(aux.getNombre())) < 0) {
+        this.listaOrdenadaZAC[ini] = this.listaOrdenadaZAC[ini - 1];    //desplaza el elemento hacia la derecha
+        --ini;
+      }
+
+      this.listaOrdenadaZAC[ini] = aux;    //inserta elemento
+    }
+    return this.listaOrdenadaZAC;
+
+  }
+
+  // ordnamos los productos de mayor a menor
   enlistarPrecioMN() {
-    console.log("ingreso")
-
     let ini = 0;
     for (let i = 1; i < this.listaOrdenadaDescendente.length; i++) {
-      console.log("ingreso")
-
       let aux: Producto = this.listaOrdenadaDescendente[i];
       ini = i;    //inicia el desplazamiento en i
       while (ini > 0 && this.listaOrdenadaDescendente[ini - 1].getPrecio() > aux.getPrecio()) {
@@ -392,14 +418,25 @@ export class ProductsComponent implements OnInit {
     }
     return this.listaOrdenadaDescendente;
   }
+  enlistarPrecioMNC() {
+    let ini = 0;
+    for (let i = 1; i < this.listaOrdenadaDescendenteC.length; i++) {
+      let aux: Combo = this.listaOrdenadaDescendenteC[i];
+      ini = i;    //inicia el desplazamiento en i
+      while (ini > 0 && this.listaOrdenadaDescendenteC[ini - 1].getPrecio() > aux.getPrecio()) {
+        this.listaOrdenadaDescendenteC[ini] = this.listaOrdenadaDescendenteC[ini - 1];    //desplaza el elemento hacia la derecha
+        --ini;
+      }
 
+      this.listaOrdenadaDescendenteC[ini] = aux;    //inserta elemento
+    }
+    return this.listaOrdenadaDescendenteC;
+  }
+
+  // ordnamos los productos de menor a mayor
   enlistarPrecioNM() {
-    console.log("ingreso")
-
     let ini = 0;
     for (let i = 1; i < this.listaOrdenadaAscendente.length; i++) {
-      console.log("ingreso")
-
       let aux: Producto = this.listaOrdenadaAscendente[i];
       ini = i;    //inicia el desplazamiento en i
       while (ini > 0 && this.listaOrdenadaAscendente[ini - 1].getPrecio() < aux.getPrecio()) {
@@ -412,43 +449,49 @@ export class ProductsComponent implements OnInit {
 
     return this.listaOrdenadaAscendente;
   }
+  enlistarPrecioNMC() {
+    let ini = 0;
+    for (let i = 1; i < this.listaOrdenadaAscendenteC.length; i++) {
+      let aux: Combo = this.listaOrdenadaAscendenteC[i];
+      ini = i;    //inicia el desplazamiento en i
+      while (ini > 0 && this.listaOrdenadaAscendenteC[ini - 1].getPrecio() < aux.getPrecio()) {
+        this.listaOrdenadaAscendenteC[ini] = this.listaOrdenadaAscendenteC[ini - 1];    //desplaza el elemento hacia la derecha
+        --ini;
+      }
 
+      this.listaOrdenadaAscendenteC[ini] = aux;    //inserta elemento
+    }
+
+    return this.listaOrdenadaAscendenteC;
+  }
+
+  //actualizamos el producto para que se vea en el modal
   setActualizarProducto(producto: Producto) {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
     this.ruta = this.srcImagen + path.substring(8);
     this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento);
-    //console.log(this.ruta);
-    //console.log(this.producto);
-    //console.log(this.descripcion);
   }
 
+  //actualizamos el combo para que se vea en el modal
   setActualizarCombo(combo: Combo) {
-     
-      for(let k=0 ; k< this.combo.getIds().length ; k++){
-        
-        this.productsService.getProducto(this.combo.getIds()[k]).subscribe(
-          res => {
-            this.productoActualizable = res;
-            this.listaProductosCombo.push(this.productoActualizable);
-
-            console.log(this.productoActualizable);
-          },
-          err => console.log(err)
-        )
-      }
-      //console.log(this.listaProductosCombo,"/*/*/*44444444*/*/**/")
-      //combo.setListaProducto(this.listaProductosCombo)
-    
-    this.combo = combo;
-    console.log(this.combo);
     this.listaProductosCombo = [];
-    
-    
+    for (let k = 0; k < combo.getIds().length; k++) {
+      this.productsService.getProducto(combo.getIds()[k]).subscribe(
+        res => {
+          this.listaProductosCombo.push(res);
+        },
+        err => console.log(err)
+      )
+    }
+
+    this.combo = combo;
+    $("#modalDetalleCombo").modal('show');
+
+
   }
 
-  verificador(){
-    console.log(this.listaProductosCombo,"------------------------------------------------------------------------");
+  verificador() {
     return true;
   }
 
