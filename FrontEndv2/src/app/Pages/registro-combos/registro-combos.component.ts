@@ -64,7 +64,7 @@ export class RegistroCombosComponent implements OnInit {
   aniadirACombo(producto: Producto) {
     this.listaProductosEnCombo.push(producto)
     this.listaProductosEnCombo = this.listaProductosEnCombo.reverse()
-    this.toastExitoso("se aniadio el producto " + producto.getNombre() + "al combo")
+    this.toastExitoso("se añadio el producto " + producto.getNombre() + "al combo")
     this.setFechaMenor(producto.getFecha());
     this.contadorDeProductos+=1;
     if(this.contadorDeProductos>1){
