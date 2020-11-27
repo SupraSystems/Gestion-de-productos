@@ -54,12 +54,10 @@
                   <td (click)="aniadirACombo(productos)">{{productos.getFecha()}}</td>
                   <td (click)="aniadirACombo(productos)">{{productos.getTipo()}}</td>
                   <td class="text-center">
-                    <div class="btn btn-group" role="group">
                       <button class="btn btn-outline-primary mx-1" type="button"
                         title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
                         <i class="fa fa-eye"></i>
                       </button>
-                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -104,7 +102,6 @@
                   <td>{{productos.getFecha()}}</td>
                   <td>{{productos.getTipo()}}</td>
                   <td class="text-center">
-                    <div class="btn btn-group" role="group">
                       <button class="btn btn-outline-primary mx-1" type="button"
                         title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
                         <i class="fa fa-eye"></i>
@@ -113,7 +110,6 @@
                       (click)="borrarProductoDelCombo(i)">
                       <i class="fa fa-trash-alt"></i>
                     </button>
-                    </div>
                   </td>
                 </tr>
           </tbody>
