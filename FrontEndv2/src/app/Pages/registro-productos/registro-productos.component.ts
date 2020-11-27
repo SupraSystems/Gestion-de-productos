@@ -128,7 +128,7 @@ export class RegistroProductosComponent implements OnInit {
     this.validador.setMensaje();
   }
   toastExito(): void {
-    tata.success('Exito', 'Se enlisto la informacion del producto', {
+    tata.success('Exito', 'Se Enlisto La Informacion Del Producto', {
       duration: 8000,
       animate: 'slide'
     });
@@ -200,7 +200,7 @@ export class RegistroProductosComponent implements OnInit {
         }
       })
     }else{
-      tata.error('Error', "no tiene productos listados", {
+      tata.error('Error', "No Tiene Productos Listados", {
         duration: 3000,
         animate: 'slide'
       });
