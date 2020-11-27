@@ -25,11 +25,25 @@ export async function createProducto(req: Request, res: Response): Promise<Respo
         imagePath:req.file.path
     };
     const producto = new Producto(newPreoducto);
-    await producto.save();
-    return res.json({
-        message: 'Producto guardado exitosamente',
-        producto
-    })
+    const productos = await Producto.find({nombre:producto.nombre});
+    const longitud = productos.length;
+    console.log(productos.length);
+    if(longitud==0){
+        await producto.save();
+        return res.json({
+            message: 'Producto guardado exitosamente',
+            producto
+        })
+    }else{
+        return res.json({message: 'Ya existe el producto'});
+  
+    }
+    
+}
+export async function getPorNombre(req: Request,res: Response): Promise<Response> {
+    const {nombre} = req.params;
+    const producto = await Producto.find({nombre:nombre});
+    return res.json(producto);
 }
 
 export async function getProducto(req: Request, res: Response): Promise<Response> {
@@ -89,5 +103,10 @@ export async function getFoto(req: Request, res: Response): Promise<Response> {
 export async function getCategoria(req: Request, res: Response): Promise<Response> {
     const { tipo } = req.params;
     const productos = await Producto.find({tipo:tipo});
+    return res.json(productos);
+}
+export async function busquedaProducto(req: Request, res: Response): Promise<Response> {
+    const { nombre } = req.params;
+    const productos = await Producto.find({nombre:nombre});
     return res.json(productos);
 }

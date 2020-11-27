@@ -8,10 +8,10 @@ export async function getDetalles(req: Request, res: Response): Promise<Response
 };
 
 export async function createDetalle(req: Request, res: Response): Promise<Response> {
-    const { idCombo, idProducto } = req.body;
+    const { combo, producto } = req.body;
     const nuevoDetalle = { 
-        idCombo:idCombo, 
-        idProducto:idProducto 
+        combo:combo, 
+        producto:producto 
     };
     const detalle = new Detalle(nuevoDetalle);
     await detalle.save();
