@@ -1,8 +1,6 @@
 import { json, Request, Response } from 'express'
 import fs from 'fs-extra';
 import path from 'path'
-
-// Models
 import Combo from '../models/combo';
 import Detalle_Combo from '../models/detalle_combo'
 import Producto from '../models/producto'
@@ -23,11 +21,19 @@ export async function createCombo(req: Request, res: Response): Promise<Response
         imagePath:req.file.path
     };
     const combo = new Combo(newCombo);
-    await combo.save();
-    return res.json({
-        message: 'Combo guardado exitosamente',
-        combo
-    })
+    const combos = await Combo.find({nombre:combo.nombre});
+    const longitud = combos.length;
+    console.log(combos.length);
+    if(longitud==0){
+        await combo.save();
+        return res.json({
+            message: 'Combo guardado exitosamente',
+            combo
+        })
+    }else{
+        return res.json({message: 'Ya existe el combo'});
+  
+    }
 }
 
 export async function getCombo(req: Request, res: Response): Promise<Response> {
