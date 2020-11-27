@@ -81,6 +81,12 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
     });
 }
 
+export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const detalle = await Detalle_Combo.find({idProducto:id});
+    return res.json(detalle);
+}
+
 export async function getDescuentoProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const producto = await Producto.findById(id);
@@ -89,17 +95,6 @@ export async function getDescuentoProducto(req: Request, res: Response): Promise
     return res.json(desc);
 }
 
-export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const detalle = await Detalle_Combo.find({idProducto:id});
-    return res.json(detalle);
-}
-export async function getFoto(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const detalle = await Producto.findById(id);
-    const foto= detalle!.imagePath;
-    return res.send('<img src=http://localhost:4000/'+foto+'>');
-}
 export async function getCategoria(req: Request, res: Response): Promise<Response> {
     const { tipo } = req.params;
     const productos = await Producto.find({tipo:tipo});
