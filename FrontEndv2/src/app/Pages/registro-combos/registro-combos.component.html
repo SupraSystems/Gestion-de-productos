@@ -54,6 +54,7 @@
                   <td (click)="aniadirACombo(productos)">{{productos.getFecha()}}</td>
                   <td (click)="aniadirACombo(productos)">{{productos.getTipo()}}</td>
                   <td class="text-center">
+                    <!--creacion boton eye-->
                       <button class="btn btn-outline-primary mx-1" type="button"
                         title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
                         <i class="fa fa-eye"></i>
@@ -68,6 +69,7 @@
         <div class="form-group col-12">
           <div class="d-flex justify-content-between align-items-end">
             <label for="requisitos">Productos Agregados</label>
+            <!--creacion boton Vaciar Productos-->
             <button class="btn btn-outline-danger" type="button" (click)="borrarProductosDelCombo()">
               <i class="fa fa-minus"></i>
               <!-- <i class="fa fa-shopping-cart"></i> -->
@@ -222,6 +224,7 @@
       <div class="form-group">
           <div class="d-flex justify-content-between align-items-end">
             <label for="requisitos">Combos A Registrar</label>
+            <!--creacion boton Añadir A Lista-->
             <button class="btn btn-outline-info" type="button" (click)="enlistarCombo()" id="enlistar">
               <i class="fa fa-plus"></i>
               <!-- <i class="fa fa-shopping-cart"></i> -->
@@ -275,9 +278,11 @@
         </div>
       </div>
       <div class="card-footer d-flex justify-content-between">
+        <!--creacion de boton limpiar formulario-->
         <button type="button" class="btn btn-secondary" (click)="limpiarFomulario()" id="vaciar">
           Limpiar Formulario
         </button>
+        <!--creacion de boton registrar combos listados-->
         <button type="button" class="btn btn-primary" (click)="alertRegistrar()" id="registrar">
           Registar Combos Listados
           <i class="fa fa-money-bill"></i>
