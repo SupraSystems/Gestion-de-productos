@@ -58,7 +58,11 @@ export class ProductsComponent implements OnInit {
     this.productsService.listaproductos = [];
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
-    this.servicio.$emitter.subscribe(x => this.actualizarBuscador(x),
+    this.servicio.$emitter.subscribe(x => {
+      if( this.tipoProducto!="combos"){
+        this.actualizarBuscador(x);
+      }
+    },
       err => console.error('Eroor de mensaje: ' + err),
       () => console.log('Ocurrio un problems')
     );
@@ -100,7 +104,6 @@ export class ProductsComponent implements OnInit {
         break;
       case 'todos_los_productos':
         this.getProductos();
-        this.getCombos();
         break;
       case 'combos':
         this.getCombos();
@@ -119,21 +122,17 @@ export class ProductsComponent implements OnInit {
 
   //actualizamos la palabra a buscar
   actualizarBuscador(msj) {
-    this.getCombos();
+    //this.getCombos();
     this.buscarNombre = msj;
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.buscarNombre = msj.palabra
     this.URLactual = msj.ruta;
+    console.log(this.URLactual,"-",this.tipoProducto)
     if (this.tipoProducto == msj.ruta) {
       let flag = false;
       for (let i = 0; i < this.listaTodosPr.length; i++) {
         if (!flag) {
           flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
-        }
-      }
-      for (let i = 0; i < this.listaCombos.length; i++) {
-        if (!flag) {
-          flag = this.nombresCoincidentes(this.listaCombos[i].getNombre())
         }
       }
       if (flag) {
@@ -321,10 +320,10 @@ export class ProductsComponent implements OnInit {
   ordenarProductosCombo(orden) {
     switch (orden) {
       case 'Precio Ascendente':
-        this.listaCombos = this.enlistarPrecioMNC();;
+        this.listaCombos = this.enlistarPrecioMNC();
         break;
       case 'Precio Descendente':
-        this.listaCombos = this.enlistarPrecioNMC();;
+        this.listaCombos = this.enlistarPrecioNMC();
         break;
       case 'Alfabeticamente Z-A':
         this.listaCombos = this.enlistarAlfabeticamenteZAC();;
@@ -476,7 +475,7 @@ export class ProductsComponent implements OnInit {
   //actualizamos el combo para que se vea en el modal
   setActualizarCombo(combo: Combo) {
     this.listaProductosCombo = [];
-    //console.log(combo.getImagePath(),":::::::::::::::::::::::::::")
+    console.log(combo.getImagePath(),":::::::::::::::::::::::::::")
     for (let k = 0; k < combo.getIds().length; k++) {
       this.productsService.getProducto(combo.getIds()[k]).subscribe(
         res => {
