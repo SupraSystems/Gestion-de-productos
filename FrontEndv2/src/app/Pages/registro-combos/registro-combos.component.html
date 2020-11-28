@@ -54,18 +54,17 @@
                   <td (click)="aniadirACombo(productos)">{{productos.getFecha()}}</td>
                   <td (click)="aniadirACombo(productos)">{{productos.getTipo()}}</td>
                   <td class="text-center">
-                    <div class="btn btn-group" role="group">
                       <button class="btn btn-outline-primary mx-1" type="button"
                         title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
                         <i class="fa fa-eye"></i>
                       </button>
-                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+        <!---->
         <div class="form-group col-12">
           <div class="d-flex justify-content-between align-items-end">
             <label for="requisitos">Productos Agregados</label>
@@ -103,7 +102,6 @@
                   <td>{{productos.getFecha()}}</td>
                   <td>{{productos.getTipo()}}</td>
                   <td class="text-center">
-                    <div class="btn btn-group" role="group">
                       <button class="btn btn-outline-primary mx-1" type="button"
                         title="ver detalles de producto de la lista" data-toggle="modal" data-target="#modalDetallesProducto" (click)="setActualizarProducto(productos)">
                         <i class="fa fa-eye"></i>
@@ -112,7 +110,6 @@
                       (click)="borrarProductoDelCombo(i)">
                       <i class="fa fa-trash-alt"></i>
                     </button>
-                    </div>
                   </td>
                 </tr>
           </tbody>
@@ -122,6 +119,7 @@
     </div>
     <form id="formulario">
       <div id="datos">
+        <label for="exampleInputpwd2">*La cantidad de productos mínima es de 2 y la máxima es de 5</label>
       <hr style="height: 2px; background-color: rgb(41, 37, 37);">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -259,8 +257,7 @@
                 <td>{{comboL.getCantidad()}}</td>
                 <td class="text-center">
                   <div class="btn btn-group" role="group">
-                    <button class="btn btn-outline-primary mx-1" type="button"
-                      title="ver detalles de combo de la lista">
+                    <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de combo de la lista" data-toggle="modal" data-target="#modalDetalleCombo" (click)="setActualizarCombo(comboL)">
                       <i class="fa fa-eye"></i>
                     </button>
                     <button class="btn btn-outline-warning" type="button" title="editar combo de la lista">
@@ -316,6 +313,41 @@
               <strong>Descripcion:</strong>
               <p>
                  {{producto.getDescripcion()}}
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal detalle de combo-->
+<div class="modal fade" id="modalDetalleCombo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5  class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{combo.getNombre()}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+          </div>
+          <div class="modal-body">
+              <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]=combo.getFoto() alt="">
+              <br>
+                  <strong>Datos:</strong>
+                  <ul>
+                      <li>Categoria de producto: {{combo.getTipo()}}</li>
+                      <li>Precio: {{combo.getPrecio()}} bs.</li>                      
+                      <li>Cantidad: {{combo.getCantidad()}}</li>
+                      <li>Fecha de vencimiento:{{combo.getFecha()}} </li>
+
+                  </ul>
+                  <strong>Contiene los siguientes productos: </strong>
+
+                  <ul *ngFor="let producto of combo.getListaProducto(); index as i">
+                    <li> {{producto.getNombre()}}, perteneciente a la categoria de: {{producto.getTipo()}}</li>
+                  </ul>
+              <strong>Descripcion:</strong>
+              <p>
+                 {{combo.getDescripcion()}}
               </p>
           </div>
       </div>

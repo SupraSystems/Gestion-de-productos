@@ -40,6 +40,7 @@ export class RegistroCombosComponent implements OnInit {
   precioTotal:number=0;
   combo:Combo=new Combo("", "", 0, 0, "", "","","",[]);
   listaCombos:Combo[]=[];
+  imagenC: string | ArrayBuffer;
 
   mensaje = "";
   constructor(public productsService: ServicesService) {
@@ -77,6 +78,8 @@ export class RegistroCombosComponent implements OnInit {
     if (this.listaProductosEnCombo.length > 0) {
       this.listaProductosEnCombo = [];
       this.toastBorrado("Borrado", "Se borraron todos los productos de su combo");
+      this.precioTotal=0;
+      this.cantidadTotal=0;
     } else {
       this.toastBorrado("Error", "Su combo no tiene productos para ser borrados");
     }
@@ -89,6 +92,8 @@ export class RegistroCombosComponent implements OnInit {
       if (indice != i) {
         listaAux.push(this.listaProductosEnCombo[i]);
       } else {
+        this.precioTotal-=this.listaProductosEnCombo[i].getPrecio();
+        this.cantidadTotal-=1;
         nombre = this.listaProductosEnCombo[i].getNombre();
       }
     }
@@ -142,6 +147,9 @@ export class RegistroCombosComponent implements OnInit {
     this.producto = producto;
   }
 
+  setActualizarCombo(combo: Combo) {
+    this.combo = combo;
+  }
   toastExitoso(msj: string): void {
     tata.success('Exito', msj, {
       duration: 5000,
@@ -184,25 +192,34 @@ export class RegistroCombosComponent implements OnInit {
 // registramos el combo que creo a una lista
   enlistarCombo() {
     if (this.camposValidos()) {
-      let nombre = $("#nombre").val();
-      let precio = $("#precio").val();
-      let fechaV = $('#fechaV').val();
-      let fecha = new Date()
-      let cantidad =this.cantidadTotal;
-      let categoria = $("#categoria").val();
-      let imagen = $("#imagen").val();
-      let descripcion = $("#descripcion").val();
+      if(this.listaProductosEnCombo.length<6){
+        if(this.listaProductosEnCombo.length>1){
+          let nombre = $("#nombre").val();
+          let precio = $("#precio").val();
+          let fechaV = $('#fechaV').val();
+          let fecha = new Date()
+          let cantidad =this.cantidadTotal;
+          let categoria = $("#categoria").val();
+          let imagen = this.imagenC;
+          let descripcion = $("#descripcion").val();
  
-      this.combo = new Combo(descripcion, categoria, precio, cantidad, "", "", "", nombre,this.listaProductosEnCombo, fechaV, this.file);
-      this.listaCombos.push(this.combo);
-      this.limpiarRegistros();
-      this.toastExito();
-      this.listaProductosEnCombo=[];
-      this.desabilitar()
-      this.contadorDeProductos= 0
-      this.fechasAcumuladas=0;
-      $("#registrar").attr("disabled",false);
-      $("#vaciar").attr("disabled",false);
+          this.combo = new Combo(descripcion, categoria, precio, cantidad, imagen, "", "", nombre,this.listaProductosEnCombo, fechaV, this.file);
+          this.listaCombos.push(this.combo);
+          this.limpiarRegistros();
+          this.toastExito();
+          this.listaProductosEnCombo=[];
+          this.desabilitar()
+          this.contadorDeProductos= 0
+          this.fechasAcumuladas=0;
+          $("#registrar").attr("disabled",false);
+          $("#vaciar").attr("disabled",false);
+        } else {
+          this.toastError2();
+        }
+      } else{
+        this.toastError1();
+      }
+      
     } else {
       this.toastError();
     }
@@ -245,6 +262,10 @@ export class RegistroCombosComponent implements OnInit {
         $("#imagen").removeClass("is-invalid");
         $("#imagen").addClass("is-valid");
         $("#imagen1").css('display', 'none');
+      
+        const reader = new FileReader();
+        reader.onload = e => this.imagenC=reader.result;
+        reader.readAsDataURL(this.file)
       } else {
         $("#imagen").removeClass("is-valid");
         $("#imagen").addClass("is-invalid");
@@ -289,6 +310,18 @@ export class RegistroCombosComponent implements OnInit {
     });
     this.validador.setMensaje();
   }
+  toastError1(): void {
+    tata.error('Error', 'La cantidad de productos seleccionados excede el limite permitido', {
+      duration: 4000,
+      animate: 'slide'
+    });
+  }
+  toastError2(): void {
+    tata.error('Error', 'La cantidad de productos seleccionados debe ser mayor a 1', {
+      duration: 4000,
+      animate: 'slide'
+    });
+  }
 
   toastEliminacion(): void {
     tata.error('Eliminacion', 'se elimino  un producto de la lista de registro', {
@@ -317,8 +350,10 @@ export class RegistroCombosComponent implements OnInit {
 
   registrarCombos() {
     for (let i = 0; i < this.listaCombos.length; i++) {
-    //  this.productsService.addProduct(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
+      this.productsService.addCombo(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
     console.log(this.listaCombos[i],"-------")
+    //console.log(this.listaCombos[i].getListaProducto()[2].getId());
+    //console.log(this.listaCombos[i].getListaProducto().length);
     }
   }
 

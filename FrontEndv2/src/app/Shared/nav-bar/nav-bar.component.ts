@@ -59,7 +59,7 @@ export class NavBarComponent implements OnInit {
           this.router.navigate(['/todos_los_productos']);
           //this.buscarProducto.emit({palabra:this.buscarNombre, ruta:"todos_los_productos"});
         } else {
-          this.toastError("No tiene productos con ese nombre");
+          this.toastError("no se encontraron productos coincidentes");
         }
       } // si no se encuentra en la ruta del home
       else{
