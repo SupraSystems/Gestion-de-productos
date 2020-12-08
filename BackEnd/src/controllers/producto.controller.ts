@@ -12,7 +12,7 @@ export async function getProductos(req: Request, res: Response): Promise<Respons
 }
 
 export async function createProducto(req: Request, res: Response): Promise<Response> {
-    const {nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
+    const {nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento,porcentajedescuento} = req.body;
     const newPreoducto = {
         nombre:nombre,
         descripcion:descripcion,
@@ -21,6 +21,7 @@ export async function createProducto(req: Request, res: Response): Promise<Respo
         cantidad:cantidad,
         fechavencimiento:fechavencimiento,
         coddescuento:coddescuento,
+        porcentajedescuento:porcentajedescuento,
         imagePath:req.file.path
     };
     const producto = new Producto(newPreoducto);
@@ -52,15 +53,15 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
     const { id } = req.params;
     const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento, porcentajedescuento} = req.body;
     const updatedProducto = await Producto.findByIdAndUpdate(id, { $set: {
-        nombre,
-        descripcion,
-        tipo,
-        precio,
-        cantidad,
-        fechavencimiento,
-        coddescuento,
-        porcentajedescuento
-    }
+            nombre,
+            descripcion,
+            tipo,
+            precio,
+            cantidad,
+            fechavencimiento,
+            coddescuento,
+            porcentajedescuento
+        }
     },{new: true});
     return res.json({
         message: 'Producto actualizado exitosamente',
