@@ -2,8 +2,8 @@ import { Router } from 'express'
 const router = Router();
 
 import upload from '../libs/multer'
-import { getProductos, createProducto, deleteProducto, getProducto, updateProducto, getComboDeProducto, getDescuentoProducto, getFoto, getCategoria } from '../controllers/producto.controller'
-import { createDescuento, deleteDescuento, getDescuento, getDescuentos, updateDescuento } from '../controllers/descuento.controller';
+import { getProductos, createProducto, deleteProducto, getProducto, updateProducto, updateDescuento, getComboDeProducto, getDescuentoProducto, getFoto, getCategoria } from '../controllers/producto.controller'
+import { createDescuento, deleteDescuento, getDescuento, getDescuentos } from '../controllers/descuento.controller';
 import { createCombo, deleteCombo, getCombo, updateCombo } from '../controllers/combo.controller';
 import { createDetalle, deleteDetalle, getDetalle, getDetalles, updateDetalle } from '../controllers/detalle.controller';
 
@@ -17,7 +17,8 @@ router.route('/producto')
 router.route('/producto/:id')
     .get(getProducto)
     .delete(deleteProducto)
-    .put(updateProducto);
+    .put(updateProducto)
+    .put(updateDescuento);
 router.route('/descuento')
     .get(getDescuentos)
     .post(createDescuento)

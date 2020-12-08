@@ -67,6 +67,7 @@ export async function updateProducto(req: Request, res: Response): Promise<Respo
         updatedProducto
     });
 }
+
 export async function updateDescuento(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const { porcentajedescuento} = req.body;
