@@ -50,21 +50,37 @@ export async function deleteProducto(req: Request, res: Response): Promise<Respo
 
 export async function updateProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento} = req.body;
-    const updatedProducto = await Producto.findByIdAndUpdate(id, {
+    const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento, porcentajedescuento} = req.body;
+    const updatedProducto = await Producto.findByIdAndUpdate(id, { $set: {
         nombre,
         descripcion,
         tipo,
         precio,
         cantidad,
         fechavencimiento,
-        coddescuento
+        coddescuento,
+        porcentajedescuento
+    }
     },{new: true});
     return res.json({
         message: 'Producto actualizado exitosamente',
         updatedProducto
     });
 }
+
+export async function updateDescuento(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { porcentajedescuento} = req.body;
+    const updatedDescuento = await Producto.findByIdAndUpdate(id, { $set: {
+        porcentajedescuento
+    }
+    },{new: true});
+    return res.json({
+        message: 'Descuento actualizado exitosamente',
+        updatedDescuento
+    });
+}
+
 
 export async function getDescuentoProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
