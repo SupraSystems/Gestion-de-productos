@@ -144,7 +144,9 @@ export class RegistroCombosComponent implements OnInit {
 
   //guardamos la informacion de un producto para mostrarlo en el modal
   setActualizarProducto(producto: Producto) {
+    console.log(producto);
     this.producto = producto;
+    console.log(producto);
   }
 
   setActualizarCombo(combo: Combo) {

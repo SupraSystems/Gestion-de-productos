@@ -10,8 +10,9 @@ export class Producto {
     imagePath: string;
     fechavencimiento:string;
     file:File;
+    descuento:number;
 
-    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File, descuento?:number){
 
         this.descripcion=descripcion;
         this.tipo=tipo;
@@ -24,6 +25,7 @@ export class Producto {
         this.nombre=nombre;
         this.fechavencimiento=fecha;
         this.file=file;
+        this.descuento=descuento;
     }
     public getFecha(){
         return this.fechavencimiento;
@@ -54,5 +56,8 @@ export class Producto {
     }
     public getFile(): File{
         return this.file;
+    }
+    public getDescuento(): number{
+        return this.descuento;
     }
 }

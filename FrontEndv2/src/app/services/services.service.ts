@@ -73,4 +73,16 @@ export class ServicesService {
     console.log(fdc);
     return this.http.post(this.URL_API_CB,fdc);
   }
+
+
+  addDescuento(producto:Producto ){
+    const fd = new FormData();
+    fd.append('id', producto.getId());
+    //fd.append('descuentos', producto.getDescuento());
+    
+    console.log(fd);
+    return this.http.put(this.URL_API,fd);
+  }
+
+
 }

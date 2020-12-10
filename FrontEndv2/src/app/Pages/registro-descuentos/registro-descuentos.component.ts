@@ -147,6 +147,7 @@ export class RegistroDescuentosComponent implements OnInit {
         this.validador.limpiarRegistros("precioDescuentoN");
         this.precioActual = 0;
         this.banderaDescuento = false;
+        //console.log(this.productoSeleccionado);
       }else{
         this.toastError("Porcentaje Ingresado Invalido")
       }

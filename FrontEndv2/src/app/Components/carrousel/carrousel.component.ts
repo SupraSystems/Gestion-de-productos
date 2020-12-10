@@ -51,12 +51,29 @@ export class CarrouselComponent implements OnInit {
           let id = this.productsService.listaproductos[i]._id;
           this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
           this.listaDescuentos.push(this.producto);
+          
         }
-        this.listaCincoDescuentos = this.listaDescuentos.slice();
+        this.ordenarProductosMayMen();
+
+        for(let j = 0; j < 5 ;j ++){
+          this.listaCincoDescuentos[j] = this.listaDescuentos[j];
+        }
+
+        //this.listaCincoDescuentos = this.listaDescuentos.slice();
         this.getImagenesDescuento();
+        console.log(this.listaCincoDescuentos);
       },
       err => console.log(err)
     )
+  }
+/*
+  ordenarProductosMenMay(){
+    this.listaDescuentos.sort(((a, b) => a.precio - b.precio));
+  }
+*/
+  //ordenar los productos para poder obtener de mayor a menor precio
+  ordenarProductosMayMen(){
+    this.listaDescuentos.sort(((a, b) => b.precio - a.precio));
   }
 
   getImagenesDescuento(){
