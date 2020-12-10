@@ -1,1 +1,233 @@
-<p>registro-descuentos works!</p>
+<div id="title" class="container py-5 text-center" width="100%">
+  <h2 class="container text-dark text-center">REGISTRO DE DESCUENTOS</h2>
+</div>
+<br>
+<div class="container" role="document">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-12">
+          <div class="row d-flex justify-content-between
+                        align-items-end">
+            <label for="requisitos" class="col">
+              Seleccionar Productos
+            </label>
+            <select class="custom-select col ml-3 mr-3" (change)="categorizar()" id="categoria">
+              <option value="todos" selected>
+                Todos Los Productos
+              </option>
+              <option value="Frescos">Frescos</option>
+              <option value="Alimentos">Alimentos</option>
+              <option value="Para Farmacia">Para Farmacia</option>
+              <option value="Basicos del hogar">Basicos del hogar</option>
+              <option value="Higiene y Belleza">Higiene y Belleza</option>
+              <option value="Mascotas">Mascotas</option>
+              <option value="Bebe">Bebe</option>
+              <option value="Bebidas">Bebidas</option>
+            </select>
+          </div>
+          <!-- este es un ejemplo -->
+          <div class="table-responsive mt-3 aux">
+            <table class="table align-middle table-hover
+                            table-bordered" id="requerimientos">
+              <thead class="thead-dark" style="background-color: black;">
+                <tr>
+                  <th class="text-center" scope="col">
+                    Nombre
+                  </th>
+                  <th class="text-center" scope="col">
+                    Precio
+                  </th>
+                  <th class="text-center" scope="col">
+                    Fecha de vencimiento
+                  </th>
+                  <th class="text-center" scope="col">
+                    Categoria
+                  </th>
+                  <th class="text-center" scope="col">
+                    Detalles
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let productos of listaProductosRegistrados; index as i">
+                  <td (click)="aniadirDescuento(productos)">{{productos.getNombre()}}</td>
+                  <td (click)="aniadirDescuento(productos)">{{productos.getPrecio()}}bs</td>
+                  <td (click)="aniadirDescuento(productos)">{{productos.getFecha()}}</td>
+                  <td (click)="aniadirDescuento(productos)">{{productos.getTipo()}}</td>
+                  <td class="text-center">
+                    <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de
+                                            la lista" data-toggle="modal" data-target="#modalDetallesProducto"
+                      (click)="setActualizarProducto(productos)">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <br>
+      <hr style="background: black; height: 1px;">
+      <div *ngIf="banderaDescuento" class="d-flex justify-content-center align-items-center">
+        <p class="h3 text-center d-inline-block">{{nombreProductoS}}</p>  
+        <button class="btn btn-outline-info" title="ver informacion del producto a comprar" data-toggle="modal"
+          data-target="#modalDetallesProductoTitulo">
+          <i class="fa fa-info"></i>
+        </button>
+
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="exampleInputpwd2">Precio Actual</label>
+          <div class="input-group">
+            <input class="form-control bg-white" formControlName="precio" readonly value="{{precioActual}}">
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="exampleInputpwd2">Porcentaje De Descuento</label>
+          <div class="input-group">
+            <input class="form-control bg-white" id="precioDescuentoN" type="number">
+            <span class="btn disabled"
+              style="background-color: #e9ecef; border: 1px solid rgba(0,0,0,.15); border-radius: 0px 0.25rem 0.25rem 0px;">
+              <i class="fa fa-money-bill"></i></span>
+          </div>
+          <small class="inline-block text-danger" id="precioDescuentoN1" style="display: none;">
+            datos invalidos
+            <small class="fal fa-exclamation-triangle"></small>
+          </small>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="exampleInputpwd2">Precio Con Descuento</label>
+          <div class="input-group">
+            <input class="form-control bg-white" formControlName="precio" readonly value="{{precioDescuento}}">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="d-flex justify-content-between align-items-end">
+        <label for="requisitos">Descuentos A Registrar</label>
+        <button class="btn btn-outline-info" [ngClass]="{disabled: !banderaDescuento}"  type="button" (click)="enlistarDescuento()"
+          id="enlistar">
+          <i class="fa fa-plus"></i>
+          <!-- <i class="fa fa-shopping-cart"></i> -->
+          Añadir A Lista
+        </button>
+      </div>
+      <div class="table-responsive mt-3">
+        <table class="table align-middle table-hover table-bordered" id="requerimientos">
+          <thead class="thead-dark">
+            <tr>
+              <th class="text-center" scope="col">
+                Nombre
+              </th>
+              <th class="text-center" scope="col">
+                Precio
+              </th>
+              <th class="text-center" scope="col">
+                Fecha de vencimiento
+              </th>
+              <th class="text-center" scope="col">
+                Categoria
+              </th>
+              <th class="text-center" scope="col">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let productos of listaProductosRD; index as i">
+              <td>{{productos.getNombre()}}</td>
+              <td>{{productos.getPrecio()}}bs</td>
+              <td>{{productos.getFecha()}}</td>
+              <td>{{productos.getTipo()}}</td>
+              <td class="text-center">
+                <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de
+                                          la lista" data-toggle="modal" data-target="#modalDetallesProducto"
+                  (click)="setActualizarProducto(productos)">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-outline-danger mx-1" type="button" title="borrar combo de la lista"
+                      (click)="borrarElemento(i)">
+                      <i class="fa fa-trash-alt"></i>
+                    </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="borrarListaDescuento()" id="vaciar">
+        Limpiar Formulario
+      </button>
+      <button type="button" class="btn btn-primary" (click)="alertRegistrar()" id="registrar">        Registar Combos Listados
+        <i class="fa fa-money-bill"></i>
+      </button>
+    </div>
+
+  </div>
+</div>
+<!-- Modal detalle de producto -->
+<div class="modal fade" id="modalDetallesProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{producto.getNombre()}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]="producto.getImagePath()" alt>
+        <br>
+        <strong>Datos:</strong>
+        <ul>
+          <li>Categoria de producto: {{producto.getTipo()}}</li>
+          <li>Precio: {{producto.getPrecio()}} bs.</li>
+          <li>Cantidad: {{producto.getCantidad()}}</li>
+          <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
+        </ul>
+        <strong>Descripcion:</strong>
+        <p>
+          {{producto.getDescripcion()}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal detalle de producto -->
+<div class="modal fade" id="modalDetallesProductoTitulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{productoSeleccionado.getNombre()}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]="productoSeleccionado.getImagePath()" alt>
+        <br>
+        <strong>Datos:</strong>
+        <ul>
+          <li>Categoria de producto: {{productoSeleccionado.getTipo()}}</li>
+          <li>Precio: {{productoSeleccionado.getPrecio()}} bs.</li>
+          <li>Cantidad: {{productoSeleccionado.getCantidad()}}</li>
+          <li>Fecha de vencimiento:{{productoSeleccionado.getFecha()}} </li>
+        </ul>
+        <strong>Descripcion:</strong>
+        <p>
+          {{productoSeleccionado.getDescripcion()}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

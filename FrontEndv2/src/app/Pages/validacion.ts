@@ -74,20 +74,39 @@ export class Validacion {
                 $("#" + id).addClass("is-invalid");
                 $("#" + id + "1").css('display', 'block');
             } else {
-                if (value.length < min || value.length > max) {
-                    $("#" + id).removeClass("is-valid");
-                    $("#" + id).addClass("is-invalid");
-                    $("#" + id + "1").css('display', 'block');
-                }
-                else {
-                    if (value.length >= min && value.length <= max) {
-                        $("#" + id).addClass("is-valid");
-                        $("#" + id + "1").css('display', 'none');
+                //
+                if (id == "precioDescuentoN") {
+                    let mn = parseInt(value)
+                    if (mn < 5 || mn > 75) {
+                        $("#" + id).removeClass("is-valid");
+                        $("#" + id).addClass("is-invalid");
+                        $("#" + id + "1").css('display', 'block');
+                    }
+                    else {
+                        if (mn >= min && mn <= max) {
+                            $("#" + id).removeClass("is-invalid");
+                            $("#" + id).addClass("is-valid");
+                            $("#" + id + "1").css('display', 'none');
+                        }
+                    }
+                    //
+                } else {
+                    if (value.length < min || value.length > max) {
+                        $("#" + id).removeClass("is-valid");
+                        $("#" + id).addClass("is-invalid");
+                        $("#" + id + "1").css('display', 'block');
+                    }
+                    else {
+                        if (value.length >= min && value.length <= max) {
+                            $("#" + id).addClass("is-valid");
+                            $("#" + id + "1").css('display', 'none');
+                        }
                     }
                 }
             }
         }, true);
         let contador = 0;
+        let num = 0;
         $("#" + id).keydown(function (e) {
             let value = (<HTMLInputElement>document.getElementById(id)).value;
             console.log(e.which)
@@ -101,22 +120,49 @@ export class Validacion {
                     if (e.which == 8) {
                         if (contador > 0) {
                             contador -= 1;
+                            //
+                            num = parseInt((num / 10).toString());
+                            if (id == "precioDescuentoN") {
+                                if (num < 5 || num > 75) {
+                                    $("#" + id).removeClass("is-valid");
+                                    $("#" + id).addClass("is-invalid");
+                                    $("#" + id + "1").css('display', 'block');
+                                } else {
+                                    $("#" + id).removeClass("is-invalid");
+                                    $("#" + id).addClass("is-valid");
+                                    $("#" + id + "1").css('display', 'none');
+                                }
+
+                            }
+                            //
                         }
                         if (contador == 0) {
                             $("#" + id).removeClass("is-valid");
                             $("#" + id).addClass("is-invalid");
                             $("#" + id + "1").css('display', 'block');
                         } else {
-                            if (contador < min) {
-                                $("#" + id).removeClass("is-valid");
-                                $("#" + id).addClass("is-invalid");
-                                $("#" + id + "1").css('display', 'block');
-                            }
-                            else {
-                                if (contador > min) {
+                            if (id == "precioDescuentoN") {
+                                if (num < 5 || num > 75) {
+                                    $("#" + id).removeClass("is-valid");
+                                    $("#" + id).addClass("is-invalid");
+                                    $("#" + id + "1").css('display', 'block');
+                                } else {
                                     $("#" + id).removeClass("is-invalid");
                                     $("#" + id).addClass("is-valid");
                                     $("#" + id + "1").css('display', 'none');
+                                }
+                            } else {
+                                if (contador < min) {
+                                    $("#" + id).removeClass("is-valid");
+                                    $("#" + id).addClass("is-invalid");
+                                    $("#" + id + "1").css('display', 'block');
+                                }
+                                else {
+                                    if (contador > min) {
+                                        $("#" + id).removeClass("is-invalid");
+                                        $("#" + id).addClass("is-valid");
+                                        $("#" + id + "1").css('display', 'none');
+                                    }
                                 }
                             }
                         }
@@ -128,16 +174,33 @@ export class Validacion {
                         else {
                             if (e.which != 32) {
                                 contador += 1;
-                            }
-                            if ((value.length + 1) >= min && (value.length + 1) < max) {
-                                $("#" + id).removeClass("is-invalid");
-                                $("#" + id).addClass("is-valid");
-                                $("#" + id + "1").css('display', 'none');
-                            } else {
-                                if ((value.length + 1) < min || (value.length + 1) > max) {
+                            }//
+                            if (id == "precioDescuentoN") {
+                                console.log(e.which);
+                                num = (num * 10) + (e.which - 48);
+                                if (num < 5 || num > 75) {
                                     $("#" + id).removeClass("is-valid");
                                     $("#" + id).addClass("is-invalid");
                                     $("#" + id + "1").css('display', 'block');
+                                }
+                                else {
+                                    if (num >= 5 && num <= 75) {
+                                        $("#" + id).removeClass("is-invalid");
+                                        $("#" + id).addClass("is-valid");
+                                        $("#" + id + "1").css('display', 'none');
+                                    }
+                                }
+                            } else {
+                                if ((value.length + 1) >= min && (value.length + 1) < max) {
+                                    $("#" + id).removeClass("is-invalid");
+                                    $("#" + id).addClass("is-valid");
+                                    $("#" + id + "1").css('display', 'none');
+                                } else {
+                                    if ((value.length + 1) < min || (value.length + 1) > max) {
+                                        $("#" + id).removeClass("is-valid");
+                                        $("#" + id).addClass("is-invalid");
+                                        $("#" + id + "1").css('display', 'block');
+                                    }
                                 }
                             }
                         }
