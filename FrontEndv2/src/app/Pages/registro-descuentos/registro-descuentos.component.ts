@@ -138,14 +138,17 @@ export class RegistroDescuentosComponent implements OnInit {
 
   // registramos el combo que creo a una lista
   enlistarDescuento() {
+    if(this.precioDescuento!=0){
     if ($("#precioDescuentoN").val() != "" && this.banderaDescuento) {
       let descuento=parseInt($("#precioDescuentoN").val());
       if(descuento > 4 && descuento< 76 ){
         this.toastExitoso("Descuento Enlistado")
+        this.productoSeleccionado.setDescuento(this.precioDescuento);
         this.listaProductosRD.push(this.productoSeleccionado)
         $("#precioDescuentoN").val("");
         this.validador.limpiarRegistros("precioDescuentoN");
         this.precioActual = 0;
+        this.precioDescuento = 0;
         this.banderaDescuento = false;
       }else{
         this.toastError("Porcentaje Ingresado Invalido")
@@ -153,6 +156,9 @@ export class RegistroDescuentosComponent implements OnInit {
     } else {
       this.toastError("Porcentaje Ingresado Invalido")
     }
+  }else{
+    this.toastError("Debe verificar el precio de descuento")
+  }
   }
 
   //guardamos la imagen que selecciono
@@ -192,6 +198,8 @@ export class RegistroDescuentosComponent implements OnInit {
     this.listaProductosRD = [];
   }
 
+
+
   // mostramos un mensaje de alerta al registrar los combos
   alertRegistrar(): void {
     if (this.listaProductosRegistrados.length > 0) {
@@ -206,7 +214,7 @@ export class RegistroDescuentosComponent implements OnInit {
         confirmButtonText: 'Si'
       }).then((result) => {
         if (result.isConfirmed) {
-          //this.registrarCombos();
+          this.registrarDeceuntos();
           this.listaProductosRD = [];
           Swal.fire(
             '!Registro Existoso!',
@@ -239,5 +247,27 @@ export class RegistroDescuentosComponent implements OnInit {
 
   validoS(id) {
     $("#" + id).addClass("is-valid");
+  }
+
+  descontarPrecio(){
+    if(this.precioActual!=0){
+      if($("#precioDescuentoN").hasClass("is-valid")){
+        let aux=this.precioActual/100;//0.15
+        let descuento=$("#precioDescuentoN").val()*aux;//1.05
+        this.precioDescuento=this.precioActual-descuento;
+        this.toastExitoso("Se calculo el precio de descuento del producto")
+      } else{
+        this.toastError("Debe ingresar un porcentaje de descuento");
+      }
+    }
+    else{
+      this.toastError("Debe seleccioinar un producto");
+    }
+  }
+  registrarDeceuntos(){
+    for (let i = 0; i < this.listaProductosRD.length; i++) {
+      console.log(this.listaProductosRD[i],"---------")
+      
+    }
   }
 }
