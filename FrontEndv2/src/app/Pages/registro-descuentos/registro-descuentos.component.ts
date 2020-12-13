@@ -136,26 +136,60 @@ export class RegistroDescuentosComponent implements OnInit {
     });
   }
 
-  // registramos el combo que creo a una lista
   enlistarDescuento() {
+    if(this.precioDescuento!=0){
     if ($("#precioDescuentoN").val() != "" && this.banderaDescuento) {
       let descuento=parseInt($("#precioDescuentoN").val());
       if(descuento > 4 && descuento< 76 ){
         this.toastExitoso("Descuento Enlistado")
+        this.productoSeleccionado.setDescuento(descuento);
+        this.productoSeleccionado.setPrecio(this.precioDescuento);
         this.listaProductosRD.push(this.productoSeleccionado)
         $("#precioDescuentoN").val("");
         this.validador.limpiarRegistros("precioDescuentoN");
         this.precioActual = 0;
+        this.precioDescuento = 0;
         this.banderaDescuento = false;
-        //console.log(this.productoSeleccionado);
+        console.log(this.listaProductosRD);
       }else{
         this.toastError("Porcentaje Ingresado Invalido")
       }
     } else {
       this.toastError("Porcentaje Ingresado Invalido")
     }
+  }else{
+    this.toastError("Debe verificar el precio de descuento")
+  }
   }
 
+
+  // registramos el combo que creo a una lista
+  /*
+  enlistarDescuento() {
+    if(this.precioDescuento!=0){
+    if ($("#precioDescuentoN").val() != "" && this.banderaDescuento) {
+      let descuento=parseInt($("#precioDescuentoN").val());
+      if(descuento > 4 && descuento< 76 ){
+        this.toastExitoso("Descuento Enlistado")
+        this.productoSeleccionado.setDescuento(this.precioDescuento);
+        this.listaProductosRD.push(this.productoSeleccionado)
+        $("#precioDescuentoN").val("");
+        this.validador.limpiarRegistros("precioDescuentoN");
+        this.precioActual = 0;
+        this.precioDescuento = 0;
+        this.banderaDescuento = false;
+        console.log(this.listaProductosRD);
+      }else{
+        this.toastError("Porcentaje Ingresado Invalido")
+      }
+    } else {
+      this.toastError("Porcentaje Ingresado Invalido")
+    }
+  }else{
+    this.toastError("Debe verificar el precio de descuento")
+  }
+  }
+*/
   //guardamos la imagen que selecciono
   seleccionImagen(event: HtmlInputEvent): void {
     if (event.target.files && event.target.files[0]) {
@@ -184,7 +218,7 @@ export class RegistroDescuentosComponent implements OnInit {
   //registro de productos con descuentos
   registrarDescuentos() {
     for (let i = 0; i < this.listaProductosRD.length; i++) {
-      //this.productsService.addCombo(this.listaCombos[i]).subscribe(res => console.log(res), err => console.log(err));
+      this.productsService.addDescuento(this.listaProductosRD[i]).subscribe(res => console.log(res), err => console.log(err));
     }
   }
 
@@ -192,6 +226,8 @@ export class RegistroDescuentosComponent implements OnInit {
     this.toastBorrado("Lista De Descuentos Borrados");
     this.listaProductosRD = [];
   }
+
+
 
   // mostramos un mensaje de alerta al registrar los combos
   alertRegistrar(): void {
@@ -207,7 +243,7 @@ export class RegistroDescuentosComponent implements OnInit {
         confirmButtonText: 'Si'
       }).then((result) => {
         if (result.isConfirmed) {
-          //this.registrarCombos();
+          this.registrarDescuentos();
           this.listaProductosRD = [];
           Swal.fire(
             '!Registro Existoso!',
@@ -240,5 +276,29 @@ export class RegistroDescuentosComponent implements OnInit {
 
   validoS(id) {
     $("#" + id).addClass("is-valid");
+  }
+
+  descontarPrecio(){
+    if(this.precioActual!=0){
+      if($("#precioDescuentoN").hasClass("is-valid")){
+        let aux=this.precioActual/100;//0.15
+        let descuento=$("#precioDescuentoN").val()*aux;//1.05
+        this.precioDescuento=this.precioActual-descuento;
+        this.toastExitoso("Se calculo el precio de descuento del producto")
+      } else{
+        this.toastError("Debe ingresar un porcentaje de descuento");
+      }
+    }
+    else{
+      this.toastError("Debe seleccioinar un producto");
+    }
+  }
+
+
+  registrarDeceuntos(){
+    for (let i = 0; i < this.listaProductosRD.length; i++) {
+      console.log(this.listaProductosRD[i],"---------")
+      
+    }
   }
 }
