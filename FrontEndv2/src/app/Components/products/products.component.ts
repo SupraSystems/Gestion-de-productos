@@ -19,6 +19,8 @@ export class ProductsComponent implements OnInit {
   ruta = "";
   descripcion = "";
   tipoProducto = "";
+  des=false;
+  des1=true;
 
   srcImagen = "https://productos-backend.herokuapp.com/uploads/";
   listaDesordenada: Producto[] = [];
@@ -211,7 +213,8 @@ export class ProductsComponent implements OnInit {
           let tipo = this.productsService.listaproductos[i].tipo;
           let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
           let id = this.productsService.listaproductos[i]._id;
-          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
+          let descuento =this.productsService.listaproductos[i].porcentajedescuento;
+          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,null, descuento)
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
@@ -239,7 +242,8 @@ export class ProductsComponent implements OnInit {
           let tipo = this.productsService.listaproductos[i].tipo;
           let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
           let id = this.productsService.listaproductos[i]._id;
-          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
+          let descuento =this.productsService.listaproductos[i].porcentajedescuento;
+          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,null,descuento)
           this.listaDesordenada.push(this.producto);
         }
         this.listaTodosPr = this.listaDesordenada.slice();
@@ -493,7 +497,18 @@ export class ProductsComponent implements OnInit {
     let path = producto.imagePath;
     this.descripcion = producto.descripcion
     this.ruta = this.srcImagen + path.substring(8);
-    this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento);
+    if(producto.porcentajedescuento>4)
+    {
+        this.des=true;
+        this.des1=false;
+        this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento,null, producto.porcentajedescuento);
+    }
+    else {
+      this.des=false;
+      this.des1=true;
+      this.producto = new Producto(this.descripcion, producto.tipo, producto.precio, producto.cantidad, producto.foto, producto._id, path, producto.nombre, producto.fechavencimiento,null,producto.porcentajedescuento);
+    }
+    
   }
 
   //actualizamos el combo para que se vea en el modal

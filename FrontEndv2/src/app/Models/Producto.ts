@@ -67,4 +67,19 @@ export class Producto {
     public getFile(): File{
         return this.file;
     }
+    public getPrecio1() {
+        if(this.porcentajedescuento>4)
+        {
+            
+            let p;
+            
+            p= this.precio-this.porcentajedescuento/100*this.precio;
+            return Math.round(p* 100) / 100 ;
+            
+
+        } else {
+            return this.precio;
+        }
+        
+    }
 }

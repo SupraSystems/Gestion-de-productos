@@ -1,6 +1,12 @@
 .card_pintura:hover{
     border: solid 0.2rem  #e94dd4;
 }
+.tachado {
+    text-decoration: line-through;
+}
+.visible {
+    display: none;
+}
 #title{
     position:absolute;
     width: 100%;
