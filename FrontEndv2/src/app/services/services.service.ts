@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../Models/Producto";
 import { DepFlags } from '@angular/compiler/src/core';
-import { Combo } from '../models/Combo';
+import { Combo } from '../Models/Combo';
+import { HttpRequest} from "@angular/common/http";
+
 
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
@@ -11,12 +13,20 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ServicesService {
-  URL_API ="https://productos-backend.herokuapp.com/api/producto"
-  URL_API_CB = "https://productos-backend.herokuapp.com/api/combo"
+  //URL_API ="https://productos-backend.herokuapp.com/api/producto"
+  //URL_API_CB = "https://productos-backend.herokuapp.com/api/combo"
+  //URL_API_DS ="https://productos-backend.herokuapp.com/api/producto/"
+
+  URL_API ="http://localhost:4000/api/producto"
+  URL_API_CB = "http://localhost:4000/api/combo"
+  URL_API_DS ="http://localhost:4000/api/producto/"
 
   listaproductos : Producto[];
   listacombos : Combo[];
   productoReg : Producto = new Producto("","",0,0,"","","","");
+  
+
+  //idDescuento ="";
 
   constructor(private http: HttpClient) { }
 
@@ -73,4 +83,20 @@ export class ServicesService {
     console.log(fdc);
     return this.http.post(this.URL_API_CB,fdc);
   }
+
+
+  addDescuento(producto:Producto) {
+    let idDescuento = producto.getId();
+    let porDes =  producto.getDescuento();
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    
+
+    let iddes = {'porcentajedescuento': porDes}
+
+    return this.http.put(this.URL_API_DS+idDescuento, iddes, httpOptions);
+  }
+
 }

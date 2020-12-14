@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistroDescuentosComponent } from '../registro-descuentos/registro-descuentos.component';
 import { Producto } from '../../Models/Producto';
-import { Combo } from '../../models/Combo';
+import { Combo } from '../../Models/Combo';
 
 import { Validacion } from '../validacion'
 import { ServicesService } from "../../services/services.service";
@@ -31,6 +31,7 @@ export class RegistroCombosComponent implements OnInit {
   producto: Producto = new Producto("", "", 0, 0, "", "", "", "");
   file: File;
   srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  //srcImagen = "http://localhost:4000/uploads/";
   listaTodosPr: Producto[] = [];
   listaProductoRegistrado: Producto[] = []
   listaProductosEnCombo: Producto[] = []
@@ -144,7 +145,9 @@ export class RegistroCombosComponent implements OnInit {
 
   //guardamos la informacion de un producto para mostrarlo en el modal
   setActualizarProducto(producto: Producto) {
+    console.log(producto);
     this.producto = producto;
+    console.log(producto);
   }
 
   setActualizarCombo(combo: Combo) {

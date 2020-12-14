@@ -1,9 +1,11 @@
-import { Request, Response } from 'express'
+import { json, Request, Response } from 'express'
 import fs from 'fs-extra';
 import path from 'path'
+
 // Models
 import Combo from '../models/combo';
 import Detalle_Combo from '../models/detalle_combo'
+import Producto from '../models/producto'
 
 export async function getCombos(req: Request, res: Response): Promise<Response> {
     const combo = await Combo.find();
@@ -11,12 +13,13 @@ export async function getCombos(req: Request, res: Response): Promise<Response> 
 }
 
 export async function createCombo(req: Request, res: Response): Promise<Response> {
-    const {_id,nombre,descripcion,precio} = req.body;
+    const {nombre,descripcion,precio,fechaconclusion,productos} = req.body;
     const newCombo = {
-        _id:_id,
         nombre:nombre,
         descripcion:descripcion,
         precio:precio,
+        fechaconclusion:fechaconclusion,
+        productos:productos,
         imagePath:req.file.path
     };
     const combo = new Combo(newCombo);
@@ -28,10 +31,13 @@ export async function createCombo(req: Request, res: Response): Promise<Response
 }
 
 export async function getCombo(req: Request, res: Response): Promise<Response> {
+    
     const { id } = req.params;
-    const combo = await Combo.findById(id);
-    return res.json(combo);
-}
+    const com = await Combo.findById(id);
+        return res.json(com);
+
+    }
+    
 
 export async function deleteCombo(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
@@ -44,11 +50,12 @@ export async function deleteCombo(req: Request, res: Response): Promise<Response
 
 export async function updateCombo(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { nombre, descripcion, precio} = req.body;
+    const { nombre, descripcion, precio,productos} = req.body;
     const updatedCombo = await Combo.findByIdAndUpdate(id, {
         nombre,
         descripcion,
         precio,
+        productos
     });
     return res.json({
         message: 'Combo actualizado exitosamente',
@@ -56,9 +63,9 @@ export async function updateCombo(req: Request, res: Response): Promise<Response
     });
 }
 
-export async function getPooductosDeCombo(req: Request, res: Response): Promise<Response> {
+export async function getProductosDeCombo(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const combo = await Combo.find(id);
-    const productos = await Detalle_Combo.findById(combo)
+    const productos = await Detalle_Combo.find({idCombo:combo});
     return res.json(productos);
 };

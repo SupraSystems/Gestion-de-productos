@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+
 import Descuento, { IDescuento } from '../models/descuento';
 
 export async function getDescuentos(req: Request, res: Response): Promise<Response> {

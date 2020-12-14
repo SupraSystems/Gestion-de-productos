@@ -1,11 +1,12 @@
 import { Schema, model, Document } from 'mongoose'
-
+//models
 const esquemaDescuento = new Schema({
     _id: String,
     fechaini: String,
     fechafin: String,
     porcentaje: Number,
     cantidad: Number
+
 });
 
 export interface IDescuento extends Document {

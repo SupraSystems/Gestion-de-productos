@@ -3,7 +3,7 @@ import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
 import { BuscadorService } from 'src/app/services/buscador.service';
-import { Combo } from 'src/app/models/Combo';
+import { Combo } from 'src/app/Models/Combo';
 declare var $: any;
 declare var tata: any;
 
@@ -20,7 +20,8 @@ export class ProductsComponent implements OnInit {
   descripcion = "";
   tipoProducto = "";
 
-  srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  //srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  srcImagen = "http://localhost:4000/uploads/";
   listaDesordenada: Producto[] = [];
   listaTodosPr: Producto[] = [];
   listaOrdenadaAZ: Producto[] = [];
@@ -272,7 +273,7 @@ export class ProductsComponent implements OnInit {
           let ids: string[] = this.productsService.listacombos[i].productos;
           let listarCombos = this.productsService.listacombos[i].listaProductos;
           this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null, ids, fechaconclusion)
-          //console.log(this.combo)
+          console.log(this.combo)
           this.listaCombos.push(this.combo);
 
         }
@@ -288,6 +289,30 @@ export class ProductsComponent implements OnInit {
 
   //obtenemos las promociones que se tienen en la base de datos
   getPromociones() {
+    this.listarProductos = true;
+    this.productsService.getProducts().subscribe(
+      res => {
+        this.productsService.listaproductos = res;
+        for (let i = 0; i < this.productsService.listaproductos.length; i++) {
+          let nombre = this.productsService.listaproductos[i].nombre;
+          let precio = this.productsService.listaproductos[i].precio;
+          let cantidad = this.productsService.listaproductos[i].cantidad;
+          let descripcion = this.productsService.listaproductos[i].descripcion;
+          let fechavencimiento = this.productsService.listaproductos[i].fechavencimiento;
+          let tipo = this.productsService.listaproductos[i].tipo;
+          let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
+          let id = this.productsService.listaproductos[i]._id;
+          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
+          this.listaDesordenada.push(this.producto);
+        }
+        this.listaTodosPr = this.listaDesordenada.slice();
+        this.listaOrdenadaAZ = this.listaTodosPr;
+        this.listaOrdenadaZA = this.listaTodosPr;
+        this.listaOrdenadaDescendente = this.listaTodosPr;
+        this.listaOrdenadaAscendente = this.listaTodosPr;
+      },
+      err => console.log(err)
+    )
 
   }
 
