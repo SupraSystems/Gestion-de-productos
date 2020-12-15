@@ -22,8 +22,8 @@ export class ProductsComponent implements OnInit {
   des=false;
   des1=true;
 
-  //srcImagen = "https://productos-backend.herokuapp.com/uploads/";
-  srcImagen = "http://localhost:4000/uploads/";
+  srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  //srcImagen = "http://localhost:4000/uploads/";
   listaDesordenada: Producto[] = [];
   listaTodosPr: Producto[] = [];
   listaOrdenadaAZ: Producto[] = [];

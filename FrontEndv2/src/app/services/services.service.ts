@@ -13,13 +13,13 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ServicesService {
-  //URL_API ="https://productos-backend.herokuapp.com/api/producto"
-  //URL_API_CB = "https://productos-backend.herokuapp.com/api/combo"
-  //URL_API_DS ="https://productos-backend.herokuapp.com/api/producto/"
+  URL_API ="https://productos-backend.herokuapp.com/api/producto"
+  URL_API_CB = "https://productos-backend.herokuapp.com/api/combo"
+  URL_API_DS ="https://productos-backend.herokuapp.com/api/producto/"
 
-  URL_API ="http://localhost:4000/api/producto"
-  URL_API_CB = "http://localhost:4000/api/combo"
-  URL_API_DS ="http://localhost:4000/api/producto/"
+  //URL_API ="http://localhost:4000/api/producto"
+  //URL_API_CB = "http://localhost:4000/api/combo"
+  //URL_API_DS ="http://localhost:4000/api/producto/"
 
   listaproductos : Producto[];
   listacombos : Combo[];
