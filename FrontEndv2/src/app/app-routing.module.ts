@@ -19,7 +19,7 @@ import { RegistroProductosComponent } from './Pages/registro-productos/registro-
 import { RegistroCombosComponent } from './Pages/registro-combos/registro-combos.component'
 import { RegistroDescuentosComponent} from './Pages/registro-descuentos/registro-descuentos.component'
 
-
+import { GuiaUsuarioComponent } from './Pages/guia-usuario/guia-usuario.component'
 
 
 const routes: Routes = [
@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'registro_productos', component: RegistroProductosComponent},
   { path: 'registro_combos', component: RegistroCombosComponent},
   { path: 'registro_descuentos', component: RegistroDescuentosComponent},
-
+  { path: 'guia_usuario', component: GuiaUsuarioComponent},
 
   { path: '', pathMatch: 'full', redirectTo: 'home' }, 
   { path: '**', pathMatch: 'full', redirectTo: 'home' }

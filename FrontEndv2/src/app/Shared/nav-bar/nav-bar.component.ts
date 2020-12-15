@@ -150,6 +150,9 @@ export class NavBarComponent implements OnInit {
   getUsuarioSesion() {
     return true;
   }
+  ayuda(){
+    
+  }
 
   cerrarSesion() {
     if (this.seRegistro) {

@@ -10,7 +10,7 @@ export class Producto {
     imagePath: string;
     fechavencimiento:string;
     file:File;
-    porcentajedescuento:number;
+    porcentajedescuento:number=0;
 
     constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File, porcentajedescuento?:number){
 

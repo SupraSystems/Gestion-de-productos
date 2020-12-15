@@ -38,6 +38,8 @@ export class RegistroDescuentosComponent implements OnInit {
   listaProductosRD: Producto[] = [];
   banderaDescuento = false;
   valido= new Validacion();
+  productoDesc: Producto = new Producto("", "", 0, 0, "", "", "", "");
+
 
   constructor(public productsService: ServicesService) {
   }
@@ -300,5 +302,9 @@ export class RegistroDescuentosComponent implements OnInit {
       console.log(this.listaProductosRD[i],"---------")
       
     }
+  }
+  setActualizarProductoDesc(producto:Producto){
+    this.productoDesc=producto
+
   }
 }

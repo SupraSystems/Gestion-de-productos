@@ -322,8 +322,10 @@ export class ProductsComponent implements OnInit {
           let tipo = this.productsService.listaproductos[i].tipo;
           let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
           let id = this.productsService.listaproductos[i]._id;
-          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
+          let descuento= this.productsService.listaproductos[i].porcentajedescuento;
+          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,null,descuento)
           if(this.producto.getDescuento()!=0){
+            console.log(this.producto.getDescuento()+"-------------------------------");
             this.listaDesordenada.push(this.producto);
           }
         }

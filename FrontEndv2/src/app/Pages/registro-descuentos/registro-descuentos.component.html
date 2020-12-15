@@ -148,8 +148,8 @@
               <td>{{productos.getTipo()}}</td>
               <td class="text-center">
                 <button class="btn btn-outline-primary mx-1" type="button" title="ver detalles de producto de
-                                          la lista" data-toggle="modal" data-target="#modalDetallesProductoTitulo"
-                  (click)="setActualizarProducto(productos)">
+                                          la lista" data-toggle="modal" data-target="#modalDetallesProductoDesc"
+                  (click)="setActualizarProductoDesc(productos)">
                   <i class="fa fa-eye"></i>
                 </button>
                 <button class="btn btn-outline-danger mx-1" type="button" title="borrar combo de la lista"
@@ -228,6 +228,37 @@
         <strong>Descripcion:</strong>
         <p>
           {{productoSeleccionado.getDescripcion()}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal detalle de producto -->
+<div class="modal fade" id="modalDetallesProductoDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger text-center  w-100" id="exampleModalLabel">{{productoSeleccionado.getNombre()}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="uk-transition-scale-up uk-transition-opaque card-img-top" [src]="productoSeleccionado.getImagePath()" alt>
+        <br>
+        <strong>Datos:</strong>
+        <ul>
+          <li>Categoria de producto: {{productoDesc.getTipo()}}</li>
+          <li>Precio: {{productoDesc.getPrecio()}} bs.</li>
+          <li>Cantidad: {{productoDesc.getCantidad()}}</li>
+          <li>Fecha de vencimiento:{{productoDesc.getFecha()}} </li>
+          <li>Precio descuento:{{productoDesc.getDescuento()}}%  </li>
+        </ul>
+        <strong>Descripcion:</strong>
+        <p>
+          {{productoDesc.getDescripcion()}}
         </p>
       </div>
     </div>

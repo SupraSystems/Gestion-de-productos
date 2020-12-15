@@ -30,6 +30,7 @@ import { RegistroDescuentosComponent } from './Pages/registro-descuentos/registr
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {  MatNativeDateModule,} from '@angular/material/core';
+import { GuiaUsuarioComponent } from './Pages/guia-usuario/guia-usuario.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {  MatNativeDateModule,} from '@angular/material/core';
     BebidasComponent,
     RegistroProductosComponent,
     RegistroCombosComponent,
-    RegistroDescuentosComponent
+    RegistroDescuentosComponent,
+    GuiaUsuarioComponent
   ],
   imports: [
     BrowserModule,
