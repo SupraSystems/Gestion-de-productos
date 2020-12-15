@@ -1,18 +1,21 @@
 import { Schema, model, Document} from 'mongoose';
 
+
 const schema = new Schema({
-    _id:String,
     nombre:String,
     descripcion: String,
     precio:Number,
-    imagePath: String,
+    fechaconclusion:String,
+    productos:[String],
+    imagePath: String
 });
 
 interface ICombo extends Document {
-    _id:string;
     nombre:string,
     descripcion: string,
     precio:number,
+    fechaconclusion:string,
+    productos:[string],
     imagePath: string,
 }
 

@@ -2,9 +2,9 @@ import { Router } from 'express'
 const router = Router();
 
 import upload from '../libs/multer'
-import { getProductos, createProducto, deleteProducto, getProducto, updateProducto, updateDescuento, getComboDeProducto, getDescuentoProducto, getFoto, getCategoria } from '../controllers/producto.controller'
-import { createDescuento, deleteDescuento, getDescuento, getDescuentos } from '../controllers/descuento.controller';
-import { createCombo, deleteCombo, getCombo, updateCombo } from '../controllers/combo.controller';
+import { getProductos, createProducto, deleteProducto, getProducto, updateProducto, getComboDeProducto, getDescuentoProducto, getFoto, getCategoria } from '../controllers/producto.controller'
+import { createDescuento, deleteDescuento, getDescuento, getDescuentos, updateDescuento } from '../controllers/descuento.controller';
+import { createCombo, deleteCombo, getCombo, updateCombo,getCombos } from '../controllers/combo.controller';
 import { createDetalle, deleteDetalle, getDetalle, getDetalles, updateDetalle } from '../controllers/detalle.controller';
 
 // middleware
@@ -17,8 +17,7 @@ router.route('/producto')
 router.route('/producto/:id')
     .get(getProducto)
     .delete(deleteProducto)
-//    .put(updateProducto);
-    .put(updateDescuento);
+    .put(updateProducto);
 router.route('/descuento')
     .get(getDescuentos)
     .post(createDescuento)
@@ -27,7 +26,7 @@ router.route('/descuento/:id')
     .delete(deleteDescuento)
     .put(updateDescuento)
 router.route('/combo')
-    .get(getCombo)
+    .get(getCombos)
     .post(upload.single('imagen'),createCombo)
 router.route('/combo/:id')
     .get(getCombo)
@@ -44,10 +43,9 @@ router.route('/comboProducto/:id')
     .get(getComboDeProducto)
 router.route('/descuentoProducto/:id')
     .get(getDescuentoProducto)
-
 router.route('/foto/:id')
 .get(getFoto)
-
 router.route('/categoria/:tipo')
 .get(getCategoria)
 export default router;
+

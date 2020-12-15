@@ -3,7 +3,7 @@ import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
 import { BuscadorService } from 'src/app/services/buscador.service';
-import { Combo } from 'src/app/models/Combo';
+import { Combo } from 'src/app/Models/Combo';
 declare var $: any;
 declare var tata: any;
 
@@ -22,7 +22,8 @@ export class ProductsComponent implements OnInit {
   des=false;
   des1=true;
 
-  srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  //srcImagen = "https://productos-backend.herokuapp.com/uploads/";
+  srcImagen = "http://localhost:4000/uploads/";
   listaDesordenada: Producto[] = [];
   listaTodosPr: Producto[] = [];
   listaOrdenadaAZ: Producto[] = [];
@@ -293,7 +294,7 @@ export class ProductsComponent implements OnInit {
           let ids: string[] = this.productsService.listacombos[i].productos;
           let listarCombos = this.productsService.listacombos[i].listaProductos;
           this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null, ids, fechaconclusion)
-          //console.log(this.combo)
+          console.log(this.combo)
           this.listaCombos.push(this.combo);
         }
         this.listaTodosC = this.listaCombos.slice();
