@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../Models/Producto";
-import { DepFlags } from '@angular/compiler/src/core';
 import { Combo } from '../models/Combo';
 
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -35,7 +34,6 @@ export class ServicesService {
     let url="https://productos-backend.herokuapp.com/api/categoria/"
     return this.http.get<Producto[]>(url+categoria);
   }
-
   addProduct(producto:Producto ){
     const fd = new FormData();
     fd.append('nombre', producto.getNombre());

@@ -118,8 +118,6 @@ export class NavBarComponent implements OnInit {
     this.productsService.getProducts().subscribe(
       res => {
         this.productsService.listaproductos = res;
-
-
         /*-----------***************************************************-------------------------*/
         console.log(this.productsService.listaproductos, "--")
         for (let i = 0; i < this.productsService.listaproductos.length; i++) {

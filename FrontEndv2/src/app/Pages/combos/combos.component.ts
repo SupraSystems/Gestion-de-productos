@@ -18,9 +18,9 @@ export class CombosComponent implements OnInit {
     console.log("<<<<>>>>>>", obj.ruta)
     if(obj.ruta=="productos_combos"){
       if(obj.tipo=="exito"){
-        this.toastExitoso("Se encontraron los siguientes productos coincidentes")            
+        this.toastExitoso("Se encontraron los siguientes combos coincidentes")            
       }else{
-        this.toastError("no se encontraron productos coincidentes")
+        this.toastError("no se encontraron combos coincidentes")
       }
     }
   }
@@ -38,5 +38,4 @@ export class CombosComponent implements OnInit {
         closeBtn: false
       });
     }
-
 }

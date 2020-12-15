@@ -59,9 +59,9 @@ export class ProductsComponent implements OnInit {
     this.titulo = localStorage.getItem('titulo');
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.servicio.$emitter.subscribe(x => {
-      if( this.tipoProducto!="combos"){
-        this.actualizarBuscador(x);
-      }
+      //if( this.tipoProducto!="combos"){
+      this.actualizarBuscador(x);
+      //}
     },
       err => console.error('Eroor de mensaje: ' + err),
       () => console.log('Ocurrio un problems')
@@ -104,6 +104,7 @@ export class ProductsComponent implements OnInit {
         break;
       case 'todos_los_productos':
         this.getProductos();
+        this.getCombos();
         break;
       case 'combos':
         this.getCombos();
@@ -127,12 +128,29 @@ export class ProductsComponent implements OnInit {
     this.tipoProducto = localStorage.getItem("tipo_producto");
     this.buscarNombre = msj.palabra
     this.URLactual = msj.ruta;
-    console.log(this.URLactual,"-",this.tipoProducto)
-    if (this.tipoProducto == msj.ruta) {
+    console.log(this.URLactual, "-", this.tipoProducto)
+    if (this.tipoProducto == msj.ruta || (msj.ruta == "productos_combos" && this.tipoProducto == "combos")) {
+      //alert("ingresooooooo a aqui")
       let flag = false;
-      for (let i = 0; i < this.listaTodosPr.length; i++) {
-        if (!flag) {
-          flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
+      if (msj.ruta == "productos_combos" && this.tipoProducto == "combos") {
+        console.log("yabb terinooooooooooooooo")
+        for (let i = 0; i < this.listaTodosC.length; i++) {
+          if (!flag) {
+            flag = this.nombresCoincidentes(this.listaTodosC[i].getNombre())
+          }
+        }
+      } else {
+        for (let i = 0; i < this.listaTodosPr.length; i++) {
+          if (!flag) {
+            flag = this.nombresCoincidentes(this.listaTodosPr[i].getNombre())
+          }
+        }if (msj.ruta == "todos_los_productos" && this.tipoProducto == "todos_los_productos") {
+          console.log("yabb terinooooooooooooooo")
+          for (let i = 0; i < this.listaTodosC.length; i++) {
+            if (!flag) {
+              flag = this.nombresCoincidentes(this.listaTodosC[i].getNombre())
+            }
+          }
         }
       }
       if (flag) {
@@ -187,7 +205,6 @@ export class ProductsComponent implements OnInit {
     } else {
       flag = true;
     }
-
     return flag;
   }
 
@@ -274,13 +291,12 @@ export class ProductsComponent implements OnInit {
           this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null, ids, fechaconclusion)
           //console.log(this.combo)
           this.listaCombos.push(this.combo);
-
         }
-        this.listaTodosC=this.listaCombos.slice();
-        this.listaOrdenadaAZC=  this.listaTodosC
-        this.listaOrdenadaZAC= this.listaTodosC
-        this.listaOrdenadaDescendenteC= this.listaTodosC
-        this.listaOrdenadaAscendenteC= this.listaTodosC
+        this.listaTodosC = this.listaCombos.slice();
+        this.listaOrdenadaAZC = this.listaTodosC
+        this.listaOrdenadaZAC = this.listaTodosC
+        this.listaOrdenadaDescendenteC = this.listaTodosC
+        this.listaOrdenadaAscendenteC = this.listaTodosC
       },
       err => console.log(err)
     )
@@ -302,7 +318,9 @@ export class ProductsComponent implements OnInit {
           let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
           let id = this.productsService.listaproductos[i]._id;
           this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
-          this.listaDesordenada.push(this.producto);
+          if(this.producto.getDescuento()!=0){
+            this.listaDesordenada.push(this.producto);
+          }
         }
         this.listaTodosPr = this.listaDesordenada.slice();
         this.listaOrdenadaAZ = this.listaTodosPr;
@@ -320,7 +338,7 @@ export class ProductsComponent implements OnInit {
   ordenarProductos() {
     let orden = $("#orden").val();
     console.log(localStorage.getItem("tipo_producto"))
-    if (localStorage.getItem("tipo_producto")=="combos") {
+    if (localStorage.getItem("tipo_producto") == "combos") {
       this.ordenarProductosCombo(orden);
     } else {
       switch (orden) {
@@ -499,7 +517,7 @@ export class ProductsComponent implements OnInit {
   //actualizamos el combo para que se vea en el modal
   setActualizarCombo(combo: Combo) {
     this.listaProductosCombo = [];
-    console.log(combo.getImagePath(),":::::::::::::::::::::::::::")
+    console.log(combo.getImagePath(), ":::::::::::::::::::::::::::")
     for (let k = 0; k < combo.getIds().length; k++) {
       this.productsService.getProducto(combo.getIds()[k]).subscribe(
         res => {
@@ -511,8 +529,6 @@ export class ProductsComponent implements OnInit {
 
     this.combo = combo;
     $("#modalDetalleCombo").modal('show');
-
-
   }
 
   verificador() {
