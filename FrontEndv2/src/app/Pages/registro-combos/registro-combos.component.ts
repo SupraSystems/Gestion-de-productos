@@ -64,7 +64,7 @@ export class RegistroCombosComponent implements OnInit {
   aniadirACombo(producto: Producto) {
     this.listaProductosEnCombo.push(producto)
     this.listaProductosEnCombo = this.listaProductosEnCombo.reverse()
-    this.toastExitoso("se aniadio el producto " + producto.getNombre() + "al combo")
+    this.toastExitoso("Se añadio el producto " + producto.getNombre() + " al combo")
     this.setFechaMenor(producto.getFecha());
     this.contadorDeProductos+=1;
     if(this.contadorDeProductos>1){
@@ -81,7 +81,7 @@ export class RegistroCombosComponent implements OnInit {
       this.precioTotal=0;
       this.cantidadTotal=0;
     } else {
-      this.toastBorrado("Error", "su combo no tiene productos para ser borrados");
+      this.toastBorrado("Error", "Su combo no tiene productos para ser borrados");
     }
   }
 
@@ -144,7 +144,9 @@ export class RegistroCombosComponent implements OnInit {
 
   //guardamos la informacion de un producto para mostrarlo en el modal
   setActualizarProducto(producto: Producto) {
+    console.log(producto);
     this.producto = producto;
+    console.log(producto);
   }
 
   setActualizarCombo(combo: Combo) {

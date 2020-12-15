@@ -10,9 +10,9 @@ export class Producto {
     imagePath: string;
     fechavencimiento:string;
     file:File;
-    descuento:number=0;
+    porcentajedescuento:number;
 
-    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File){
+    constructor(descripcion:string,tipo:string,precio:number,cantidad:number,foto: string | ArrayBuffer,_id:string,imagePath: string,nombre:string,fecha?:string, file?:File, porcentajedescuento?:number){
 
         this.descripcion=descripcion;
         this.tipo=tipo;
@@ -25,12 +25,13 @@ export class Producto {
         this.nombre=nombre;
         this.fechavencimiento=fecha;
         this.file=file;
+        this.porcentajedescuento=porcentajedescuento;
     }
     public getDescuento(){
-        return this.descuento;
+        return this.porcentajedescuento;
     }
-    public setDescuento(decuento:number){
-         this.descuento=decuento;
+    public setDescuento(descuento:number){
+         this.porcentajedescuento=descuento;
     }
     public getFecha(){
         return this.fechavencimiento;
@@ -38,6 +39,10 @@ export class Producto {
     public getPrecio(): number {
         return this.precio;
     }
+    public setPrecio(precio:number) {
+        this.precio=precio;
+    }
+
     public getCantidad(): number {
         return this.cantidad;
     }
@@ -61,5 +66,20 @@ export class Producto {
     }
     public getFile(): File{
         return this.file;
+    }
+    public getPrecio1() {
+        if(this.porcentajedescuento>4)
+        {
+            
+            let p;
+            
+            p= this.precio-this.porcentajedescuento/100*this.precio;
+            return Math.round(p* 100) / 100 ;
+            
+
+        } else {
+            return this.precio;
+        }
+        
     }
 }

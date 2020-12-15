@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import fs from 'fs-extra';
 import path from 'path'
-
 // Models
 import Producto from '../models/producto';
 import Descuento from '../models/descuento'
@@ -13,7 +12,7 @@ export async function getProductos(req: Request, res: Response): Promise<Respons
 }
 
 export async function createProducto(req: Request, res: Response): Promise<Response> {
-    const {nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento} = req.body;
+    const {nombre,descripcion,tipo,precio,cantidad,fechavencimiento,coddescuento,porcentajedescuento} = req.body;
     const newPreoducto = {
         nombre:nombre,
         descripcion:descripcion,
@@ -22,6 +21,7 @@ export async function createProducto(req: Request, res: Response): Promise<Respo
         cantidad:cantidad,
         fechavencimiento:fechavencimiento,
         coddescuento:coddescuento,
+        porcentajedescuento:porcentajedescuento,
         imagePath:req.file.path
     };
     const producto = new Producto(newPreoducto);
@@ -51,19 +51,34 @@ export async function deleteProducto(req: Request, res: Response): Promise<Respo
 
 export async function updateProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento} = req.body;
-    const updatedProducto = await Producto.findByIdAndUpdate(id, {
-        nombre,
-        descripcion,
-        tipo,
-        precio,
-        cantidad,
-        fechavencimiento,
-        coddescuento
+    const { nombre, descripcion,tipo, precio,cantidad,fechavencimiento,coddescuento, porcentajedescuento} = req.body;
+    const updatedProducto = await Producto.findByIdAndUpdate(id, { $set: {
+            nombre,
+            descripcion,
+            tipo,
+            precio,
+            cantidad,
+            fechavencimiento,
+            coddescuento,
+            porcentajedescuento
+        }
     },{new: true});
     return res.json({
         message: 'Producto actualizado exitosamente',
         updatedProducto
+    });
+}
+
+export async function updateDescuento(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { porcentajedescuento} = req.body;
+    const updatedDescuento = await Producto.findByIdAndUpdate(id, { $set: {
+        porcentajedescuento
+    }
+    },{new: true});
+    return res.json({
+        message: 'Descuento actualizado exitosamente',
+        updatedDescuento
     });
 }
 
@@ -74,7 +89,6 @@ export async function getDescuentoProducto(req: Request, res: Response): Promise
     const desc = await Descuento.findById(descuento)
     return res.json(desc);
 }
-
 export async function getComboDeProducto(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const detalle = await Detalle_Combo.find({idProducto:id});

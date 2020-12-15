@@ -29,7 +29,7 @@
                             <div class="card mt-4  text-centeruk-transition-scale-up uk-transition-opaque uk-transition-toggle card_pintura">
                                 <!--style="max-width: 25rem; max-height: 20rem;"-->
                                 <div style="height: 4rem;">
-                                    <h5 class="card-title text-primary text"><strong>{{producto.getNombre()}}</strong> &nbsp;&nbsp;{{producto.getPrecio()}} .bs </h5>
+                                    <h5 class="card-title text-primary text"><strong>{{producto.getNombre()}}</strong> &nbsp;&nbsp;{{producto.getPrecio1()}} .bs </h5>
                                 </div>
                                 <div class="card-body text-center  uk-transition-toggle" tabindex="0">
                                     <img class="uk-transition-scale-up uk-transition-opaque card-img-top" src="{{producto.getImagePath()}}" width="300" height="200" alt="">
@@ -99,7 +99,8 @@
                 <strong>Datos:</strong>
                 <ul>
                     <li>Categoria de producto: {{producto.getTipo()}}</li>
-                    <li>Precio: {{producto.getPrecio()}} bs.</li>
+                    <li [class.visible]="des1">Precio: <span class="tachado">{{producto.getPrecio()}} bs.</span> {{producto.getPrecio1()}} bs.</li>
+                    <li [class.visible]="des">Precio: {{producto.getPrecio()}} bs.</li>
                     <li>Cantidad: {{producto.getCantidad()}}</li>
                     <li>Fecha de vencimiento:{{producto.getFecha()}} </li>
                 </ul>

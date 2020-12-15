@@ -49,14 +49,32 @@ export class CarrouselComponent implements OnInit {
           let tipo = this.productsService.listaproductos[i].tipo;
           let imagen = this.srcImagen + this.productsService.listaproductos[i].imagePath.substring(8);
           let id = this.productsService.listaproductos[i]._id;
-          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,)
+          let porcentajedescuento = this.productsService.listaproductos[i].porcentajedescuento;
+          this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,null,porcentajedescuento)
           this.listaDescuentos.push(this.producto);
+          
         }
-        this.listaCincoDescuentos = this.listaDescuentos.slice();
+        this.ordenarProductosMayMen();
+
+        for(let j = 0; j < 5 ;j ++){
+          this.listaCincoDescuentos[j] = this.listaDescuentos[j];
+        }
+
+        //this.listaCincoDescuentos = this.listaDescuentos.slice();
         this.getImagenesDescuento();
+        console.log(this.listaCincoDescuentos);
       },
       err => console.log(err)
     )
+  }
+/*
+  ordenarProductosMenMay(){
+    this.listaDescuentos.sort(((a, b) => a.precio - b.precio));
+  }
+*/
+  //ordenar los productos para poder obtener de mayor a menor precio
+  ordenarProductosMayMen(){
+    this.listaDescuentos.sort(((a, b) => b.porcentajedescuento - a.porcentajedescuento));
   }
 
   getImagenesDescuento(){
