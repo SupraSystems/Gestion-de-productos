@@ -5,12 +5,68 @@
     position:absolute;
     width: 100%;
 }*/
-    /*img{
-      position: relative;
-    }
-    p{
-      position: absolute;
-      padding-top: 50%;
-      font-size: 1em;
-      top: 100px;
-    }*/
+
+
+/*
+.imagencita {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 100px);
+    opacity: 100;
+    animation: display 10s infinite;
+}
+*/
+
+
+/*
+.textopi {
+    width: 30%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+
+/*
+.carousel-item {
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    height: 30rem;
+    width: 100%;
+}
+
+.nones {
+    display: flex;
+    width: 27.8125rem;
+    height: 16.25rem;
+    border-radius: 0.5rem;
+    transform-origin: center center;
+    transform: scale(1) translate(0px, 0px) perspective( 750px) rotateY(0deg);
+    transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+    transition-duration: 0.5s;
+    position: absolute;
+    top: 0;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.carousel-inner--center {
+    transform: scale(1) translate(0px, 0px) perspective( 750px) rotateY(0deg);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+
+/*
+p {
+    position: absolute;
+    padding-top: 50%;
+    font-size: 1em;
+    top: 100px;
+}*/

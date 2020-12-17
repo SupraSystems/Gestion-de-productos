@@ -13,33 +13,29 @@
         <div class="carousel-inner">
             <ng-container *ngFor="let item of listaCincoDescuentos; let i = index">
                 <div *ngIf="i==0" class="carousel-item active">
-                    <img src={{item.getImagePath()}} class="d-block w-100 " height="400 important!" alt=""><br>
+                    <img src={{item.getImagePath()}} class="imagencita"><br>
                     <div style="height: 6rem;">
-                        <h6 class="text-center">
+                        <h6 class="texto">
                             {{item.getDescripcion()}}
-
+                            <h2>
+                                Con un Descuento del : {{item.getDescuento()}}%
+                            </h2>
                         </h6>
-                        <br>
-                        <h2 class="text-center">
-                            Con un Descuento del : {{item.getDescuento()}}%
-
-                        </h2>
                         <br>
                     </div>
                 </div>
                 <br>
 
                 <div *ngIf="i!=0" class="carousel-item">
-                    <img src={{item.getImagePath()}} class="d-block w-100" height="400 important!" alt=""><br>
+                    <img src={{item.getImagePath()}} class="imagencita"><br>
                     <div style="height: 6rem;">
-                        <h6 class="text-center">
+                        <h6 class="texto">
                             {{item.getDescripcion()}}
-                        </h6>
-                        <br>
-                        <h2 class="text-center">
-                            Con un Descuento del : {{item.getDescuento()}}%
+                            <h2>
+                                Con un Descuento del : {{item.getDescuento()}}%
 
-                        </h2>
+                            </h2>
+                        </h6>
                         <br>
                     </div>
                 </div>
