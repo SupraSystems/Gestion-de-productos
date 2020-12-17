@@ -324,7 +324,7 @@ export class ProductsComponent implements OnInit {
           let id = this.productsService.listaproductos[i]._id;
           let descuento= this.productsService.listaproductos[i].porcentajedescuento;
           this.producto = new Producto(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, fechavencimiento,null,descuento)
-          if(this.producto.getDescuento()!=0){
+          if(this.producto.getDescuento()!=0 && this.producto.getDescuento()!= null){
             console.log(this.producto.getDescuento()+"-------------------------------");
             this.listaDesordenada.push(this.producto);
           }

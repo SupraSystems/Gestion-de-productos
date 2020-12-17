@@ -3,6 +3,7 @@ import { Producto } from '../../Models/Producto';
 import { Router } from '@angular/router';
 import { ServicesService } from "../../services/services.service";
 import { BuscadorService } from 'src/app/services/buscador.service';
+import { Combo } from 'src/app/Models/Combo';
 
 declare var $: any;
 declare var tata: any;
@@ -26,11 +27,16 @@ export class NavBarComponent implements OnInit {
   listaProductosTemp: Producto[] = [];
 
 
+  combo: Combo = new Combo("", "", 0, 0, "", "", "", "", [])
+  srcImagen="";
+  listaCombos:Combo[] = [];
+  listaTodosC:Combo[] =[];
   constructor(private router: Router, public productsService: ServicesService, servicio: BuscadorService) {
 
   }
   ngOnInit(): void {
     this.getProductos();
+    this.getCombos();
     this.precionar_amburguesa()
   }
 
@@ -51,7 +57,16 @@ export class NavBarComponent implements OnInit {
           if (!flag) {
             flag = this.nombresCoincidentes(this.listaProductos[i].getNombre())
           }else{
-            this.listaProductosTemp.push(this.listaProductos[i])
+            //this.listaProductosTemp.push(this.listaProductos[i])
+          }
+        }
+        if(!flag){
+          for (let i = 0; i < this.listaCombos.length; i++) {
+            if (!flag) {
+              flag = this.nombresCoincidentes(this.listaCombos[i].getNombre())
+            }else{
+              //this.listaTodosC.push(this.listaCombos[i])
+            }
           }
         }
         if (flag) {
@@ -134,6 +149,32 @@ export class NavBarComponent implements OnInit {
         }
         /*-------------------------------------------------------*/
 
+      },
+      err => console.log(err)
+    )
+  }
+  getCombos(){
+    this.productsService.getCombos().subscribe(
+      res => {
+        this.productsService.listacombos = res;
+        for (let i = 0; i < this.productsService.listacombos.length; i++) {
+          let nombre = this.productsService.listacombos[i].nombre;
+          let precio = this.productsService.listacombos[i].precio;
+          let descripcion = this.productsService.listacombos[i].descripcion;
+          let fechavencimiento = this.productsService.listacombos[i].fechaconclusion;
+          let fechaconclusion = this.productsService.listacombos[i].fechaconclusion;
+          //console.log(this.productsService.listacombos[i].imagePath,"++++++++++++++++++++++++++++++++++++++++++")
+          let imagen = this.srcImagen + this.productsService.listacombos[i].imagePath.substring(8);
+          let id = this.productsService.listacombos[i]._id;
+          let tipo = "";
+          let cantidad = 0;
+          let ids: string[] = this.productsService.listacombos[i].productos;
+          let listarCombos = this.productsService.listacombos[i].listaProductos;
+          this.combo = new Combo(descripcion, tipo, precio, cantidad, imagen, id, imagen, nombre, listarCombos, fechavencimiento, null, ids, fechaconclusion)
+          console.log(this.combo)
+          this.listaCombos.push(this.combo);
+        }
+        this.listaTodosC = this.listaCombos.slice();
       },
       err => console.log(err)
     )
