@@ -145,7 +145,7 @@ export class RegistroDescuentosComponent implements OnInit {
       if(descuento > 4 && descuento< 76 ){
         this.toastExitoso("Descuento Enlistado")
         this.productoSeleccionado.setDescuento(descuento);
-        this.productoSeleccionado.setPrecio(this.precioDescuento);
+        //this.productoSeleccionado.setPrecio(this.precioDescuento);
         this.listaProductosRD.push(this.productoSeleccionado)
         $("#precioDescuentoN").val("");
         this.validador.limpiarRegistros("precioDescuentoN");
