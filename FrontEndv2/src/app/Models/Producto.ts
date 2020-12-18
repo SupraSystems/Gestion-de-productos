@@ -25,8 +25,9 @@ export class Producto {
         this.nombre=nombre;
         this.fechavencimiento=fecha;
         this.file=file;
-        this.porcentajedescuento=porcentajedescuento;
     }
+    
+
     public getDescuento(){
         return this.porcentajedescuento;
     }
