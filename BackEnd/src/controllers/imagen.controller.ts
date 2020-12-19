@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 import fs from 'fs-extra';
 import path from 'path'
+
 // Models
 
 import Imagen from '../models/imagen'
 import Detalle from '../models/detalle_combo';
 import Descuento from '../models/descuento';
 
-export async function getimagen(req: Request, res: Response): Promise<Response> {
+export async function getimagenes(req: Request, res: Response): Promise<Response> {
     const detalles = await Detalle.find();
     return res.json(detalles);
 };
