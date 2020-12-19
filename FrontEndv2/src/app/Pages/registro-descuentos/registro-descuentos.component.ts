@@ -37,7 +37,7 @@ export class RegistroDescuentosComponent implements OnInit {
   porcentajeDescuento: number = 0;
   listaProductosRD: Producto[] = [];
   banderaDescuento = false;
-  valido= new Validacion();
+  valido = new Validacion();
   productoDesc: Producto = new Producto("", "", 0, 0, "", "", "", "");
 
 
@@ -126,8 +126,7 @@ export class RegistroDescuentosComponent implements OnInit {
       if (indice != i) {
         listaAux.push(this.listaProductosRD[i]);
       }
-      this.listaProductosRD = listaAux;
-    }
+    } this.listaProductosRD = listaAux;
   }
 
 
@@ -139,29 +138,41 @@ export class RegistroDescuentosComponent implements OnInit {
   }
 
   enlistarDescuento() {
-    if(this.precioDescuento!=0){
-    if ($("#precioDescuentoN").val() != "" && this.banderaDescuento) {
-      let descuento=parseInt($("#precioDescuentoN").val());
-      if(descuento > 4 && descuento< 76 ){
-        this.toastExitoso("Descuento Enlistado")
-        this.productoSeleccionado.setDescuento(descuento);
-        //this.productoSeleccionado.setPrecio(this.precioDescuento);
-        this.listaProductosRD.push(this.productoSeleccionado)
-        $("#precioDescuentoN").val("");
-        this.validador.limpiarRegistros("precioDescuentoN");
-        this.precioActual = 0;
-        this.precioDescuento = 0;
-        this.banderaDescuento = false;
-        console.log(this.listaProductosRD);
-      }else{
+    if (this.precioDescuento != 0) {
+      if ($("#precioDescuentoN").val() != "" && this.banderaDescuento) {
+        let descuento = parseInt($("#precioDescuentoN").val());
+        if (descuento > 4 && descuento < 76) {
+          let res = false;
+          for (let i = 0; i < this.listaProductosRD.length; i++) {
+            let result = this.listaProductosRD[i].getNombre().toLowerCase();
+            let result2 = this.productoSeleccionado.getNombre().toLowerCase();
+            if (result == result2) {
+              res = true;
+            }
+           // alert(result + "---" + result2);
+          } if (res) {
+            this.toastError("desceunto enlistado, debe eliminar de lista descuentos para realizar cambios!")
+          } else {
+            this.toastExitoso("Descuento Enlistado")
+            this.productoSeleccionado.setDescuento(descuento);
+            //this.productoSeleccionado.setPrecio(this.precioDescuento);
+            this.listaProductosRD.push(this.productoSeleccionado)
+            $("#precioDescuentoN").val("");
+            this.validador.limpiarRegistros("precioDescuentoN");
+            this.precioActual = 0;
+            this.precioDescuento = 0;
+            this.banderaDescuento = false;
+            console.log(this.listaProductosRD);
+          }
+        } else {
+          this.toastError("Porcentaje Ingresado Invalido")
+        }
+      } else {
         this.toastError("Porcentaje Ingresado Invalido")
       }
     } else {
-      this.toastError("Porcentaje Ingresado Invalido")
+      this.toastError("Debe verificar el precio de descuento")
     }
-  }else{
-    this.toastError("Debe verificar el precio de descuento")
-  }
   }
 
 
@@ -280,31 +291,31 @@ export class RegistroDescuentosComponent implements OnInit {
     $("#" + id).addClass("is-valid");
   }
 
-  descontarPrecio(){
-    if(this.precioActual!=0){
-      if($("#precioDescuentoN").hasClass("is-valid")){
-        let aux=this.precioActual/100;//0.15
-        let descuento=$("#precioDescuentoN").val()*aux;//1.05
-        this.precioDescuento=this.precioActual-descuento;
+  descontarPrecio() {
+    if (this.precioActual != 0) {
+      if ($("#precioDescuentoN").hasClass("is-valid")) {
+        let aux = this.precioActual / 100;//0.15
+        let descuento = $("#precioDescuentoN").val() * aux;//1.05
+        this.precioDescuento = this.precioActual - descuento;
         this.toastExitoso("Se calculo el precio de descuento del producto")
-      } else{
+      } else {
         this.toastError("Debe ingresar un porcentaje de descuento");
       }
     }
-    else{
+    else {
       this.toastError("Debe seleccioinar un producto");
     }
   }
 
 
-  registrarDeceuntos(){
+  registrarDeceuntos() {
     for (let i = 0; i < this.listaProductosRD.length; i++) {
-      console.log(this.listaProductosRD[i],"---------")
-      
+      console.log(this.listaProductosRD[i], "---------")
+
     }
   }
-  setActualizarProductoDesc(producto:Producto){
-    this.productoDesc=producto
+  setActualizarProductoDesc(producto: Producto) {
+    this.productoDesc = producto
 
   }
 }
