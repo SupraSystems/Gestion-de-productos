@@ -55,9 +55,19 @@ export class RegistroDescuentosComponent implements OnInit {
     this.porcentajeDescuento = 0;
     this.nombreProductoS = producto.getNombre();
     this.productoSeleccionado = producto;
+
+
+    ////////////////////
+    $("#precioDescuentoN").val("");
+    this.validador.limpiarRegistros("precioDescuentoN");
+//////////////////////////
+
+
     this.banderaDescuento = true;
     $("#precioDescuentoN").off();
     this.valido.validoNumber('precioDescuentoN', 2, 1);
+
+   
 
   }
 
